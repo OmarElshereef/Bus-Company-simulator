@@ -16,7 +16,7 @@ public:
 		next = nullptr;
 	}
 
-	Node(T newItem) //non-default constructor
+	Node(T& newItem) //non-default constructor
 	{
 		item = newItem;
 		next = nullptr;
@@ -24,14 +24,14 @@ public:
 
 	}
 
-	Node(T newitem, int pri)
+	Node(T& newitem, int pri)
 	{
 		item = newitem;
 		next = nullptr;
 		priority = pri;
 	}
 
-	void setItem(T newItem)
+	void setItem(T& newItem)
 	{
 		item = newItem;
 	} // end setItem
@@ -59,7 +59,10 @@ public:
 	Node<T>* getNext() const
 	{
 		return next;
-	} // end Node
+	}
+
+	~Node()
+	{}// end Node
 };
 
 
@@ -77,7 +80,7 @@ public:
 		next = nullptr;
 	}
 
-	Node(T* newItem) //non-default constructor
+	Node(T*& newItem) //non-default constructor
 	{
 		item = newItem;
 		next = nullptr;
@@ -85,14 +88,14 @@ public:
 
 	}
 
-	Node(T* newitem, int pri)
+	Node(T*& newitem, int pri)
 	{
 		item = newitem;
 		next = nullptr;
 		priority = pri;
 	}
 
-	void setItem(T* newItem)
+	void setItem(T*& newItem)
 	{
 		item = newItem;
 	} // end setItem
@@ -121,6 +124,9 @@ public:
 	{
 		return next;
 	}
+
+	~Node()
+	{}
 }; // end Node
 #endif	
 

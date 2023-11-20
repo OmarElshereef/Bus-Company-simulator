@@ -7,7 +7,7 @@ using namespace std;
 
 class Passenger
 {
-
+	int arrivetime;
 	int  StartStation, EndStation;
 	int PassengerType;
 	int PassengerId;
