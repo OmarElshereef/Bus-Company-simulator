@@ -13,5 +13,5 @@ void Company::readFile()
 	int journies, wbusfix, mbusfix;
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix;
-	cout << stations << distance << wbus << mbus << wbuscap << mbuscap << journies << wbusfix << mbusfix;
+	cout << stations <<" "<< distance << wbus << mbus << wbuscap << mbuscap << journies << wbusfix << mbusfix;
 }
