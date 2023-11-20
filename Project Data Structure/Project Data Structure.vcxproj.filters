@@ -13,10 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\DataStructures">
+      <UniqueIdentifier>{aab745ff-6e0b-44a5-ba93-2a6c8c9b92fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classes">
+      <UniqueIdentifier>{b5603f66-bf35-4b1c-a5e5-43547cceb0cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classes\entities">
+      <UniqueIdentifier>{1e2746f1-d690-438c-a8af-39b0d97d17f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classes\functionality Classes">
+      <UniqueIdentifier>{4c16c328-1580-4401-b57f-73a02c43febf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project Data Structure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Passenger.cpp">
+      <Filter>Header Files\Classes\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Bus.cpp">
+      <Filter>Header Files\Classes\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Company.cpp">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrivalEvent.cpp">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaveEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="fifoqueue.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="priorityqueue.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Passenger.h">
+      <Filter>Header Files\Classes\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Bus.h">
+      <Filter>Header Files\Classes\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Company.h">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrivalEvent.h">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaveEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

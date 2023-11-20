@@ -127,7 +127,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArrivalEvent.cpp" />
+    <ClCompile Include="Bus.cpp" />
+    <ClCompile Include="Company.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="LeaveEvent.cpp" />
+    <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Project Data Structure.cpp" />
+    <ClCompile Include="UI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ArrivalEvent.h" />
+    <ClInclude Include="Bus.h" />
+    <ClInclude Include="Company.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="fifoqueue.h" />
+    <ClInclude Include="LeaveEvent.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Passenger.h" />
+    <ClInclude Include="priorityqueue.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
