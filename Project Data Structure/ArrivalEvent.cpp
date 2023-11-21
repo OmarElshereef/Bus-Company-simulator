@@ -2,6 +2,7 @@
 
 ArrivalEvent::ArrivalEvent(): Event()
 {
+
 }
 
 ArrivalEvent::~ArrivalEvent()
