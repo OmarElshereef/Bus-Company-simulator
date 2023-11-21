@@ -1,5 +1,8 @@
 #pragma once
 #include"Passenger.h"
+//#include"Company.h"
+#include"ArrivalEvent.h"
+#include"LeaveEvent.h"
 #include "fifoqueue.h"
 
 class Passenger;
@@ -7,9 +10,11 @@ class Passenger;
 class Bus
 {
 private:
-	Passenger x;
+	//Company* company;
 	Passenger** passenger_arr;
 	fifoqueue<Passenger*>* finished_queue;
+	ArrivalEvent* arrivalEvent = new ArrivalEvent;
+	LeaveEvent* leaveEvent = new LeaveEvent;
 	const int BC;		   // bus capacity (max # of passengers can a bus carry)
 	const int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance
@@ -18,14 +23,15 @@ private:
 	bool direction;		   // true = forward  false = backward
 	bool closed;		   // closed = 1, open = 0
 	int station;		   // station number [0,11]
-	bool bus_type;		   // mixed= 1 & wheel-chair= 0
+	char bus_type;		   // mixed= M & wheel-chair= W
 
 
 public:
-	Bus(int size, int max, char type); 
+	Bus(int size, int max, int bus_num, int s, char type);
 
 	~Bus();
 	
+	void display_bus();
 
 	bool get_door();
 	
@@ -64,5 +70,14 @@ public:
 
 
 	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
+
+	void set_arrival_event(ArrivalEvent* arrivalEvt);
+
+	void set_leave_event(LeaveEvent* leaveEvt);
+
+	// Adding functions to interact with the Company and Events:
+	void arrive_at_station();
+
+	void leave_station();
 
 };

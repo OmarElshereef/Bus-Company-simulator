@@ -1,10 +1,16 @@
 #include "Bus.h"
 
-Bus::Bus(int size, int max, char type) : BC(size), max_trips(max)
+Bus::Bus(int size, int max, int bus_num, int s, char type)
+	: BC(size), max_trips(max), bus_number(bus_num),station(s)
 {
 	passenger_arr = new Passenger * [size];
+	finished_queue = new fifoqueue<Passenger*>();
+	//arrivalEvent = new ArrivalEvent;
+	//leaveEvent = new LeaveEvent;
+
 	curr_trips = 0;
 	num_of_passengers = 0;
+	direction = 1;
 	direction = true;
 	closed = false;
 	if (type == 'W')
@@ -17,6 +23,26 @@ Bus::~Bus()
 {
 	for (int i = 0; i < BC; i++)
 		delete passenger_arr[i];
+	delete finished_queue;
+	delete arrivalEvent;
+	delete leaveEvent;
+
+}
+
+void Bus::display_bus()
+{
+	string available = "No, not available", mixed = "No, not mixed bus";
+	if (is_available())
+		available = "Yes";
+	if (is_mixed_bus())
+		mixed = "Yes, mixed bus";
+
+	cout << "Reading Bus Data: "<< endl
+		<< "Station Number: " << get_station() << endl
+		<< "Number of Passengers: " << get_passengers()<< endl
+		<< "Is available?: " << available << endl
+		<< "Station Number: " << mixed << endl
+		<< "Station Number: " << maintenance_time() << endl;
 }
 
 bool Bus::get_door()
@@ -61,7 +87,9 @@ bool Bus::is_available()
 
 bool Bus::is_mixed_bus()
 {
-	return bus_type == 'M';
+	if(bus_type == 'M')
+		return true;
+	return false;
 }
 
 bool Bus::maintenance_time()
@@ -109,4 +137,33 @@ void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
 			remove(i);
 		}
 	}
+}
+
+void Bus::set_arrival_event(ArrivalEvent * arrivalEvt)
+{
+	arrivalEvent = arrivalEvt;
+}
+
+void Bus::set_leave_event(LeaveEvent* leaveEvt)
+{
+	leaveEvent = leaveEvt;
+}
+
+void Bus::arrive_at_station()
+{
+	// Call the Company's method to handle the arrival
+	//company->handle_bus_arrival(this);
+
+	// Trigger the arrival event
+	//arrivalEvent->trigger();
+
+}
+
+void Bus::leave_station()
+{
+	// Call the Company's method to handle the departure
+	//company->handle_bus_departure(this);
+
+	// Trigger the leave event
+	//leaveEvent->trigger();
 }
