@@ -18,8 +18,9 @@ void Company::readFile()
 	int stations, distance;
 	int wbus, mbus, wbuscap, mbuscap;   //defining varaibles to read data into
 	int journies, wbusfix, mbusfix;
+	int maxwait, geton;
 
-	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix;
+	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton;
 	// reading initial values in order
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;
 	
@@ -44,13 +45,14 @@ void Company::readFile()
 			if (Ptype == "SP")
 				reader >> disability;
 
-			Passenger coming;  //should insert data of passenger here
+			Passenger coming(Ptype, ID, fromstation, tostation, disability);  //should insert data of passenger here
+			coming.setgetontime(geton); coming.setmaxwait(maxwait);
 			population.push(coming);
 
 			ArrivalEvent arrive;
 			arrivals.push(arrive);
 
-			cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
+			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
 		}
 		else if (type == 'L')
 		{
@@ -67,7 +69,7 @@ void Company::readFile()
 			LeaveEvent leave;
 			leaves.push(leave);
 
-			cout << time << " " << ID << endl;
+			//cout << time << " " << ID << endl;
 		}
 	}
 

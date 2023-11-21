@@ -1,5 +1,8 @@
 #include "Passenger.h"
 
+int Passenger::Bus_GetOnTime = 0;
+int Passenger::maxWait = 0;
+
 Passenger::Passenger(string passtype , int PassID , int Start , int End, string PriorityType )
 {
 
@@ -20,6 +23,7 @@ void Passenger::SetPassengerType(string Type)
 }
 
 void Passenger::SetPassengerPriority(string type)
+
 {
 	if (PassengerType == "NP")
 	{
@@ -44,6 +48,11 @@ void Passenger::SetPassengerPriority(string type)
 			PassengerPriority = 1;
 		}
 	}
+}
+
+void Passenger::displayData()
+{
+	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority <<" "<< Bus_GetOnTime << " "<< maxWait <<endl;
 }
 
 int Passenger::getPassengerID()
@@ -81,8 +90,15 @@ void Passenger::setPassengerID(int id)
 	PassengerId = id;
 }
 
+void Passenger::setgetontime(int geton)
+{
+	Bus_GetOnTime = geton;
+}
 
-
+void Passenger::setmaxwait(int wait)
+{
+	maxWait = wait;
+}
 
 Passenger ::~Passenger()
 {

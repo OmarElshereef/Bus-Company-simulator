@@ -3,13 +3,12 @@
 
 using namespace std;
 
-
-
 class Passenger
 {
 	int arrivetime;
 
-	int Bus_GetOnTime;
+	static int Bus_GetOnTime;
+	static int maxWait;
 
 	int  StartStation,CurrentStation ,EndStation;
 	
@@ -40,6 +39,12 @@ public:
 	int GetCurrentStation(); 
 
 	int GetPassengerPriority();
+
+	void setgetontime(int);
+
+	void setmaxwait(int);
+
+	void displayData();
 	
 	~Passenger();
 	
