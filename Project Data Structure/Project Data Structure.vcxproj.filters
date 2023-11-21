@@ -49,7 +49,7 @@
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
     <ClCompile Include="LeaveEvent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +84,7 @@
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
     <ClInclude Include="LeaveEvent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

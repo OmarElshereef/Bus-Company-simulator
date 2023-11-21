@@ -1,11 +1,10 @@
-// Project Data Structure.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include"Company.h"
 #include <iostream>
 using namespace std;
 
 int main()
 {
-  cout<< "Hello World!\n";
+	Company c;
+	c.readFile();
 }
 
