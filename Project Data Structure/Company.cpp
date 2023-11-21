@@ -1,14 +1,4 @@
 #include "Company.h"
-#include<iostream>
-#include<fstream>
-#include"Passenger.h"
-#include"bus.h"
-#include"ArrivalEvent.h"
-#include"LeaveEvent.h"
-#include"fifoqueue.h"
-
-using namespace std;
-
 
 Company::Company()
 {
