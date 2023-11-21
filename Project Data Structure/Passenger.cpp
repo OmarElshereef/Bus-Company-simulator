@@ -20,6 +20,7 @@ void Passenger::SetPassengerType(string Type)
 }
 
 void Passenger::SetPassengerPriority(string type)
+
 {
 	if (PassengerType == "NP")
 	{
@@ -44,6 +45,11 @@ void Passenger::SetPassengerPriority(string type)
 			PassengerPriority = 1;
 		}
 	}
+}
+
+void Passenger::displayData()
+{
+	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority << endl;
 }
 
 int Passenger::getPassengerID()

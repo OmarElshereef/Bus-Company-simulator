@@ -40,6 +40,8 @@ public:
 	int GetCurrentStation(); 
 
 	int GetPassengerPriority();
+
+	void displayData();
 	
 	~Passenger();
 	

@@ -44,13 +44,13 @@ void Company::readFile()
 			if (Ptype == "SP")
 				reader >> disability;
 
-			Passenger coming;  //should insert data of passenger here
+			Passenger coming(Ptype, ID, fromstation, tostation, disability);  //should insert data of passenger here
 			population.push(coming);
 
 			ArrivalEvent arrive;
 			arrivals.push(arrive);
 
-			cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
+			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
 		}
 		else if (type == 'L')
 		{
@@ -67,7 +67,7 @@ void Company::readFile()
 			LeaveEvent leave;
 			leaves.push(leave);
 
-			cout << time << " " << ID << endl;
+			//cout << time << " " << ID << endl;
 		}
 	}
 
