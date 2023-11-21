@@ -20,6 +20,7 @@ private:
 	int station;		   // station number [0,11]
 	bool bus_type;		   // mixed= 1 & wheel-chair= 0
 
+
 public:
 	Bus(int size, int max, char type); 
 
