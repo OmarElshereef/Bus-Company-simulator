@@ -154,6 +154,8 @@ public:
 	~priorityqueue()
 	{
 		Node<T>* dum = head;
+		if (!head)
+			return;
 		Node<T>* ptr = dum->getNext();
 		while (ptr)
 		{
@@ -301,6 +303,8 @@ public:
 	~priorityqueue()
 	{
 		Node<T*>* dum = head;
+		if (!head)
+			return;
 		Node<T*>* ptr = dum->getNext();
 		while (ptr)
 		{

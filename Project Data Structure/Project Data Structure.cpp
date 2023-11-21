@@ -1,4 +1,7 @@
 #include"Company.h"
+#include"fifoqueue.h"
+#include"priorityqueue.h"
+#include"Node.h"
 #include <iostream>
 using namespace std;
 

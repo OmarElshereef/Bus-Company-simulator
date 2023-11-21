@@ -93,6 +93,8 @@ public:
 	~fifoqueue()
 	{
 		Node<T>* dum = head;
+		if (!head)
+			return;
 		Node<T>* ptr = dum->getNext();
 		while (ptr)
 		{
@@ -182,6 +184,8 @@ public:
 	~fifoqueue()
 	{
 		Node<T*>* dum = head;
+		if (!head)
+			return;
 		Node<T*>* ptr = dum->getNext();
 		while (ptr)
 		{
