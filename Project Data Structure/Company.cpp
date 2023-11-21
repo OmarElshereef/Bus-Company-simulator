@@ -1,4 +1,14 @@
 #include "Company.h"
+#include<iostream>
+#include<fstream>
+#include"Passenger.h"
+#include"bus.h"
+#include"ArrivalEvent.h"
+#include"LeaveEvent.h"
+#include"fifoqueue.h"
+
+using namespace std;
+
 
 Company::Company()
 {
@@ -11,12 +21,12 @@ void Company::readFile()
 
 	if (!reader.is_open())
 	{
-		cout << "error cannot open file";
+		cout << "error cannot open file"; //if file couldn't be opened print error message then quit
 		return;
 	}
 
 	int stations, distance;
-	int wbus, mbus, wbuscap, mbuscap;
+	int wbus, mbus, wbuscap, mbuscap;   //defining varaibles to read data into
 	int journies, wbusfix, mbusfix;
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix;
@@ -45,10 +55,10 @@ void Company::readFile()
 				reader >> disability;
 
 			Passenger coming;  //should insert data of passenger here
-			//population.push(coming);
+			population.push(coming);
 
 			ArrivalEvent arrive;
-			//arrivals.push(arrive);
+			arrivals.push(arrive);
 
 			cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
 		}
@@ -65,7 +75,7 @@ void Company::readFile()
 			time += arrtime;
 
 			LeaveEvent leave;
-			//leaves.push(leave);
+			leaves.push(leave);
 
 			cout << time << " " << ID << endl;
 		}
