@@ -5,6 +5,7 @@ class ArrivalEvent:protected Event
 {
 public:
 	ArrivalEvent();
+
 	~ArrivalEvent();
 };
 
