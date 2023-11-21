@@ -18,8 +18,9 @@ void Company::readFile()
 	int stations, distance;
 	int wbus, mbus, wbuscap, mbuscap;   //defining varaibles to read data into
 	int journies, wbusfix, mbusfix;
+	int maxwait, geton;
 
-	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix;
+	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton;
 	// reading initial values in order
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;
 	
@@ -45,6 +46,7 @@ void Company::readFile()
 				reader >> disability;
 
 			Passenger coming(Ptype, ID, fromstation, tostation, disability);  //should insert data of passenger here
+			coming.setgetontime(geton); coming.setmaxwait(maxwait);
 			population.push(coming);
 
 			ArrivalEvent arrive;
