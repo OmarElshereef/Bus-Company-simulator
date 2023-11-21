@@ -2,7 +2,7 @@
 #define _NODE
 
 //First let's declare a single node in the list
-template<typename T>
+template<class T>
 class Node
 {
 private:
@@ -66,7 +66,7 @@ public:
 };
 
 
-template<typename T>
+template<class T>
 class Node<T*>
 {
 private:
@@ -128,5 +128,6 @@ public:
 	~Node()
 	{}
 }; // end Node
+
 #endif	
 
