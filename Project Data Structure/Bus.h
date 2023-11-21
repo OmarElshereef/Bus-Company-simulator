@@ -15,7 +15,7 @@ private:
 	fifoqueue<Passenger*>* finished_queue;
 	ArrivalEvent* arrivalEvent = new ArrivalEvent;
 	LeaveEvent* leaveEvent = new LeaveEvent;
-	const int BC;		   // bus capacity (max # of passengers can a bus carry)
+    int BC;		   // bus capacity (max # of passengers can a bus carry)
 	const int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance
 	int num_of_passengers; // # current passengers in the bus
