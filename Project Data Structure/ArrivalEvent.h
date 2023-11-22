@@ -1,11 +1,12 @@
 #pragma once
 #include"Event.h"
 
-class ArrivalEvent:protected Event
+class ArrivalEvent:public Event
 {
 public:
 	ArrivalEvent();
-
+	ArrivalEvent(int,char);
+	char gettype();
 	~ArrivalEvent();
 };
 
