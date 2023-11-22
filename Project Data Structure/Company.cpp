@@ -22,21 +22,24 @@ void Company::readFile()
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton;
 	// reading initial values in order
+	stationList = new int[stations];  stationNum = stations;
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;
 	
-	while (!reader.eof())  //looping until file ends
+	while (true)  //loop until file ends
 	{
 		char type;
 		reader >> type;
-
+		if (reader.eof())
+			break;
+		
 		if (type == 'A')
 		{
-			string Ptype, disability ="";  char trash;
+			string Ptype, disability = "";  char trash;
 			int arrtime, ID, fromstation, tostation;
 
 			reader >> Ptype >> arrtime >> trash;
 
-			int time = arrtime *60;
+			int time = arrtime * 60;
 
 			reader >> arrtime >> ID >> fromstation >> tostation;
 
@@ -47,9 +50,11 @@ void Company::readFile()
 
 			Passenger coming(Ptype, ID, fromstation, tostation, disability);  //should insert data of passenger here
 			coming.setgetontime(geton); coming.setmaxwait(maxwait);
+			coming.displayData();
 			population.push(coming);
 
-			ArrivalEvent arrive;
+			ArrivalEvent arrive(time, 'A');
+			arrive.display();
 			arrivals.push(arrive);
 
 			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
@@ -66,11 +71,14 @@ void Company::readFile()
 
 			time += arrtime;
 
-			LeaveEvent leave;
+			LeaveEvent leave(time, 'L');
+			leave.display();
 			leaves.push(leave);
 
 			//cout << time << " " << ID << endl;
 		}
+		else
+			break;
 	}
 
 }
