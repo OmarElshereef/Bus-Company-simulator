@@ -11,7 +11,8 @@ using namespace std;
 class Company
 {
 private:
-
+	int* stationList;
+	int stationNum;
 	fifoqueue<ArrivalEvent> arrivals;
 	fifoqueue<Passenger> population;
 	fifoqueue<LeaveEvent> leaves;
