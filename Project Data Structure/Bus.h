@@ -5,7 +5,6 @@
 #include"LeaveEvent.h"
 #include "fifoqueue.h"
 
-class Passenger;
 
 class Bus
 {
