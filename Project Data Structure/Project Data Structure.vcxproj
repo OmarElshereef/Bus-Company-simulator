@@ -134,6 +134,7 @@
     <ClCompile Include="LeaveEvent.cpp" />
     <ClCompile Include="Passenger.cpp" />
     <ClCompile Include="Project Data Structure.cpp" />
+    <ClCompile Include="Station.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="Passenger.h" />
     <ClInclude Include="priorityqueue.h" />
+    <ClInclude Include="Station.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
