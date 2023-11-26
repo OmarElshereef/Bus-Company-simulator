@@ -6,15 +6,18 @@
 #include "fifoqueue.h"
 
 class Passenger;
+class Company;
 
 class Bus
 {
 private:
-	//Company* company;
 	Passenger** passenger_arr;
 	fifoqueue<Passenger*>* finished_queue;
 	ArrivalEvent* arrivalEvent = new ArrivalEvent;
 	LeaveEvent* leaveEvent = new LeaveEvent;
+	//Company company;
+	
+
     int BC;		   // bus capacity (max # of passengers can a bus carry)
 	const int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance
@@ -25,9 +28,12 @@ private:
 	int station;		   // station number [0,11]
 	char bus_type;		   // mixed= M & wheel-chair= W
 
+	int distance; // time for each bus and =0 when arrive station
+
 
 public:
-	Bus(int size, int max, int bus_num, int s, char type);
+
+	Bus(int size = 100, int max = 100, int s = 0, char type = 'M');
 
 	~Bus();
 	
@@ -43,6 +49,7 @@ public:
 	
 
 	void set_station(int s);
+	void upgrade_station();
 	
 
 	int get_passengers();
@@ -62,6 +69,8 @@ public:
 
 	bool maintenance_time(); // check if a bus need maintenance or not
 	
+	int get_distance();
+	void set_distance(int d);
 
 	void remove(int index);
 	
@@ -69,7 +78,7 @@ public:
 	bool enter_passenger(Passenger* p);
 
 
-	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
+	void exit_passenger();
 
 	void set_arrival_event(ArrivalEvent* arrivalEvt);
 
@@ -79,5 +88,7 @@ public:
 	void arrive_at_station();
 
 	void leave_station();
+
+
 
 };

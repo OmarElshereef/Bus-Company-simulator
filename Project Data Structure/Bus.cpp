@@ -1,31 +1,32 @@
 #include "Bus.h"
 
-Bus::Bus(int size, int max, int bus_num, int s, char type)
-	: BC(size), max_trips(max), bus_number(bus_num),station(s)
-{
-	passenger_arr = new Passenger * [size];
-	finished_queue = new fifoqueue<Passenger*>();
-	//arrivalEvent = new ArrivalEvent;
-	//leaveEvent = new LeaveEvent;
 
+Bus::Bus(int size, int max, int s, char type)
+	: BC(size), max_trips(max), station(s)
+{
+	passenger_arr = new Passenger *[size];
+	finished_queue = new fifoqueue<Passenger *>();
+	// arrivalEvent = new ArrivalEvent;
+	// leaveEvent = new LeaveEvent;
+	
+	distance = 0;
 	curr_trips = 0;
 	num_of_passengers = 0;
 	direction = 1;
 	direction = true;
 	closed = false;
-	if (type == 'W')
-		bus_type = 0;
+	if (type == 'W' || 'w')
+		bus_type = 'W';
 	else
-		bus_type = 1;
+		bus_type = 'M';
 }
 
 Bus::~Bus()
 {
-	delete [] passenger_arr;
+	delete[] passenger_arr;
 	delete finished_queue;
 	delete arrivalEvent;
 	delete leaveEvent;
-
 }
 
 void Bus::display_bus()
@@ -36,12 +37,12 @@ void Bus::display_bus()
 	if (is_mixed_bus())
 		mixed = "Yes, mixed bus";
 
-	cout << "Reading Bus Data: "<< endl
-		<< "Station Number: " << get_station() << endl
-		<< "Number of Passengers: " << get_passengers()<< endl
-		<< "Is available?: " << available << endl
-		<< "Station Number: " << mixed << endl
-		<< "Station Number: " << maintenance_time() << endl;
+	cout << "Reading Bus Data: " << endl
+		 << "Station Number: " << get_station() << endl
+		 << "Number of Passengers: " << get_passengers() << endl
+		 << "Is available?: " << available << endl
+		 << "Station Number: " << mixed << endl
+		 << "Station Number: " << maintenance_time() << endl;
 }
 
 bool Bus::get_door()
@@ -62,6 +63,15 @@ int Bus::get_station()
 void Bus::set_station(int s)
 {
 	station = s;
+}
+
+void Bus::upgrade_station()
+{
+	if (direction == 1)
+		station++;
+	else
+		station--;
+
 }
 
 int Bus::get_passengers()
@@ -86,7 +96,7 @@ bool Bus::is_available()
 
 bool Bus::is_mixed_bus()
 {
-	if(bus_type == 'M')
+	if (bus_type == 'M')
 		return true;
 	return false;
 }
@@ -94,6 +104,16 @@ bool Bus::is_mixed_bus()
 bool Bus::maintenance_time()
 {
 	return max_trips == curr_trips;
+}
+
+int Bus::get_distance()
+{
+	return distance;
+}
+
+void Bus::set_distance(int d)
+{
+	distance = d;
 }
 
 void Bus::remove(int index)
@@ -113,7 +133,7 @@ void Bus::remove(int index)
 	return;
 }
 
-bool Bus::enter_passenger(Passenger* p)
+bool Bus::enter_passenger(Passenger *p)
 {
 	if (is_available())
 	{
@@ -125,25 +145,25 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
+void Bus::exit_passenger()
 {
 	int num = get_passengers();
 	for (int i = 0; i < num; i++)
 	{
-		if (passenger_arr[i]->getPassengerID() == p->getPassengerID())
+		if (passenger_arr[i]->GetEndStation() == station)
 		{
-			finished_queue->push(p);
+			finished_queue->push(passenger_arr[i]);
 			remove(i);
 		}
 	}
 }
 
-void Bus::set_arrival_event(ArrivalEvent * arrivalEvt)
+void Bus::set_arrival_event(ArrivalEvent *arrivalEvt)
 {
 	arrivalEvent = arrivalEvt;
 }
 
-void Bus::set_leave_event(LeaveEvent* leaveEvt)
+void Bus::set_leave_event(LeaveEvent *leaveEvt)
 {
 	leaveEvent = leaveEvt;
 }
@@ -151,18 +171,17 @@ void Bus::set_leave_event(LeaveEvent* leaveEvt)
 void Bus::arrive_at_station()
 {
 	// Call the Company's method to handle the arrival
-	//company->handle_bus_arrival(this);
+	// company->handle_bus_arrival(this);
 
 	// Trigger the arrival event
-	//arrivalEvent->trigger();
-
+	// arrivalEvent->trigger();
 }
 
 void Bus::leave_station()
 {
 	// Call the Company's method to handle the departure
-	//company->handle_bus_departure(this);
+	// company->handle_bus_departure(this);
 
 	// Trigger the leave event
-	//leaveEvent->trigger();
+	// leaveEvent->trigger();
 }
