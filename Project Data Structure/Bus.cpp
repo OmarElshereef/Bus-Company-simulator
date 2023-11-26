@@ -21,7 +21,7 @@ Bus::Bus(int size, int max, int bus_num, int s, char type)
 
 Bus::~Bus()
 {
-	delete [] passenger_arr;
+	delete[] passenger_arr;
 	delete finished_queue;
 	delete arrivalEvent;
 	delete leaveEvent;
