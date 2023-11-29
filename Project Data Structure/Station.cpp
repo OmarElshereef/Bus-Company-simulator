@@ -13,7 +13,7 @@ void Station::displayinfo()
 {
 	cout << "Station number:" << number << endl;
 	cout << "people in queue waiting:"; stationpassengers.print();
-	cout << "busses in queue waiting:" << BusInStation.size()<<endl;
+	//cout << "busses in queue waiting:" << BusInStation.size()<<endl;
 }
 
 void Station::insertpassenger(Passenger& incoming)
