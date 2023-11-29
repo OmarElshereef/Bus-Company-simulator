@@ -4,8 +4,9 @@ Event::Event()
 {
 }
 
-Event::Event(int t,char c)
+Event::Event(int t,int I,char c)
 {
+	ID = I;
 	time = t;
 	type = c;
 }
@@ -13,6 +14,16 @@ Event::Event(int t,char c)
 int Event::gettime()
 {
 	return time;
+}
+
+int Event::getID()
+{
+	return ID;
+}
+
+void Event::setID(int I)
+{
+	ID = I;
 }
 
 void Event::settime(int t)
@@ -27,7 +38,7 @@ void Event::settype(char c)
 
 void Event::display()
 {
-	cout << type << " " << time << endl;
+	cout << type << " " << ID << " " << time << endl;
 }
 
 Event::~Event()

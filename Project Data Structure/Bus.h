@@ -10,10 +10,11 @@ class Bus
 {
 private:
 	//Company* company;
+
 	Passenger** passenger_arr;
 	fifoqueue<Passenger*>* finished_queue;
-	ArrivalEvent* arrivalEvent = new ArrivalEvent(0,'a');
-	LeaveEvent* leaveEvent = new LeaveEvent(0,'a');
+	//ArrivalEvent* arrivalEvent = new ArrivalEvent(0,'a');
+	//LeaveEvent* leaveEvent = new LeaveEvent(0,'a');
     int BC;		   // bus capacity (max # of passengers can a bus carry)
 	const int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance

@@ -5,8 +5,6 @@ using namespace std;
 
 class Passenger
 {
-	int arrivetime;
-
 	static int Bus_GetOnTime;
 	static int maxWait;
 
@@ -16,11 +14,13 @@ class Passenger
 	
 	int PassengerId;
 	
+	int arrivetime;
+
 	string PassengerType; //NP for normal passenger,SP for special passenger , WP for wheel chair passenger
 
 public:
 	
-	Passenger(string passtype = "NP", int PassID = 0, int Start = 0, int End=0, string PriorityType = "no priority");
+	Passenger(string passtype = "NP", int PassID = 0, int Start = 0, int End=0, string PriorityType = "no priority", int arriving=0);
 	
 	void SetPassengerType(string Type);
 
@@ -36,7 +36,13 @@ public:
 
 	int GetEndStation();
 
+	int getmaxwait();
+
+	int getarrivetime();
+
 	int GetCurrentStation(); 
+
+	string GetPassengerType();
 
 	int GetPassengerPriority();
 
@@ -46,6 +52,8 @@ public:
 
 	void displayData();
 	
+	bool operator == (Passenger&);
+	void operator = (Passenger&);
 	~Passenger();
 	
 };

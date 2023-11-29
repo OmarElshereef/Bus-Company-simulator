@@ -4,7 +4,7 @@ ArrivalEvent::ArrivalEvent() : Event()
 {
 }
 
-ArrivalEvent::ArrivalEvent(int t=0,char c='a') : Event(t,c)
+ArrivalEvent::ArrivalEvent(int t=0,int i=0,char c='a') : Event(t,i,c)
 {
 }
 

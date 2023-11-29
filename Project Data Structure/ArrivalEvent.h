@@ -5,7 +5,7 @@ class ArrivalEvent:public Event
 {
 public:
 	ArrivalEvent();
-	ArrivalEvent(int,char);
+	ArrivalEvent(int,int,char);
 	char gettype();
 	~ArrivalEvent();
 };
