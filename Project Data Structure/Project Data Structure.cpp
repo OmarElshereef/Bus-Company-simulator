@@ -14,7 +14,7 @@ int main()
 	priorityqueue<Passenger> q;
 
 	//Station s(0);
-	//s.insertpassenger
+	//s.insertpassenger();
 
 	//Bus b(40,10,1,1,'W'); //size, max_trips, bus_number, station_number, type
 
