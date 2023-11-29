@@ -9,7 +9,8 @@ class Station
 private:
 	static int travel_distance;
 	const int number;
-	fifoqueue<Bus> BusInStation;
+	fifoqueue<Bus> MBusInStation;
+	fifoqueue<Bus> WBusInStation;
 	priorityqueue<Passenger> stationpassengers;
 	fifoqueue<Passenger> WheelChairQ;
 
