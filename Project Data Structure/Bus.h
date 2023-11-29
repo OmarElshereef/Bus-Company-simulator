@@ -10,6 +10,7 @@ class Bus
 {
 private:
 	//Company* company;
+
 	Passenger** passenger_arr;
 	fifoqueue<Passenger*>* finished_queue;
 	//ArrivalEvent* arrivalEvent = new ArrivalEvent(0,'a');
