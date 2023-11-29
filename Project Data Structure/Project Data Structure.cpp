@@ -12,16 +12,7 @@ int main()
 	Company c;
 	c.readFile();
 	priorityqueue<Passenger> q;
-	while (!c.population.isempty())
-	{
-		Passenger dum;
-		c.population.pop(dum);
-		q.push(dum, dum.GetPassengerPriority());
-	}
 
-	q.print();
-	q.promote(278);
-	q.print();
 	//Station s(0);
 	//s.insertpassenger
 

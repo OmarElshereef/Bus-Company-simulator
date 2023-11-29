@@ -14,11 +14,11 @@ private:
 	Station** stationList;
 	int stationNum;
 	fifoqueue<ArrivalEvent> arrivals;
-
+	fifoqueue<Passenger> population;
 	fifoqueue<LeaveEvent> leaves;
 
 public:
-	fifoqueue<Passenger> population;
+
 	Company();
 	
 	void readFile();
