@@ -51,12 +51,12 @@ public:
 		return priority;
 	}
 
-	T getItem() const
+	T& getItem()
 	{
 		return item;
 	} // end getItem
 
-	Node<T>* getNext() const
+	Node<T>* getNext()
 	{
 		return next;
 	}

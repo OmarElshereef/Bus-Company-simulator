@@ -3,14 +3,34 @@
 int Passenger::Bus_GetOnTime = 0;
 int Passenger::maxWait = 0;
 
-Passenger::Passenger(string passtype , int PassID , int Start , int End, string PriorityType )
+bool Passenger::operator==(Passenger& Pto)
 {
+	if (PassengerId == Pto.getPassengerID())
+		return true;
+	else
+		return false;
+}
 
+void Passenger::operator=(Passenger& Pto)
+{
+	PassengerType = Pto.GetPassengerType();
+	arrivetime = Pto.getarrivetime();
+	PassengerId = Pto.getPassengerID();
+	StartStation = Pto.GetStartStation();
+	CurrentStation = Pto.GetCurrentStation();
+	EndStation = Pto.GetEndStation();
+	PassengerPriority = Pto.GetPassengerPriority();
+}
+
+Passenger::Passenger(string passtype , int PassID , int Start , int End, string PriorityType, int arriving)
+{
 	PassengerType = passtype;
+
+	arrivetime = arriving;
 
 	PassengerId = PassID;
 
-	StartStation =CurrentStation= Start;
+	StartStation = CurrentStation = Start;
 
 	EndStation = End; 
 
@@ -43,7 +63,7 @@ void Passenger::SetPassengerPriority(string type)
 		{
 			PassengerPriority = 2;
 		}
-		else if(type == "pregnant women")
+		else if(type == "pregnantwomen")
 		{
 			PassengerPriority = 1;
 		}
@@ -52,7 +72,7 @@ void Passenger::SetPassengerPriority(string type)
 
 void Passenger::displayData()
 {
-	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority <<" "<< Bus_GetOnTime << " "<< maxWait <<endl;
+	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority <<" "<< Bus_GetOnTime << " "<< maxWait << " " << arrivetime <<endl;
 }
 
 int Passenger::getPassengerID()
@@ -70,9 +90,24 @@ int Passenger::GetEndStation()
 	return EndStation;
 }
 
+int Passenger::getmaxwait()
+{
+	return maxWait;
+}
+
+int Passenger::getarrivetime()
+{
+	return arrivetime;
+}
+
 int Passenger::GetCurrentStation()
 {
 	return CurrentStation;
+}
+
+string Passenger::GetPassengerType()
+{
+	return PassengerType;
 }
 
 int Passenger::GetPassengerPriority()

@@ -23,8 +23,8 @@ Bus::~Bus()
 {
 	delete[] passenger_arr;
 	delete finished_queue;
-	delete arrivalEvent;
-	delete leaveEvent;
+	//delete arrivalEvent;
+	//delete leaveEvent;
 
 }
 
@@ -140,12 +140,12 @@ void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
 
 void Bus::set_arrival_event(ArrivalEvent * arrivalEvt)
 {
-	arrivalEvent = arrivalEvt;
+	//arrivalEvent = arrivalEvt;
 }
 
 void Bus::set_leave_event(LeaveEvent* leaveEvt)
 {
-	leaveEvent = leaveEvt;
+	//leaveEvent = leaveEvt;
 }
 
 void Bus::arrive_at_station()

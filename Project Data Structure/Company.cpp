@@ -1,4 +1,5 @@
 #include "Company.h"
+#include"Station.h"
 
 Company::Company()
 {
@@ -20,50 +21,58 @@ void Company::readFile()
 	int journies, wbusfix, mbusfix;
 	int maxwait, geton;
 
-	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton;
-	// reading initial values in order
-	stationList = new int[stations];  stationNum = stations;
-	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;
+	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton; // reading initial values in order
+	
+	stationList = new Station*[stations];  stationNum = stations;  //setting array for stations
+
+	for (int i = 0; i < stations; i++)
+	{
+		stationList[i] = new Station(i);
+	}
+
+	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
 	while (true)  //loop until file ends
 	{
 		char type;
-		reader >> type;
-		if (reader.eof())
+		reader >> type;   // read event type character
+		if (reader.eof())  //if file ends break
 			break;
 		
-		if (type == 'A')
+		if (type == 'A')   //if event is arrival
 		{
 			string Ptype, disability = "";  char trash;
 			int arrtime, ID, fromstation, tostation;
 
-			reader >> Ptype >> arrtime >> trash;
+			reader >> Ptype >> arrtime >> trash;  //read info pertaining to arrived passenger
 
-			int time = arrtime * 60;
+			int time = arrtime * 60;   //read time of event
 
-			reader >> arrtime >> ID >> fromstation >> tostation;
+			reader >> arrtime >> ID >> fromstation >> tostation;  //reads rest of data
 
 			time += arrtime;
 
-			if (Ptype == "SP")
+			if (Ptype == "SP")  //is passenger is SP reads additional type
 				reader >> disability;
 
-			Passenger coming(Ptype, ID, fromstation, tostation, disability);  //should insert data of passenger here
+			Passenger coming(Ptype, ID, fromstation, tostation, disability,time);  //new passenger with said data
 			coming.setgetontime(geton); coming.setmaxwait(maxwait);
-			coming.displayData();
-			population.push(coming);
 
-			ArrivalEvent arrive(time, 'A');
-			arrive.display();
-			arrivals.push(arrive);
+			coming.displayData();  //for testing
+			population.push(coming);  //pushes passenger into the population of simulation
 
-			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;
+			ArrivalEvent arrive(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
+			arrive.display();  //for testing
+
+			arrivals.push(arrive);  //pushes event into queue of events
+
+			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;  //for testing
 		}
-		else if (type == 'L')
+		else if (type == 'L')  // if event is leave
 		{
 			int arrtime, ID; char trash;
 
-			reader >> arrtime >> trash;
+			reader >> arrtime >> trash;  //same as arrival reads info of leaveevent
 
 			int time = arrtime * 60;
 
@@ -71,15 +80,23 @@ void Company::readFile()
 
 			time += arrtime;
 
-			LeaveEvent leave(time, 'L');
-			leave.display();
-			leaves.push(leave);
+			LeaveEvent leave(time,ID, 'L'); //create leaveevent
+			leave.display();  //for testing
 
-			//cout << time << " " << ID << endl;
+			leaves.push(leave);  //pushes into queue of events
+
+			//cout << time << " " << ID << endl;  
 		}
 		else
 			break;
 	}
+
+}
+
+bool Company::takeinpassenger()
+{
+	if (arrivals.isempty())
+		return false;
 
 }
 
