@@ -11,10 +11,6 @@ private:
 	const int number;
 	fifoqueue<Bus> BusInStation;
 	priorityqueue<Passenger> stationpassengers;
-	//fifoqueue<Passenger> NormalPassengerQ;
-	//fifoqueue<Passenger> AgedPassengerQ;
-	//fifoqueue<Passenger> PODPassengerQ;
-	//fifoqueue<Passenger> PregnantWomenQ;
 	fifoqueue<Passenger> WheelChairQ;
 
 public:

@@ -485,8 +485,8 @@ public:
 			{
 				temp->setNext(ptr->getNext());
 				Passenger currP = ptr->getItem();
-				currP.SetPassengerPriority("aged");
-				tempq.push(currP);
+				ptr->getItem().UpgradePriority();
+				tempq.push(ptr->getItem());
 				delete ptr;
 				ptr = temp->getNext();
 			}
