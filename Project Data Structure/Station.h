@@ -18,7 +18,7 @@ public:
 	Station(int);
 	void displayinfo();
 	void setTravelDistance(int);
-	void promotePassengers();
+	void promotePassengers(int);
 	void insertpassenger(Passenger&);
 	~Station(); 
 };
