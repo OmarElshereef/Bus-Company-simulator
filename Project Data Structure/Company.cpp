@@ -24,11 +24,12 @@ void Company::readFile()
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton; // reading initial values in order
 	
 	stationList = new Station*[stations];  stationNum = stations;  //setting array for stations
-
+	
 	for (int i = 0; i < stations; i++)
 	{
 		stationList[i] = new Station(i);
 	}
+	stationList[0]->setTravelDistance(distance);
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	

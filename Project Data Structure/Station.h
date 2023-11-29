@@ -14,7 +14,6 @@ private:
 	fifoqueue<Passenger> WheelChairQ;
 
 public:
-	//Station();
 	Station(int);
 	void displayinfo();
 	void setTravelDistance(int);
