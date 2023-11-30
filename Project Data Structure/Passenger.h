@@ -60,6 +60,5 @@ public:
 	
 	bool getdirection();
 
-	~Passenger();
-	
+	~Passenger();	
 };

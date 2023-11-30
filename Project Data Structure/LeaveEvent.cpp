@@ -8,6 +8,16 @@ LeaveEvent::LeaveEvent(int t=0,int i=0,char c='a') : Event(t,i, c)
 {
 }
 
+bool LeaveEvent::execute(Station** list, int size)
+{
+	bool is = false;
+	for (int i = 0; i < size; i++)
+	{
+		is = list[i]->exitpassenger(ID);
+	}
+	return is;
+}
+
 char LeaveEvent::gettype()
 {
 	return type;

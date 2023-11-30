@@ -9,6 +9,20 @@ Station::Station(int num):number(num)
 {
 }
 
+bool Station::exitpassenger(int id)
+{
+	Passenger* temp = new Passenger("NP", id);
+	if (stationpassengersForward.remove(temp))
+		return true;
+	if (stationpassengersBackward.remove(temp))
+		return true;
+	if (WheelChairQForward.remove(temp))
+		return true;
+	if (WheelChairQBackward.remove(temp))
+		return true;
+	return false;
+}
+
 void Station::displayinfo()
 {
 	cout << "Station number:" << number << endl;
@@ -22,14 +36,14 @@ void Station::insertpassenger(Passenger* incoming)
 	if (incoming->getdirection())
 	{
 		if (incoming->GetPassengerPriority() == 10)
-			WheelChairQForward.push(incoming);
+			WheelChairQForward.push(incoming,10);
 		else
 			stationpassengersForward.push(incoming, incoming->GetPassengerPriority());
 	}
 	else
 	{
 		if (incoming->GetPassengerPriority() == 10)
-			WheelChairQBackward.push(incoming);
+			WheelChairQBackward.push(incoming,10);
 		else
 			stationpassengersBackward.push(incoming, incoming->GetPassengerPriority());
 	}

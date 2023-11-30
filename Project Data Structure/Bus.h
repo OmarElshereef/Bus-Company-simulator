@@ -8,19 +8,14 @@
 class Bus
 {
 private:
-	//Company* company;
-
 	Passenger** passenger_arr;
-	fifoqueue<Passenger*>* finished_queue;
 	
-	//ArrivalEvent* arrivalEvent = new ArrivalEvent(0,'a');
-	//LeaveEvent* leaveEvent = new LeaveEvent(0,'a');
+	
 	static int TimeBetweenStations;
     int BC;				   // bus capacity (max # of passengers can a bus carry)
 	static int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance
 	int num_of_passengers; // # current passengers in the bus
-	int bus_number;		   // In the busses array [0,13]
 	bool direction;		   // true = forward  false = backward
 	bool closed;		   // closed = 1, open = 0
 	int station;		   // station number [0,11]
@@ -28,13 +23,8 @@ private:
 	int EstimatedTimeOfArrival;   //time to reach the next station
 	bool InStation;               //if the bus is instation or not
 
-	int distance; // time for each bus and =0 when arrive station
-
-
-
-
 public:
-	Bus(int size = 100, int max = 100,int bus_num=0, int s = 0, char type = 'M');
+	Bus(int capacity = 100, int s = 0, char type = 'M');
 
 	~Bus();
 	
@@ -74,20 +64,13 @@ public:
 
 	int get_distance();
 	void set_distance(int d);
-	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
 
-	
+	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
 
 	void remove(int index);
 	
 
 	bool enter_passenger(Passenger* p);
-
-
-
-	void set_arrival_event(ArrivalEvent* arrivalEvt);
-
-	void set_leave_event(LeaveEvent* leaveEvt);
 
 	// Adding functions to interact with the Company and Events:
 	void arrive_at_station();
