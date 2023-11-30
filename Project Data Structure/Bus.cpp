@@ -1,24 +1,20 @@
 #include "Bus.h"
 
-Bus::Bus(int size, int max, int s, char type)
-	: BC(size), max_trips(max), station(s)
-{	
-
+Bus::Bus(int size, int max, int bus_num, int s, char type)
+	: BC(size), max_trips(max), bus_number(bus_num),station(s)
+{
 	passenger_arr = new Passenger * [size];
 	finished_queue = new fifoqueue<Passenger*>();
-	// arrivalEvent = new ArrivalEvent;
-	// leaveEvent = new LeaveEvent;
+	//arrivalEvent = new ArrivalEvent;
+	//leaveEvent = new LeaveEvent;
 
-	distance = 0;
 	curr_trips = 0;
 	num_of_passengers = 0;
 	direction = 1;
 	direction = true;
 	closed = false;
-	if (type == 'W' || 'w')
-		bus_type = 'W';
-	else
-		bus_type = 'M';
+	
+	bus_type = type;
 }
 
 Bus::~Bus()
@@ -42,8 +38,8 @@ void Bus::display_bus()
 		<< "Station Number: " << get_station() << endl
 		<< "Number of Passengers: " << get_passengers()<< endl
 		<< "Is available?: " << available << endl
-		<< "Bus type: " << mixed << endl
-		<< "Checkup: " << maintenance_time() << endl;
+		<< "Station Number: " << mixed << endl
+		<< "Station Number: " << maintenance_time() << endl;
 }
 
 bool Bus::get_door()
@@ -65,22 +61,6 @@ void Bus::set_station(int s)
 {
 	station = s;
 }
-
-void Bus::set_direction(bool d) //d=true => forward or d=false => backward
-{
-	direction = d;
-}
-
-void Bus::upgrade_station()
-{
-	if (direction == true)
-		station++;
-	else
-		station--;
-
-}
-
-
 
 int Bus::get_passengers()
 {
@@ -114,16 +94,6 @@ bool Bus::maintenance_time()
 	return max_trips == curr_trips;
 }
 
-int Bus::get_distance()
-{
-	return distance;
-}
-
-void Bus::set_distance(int d)
-{
-	distance = d;
-}
-
 void Bus::remove(int index)
 {
 	if (index + 1 == num_of_passengers)
@@ -153,14 +123,14 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-void Bus::exit_passenger()
+void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
 {
 	int num = get_passengers();
 	for (int i = 0; i < num; i++)
 	{
-		if (passenger_arr[i]->GetEndStation() == station)
+		if (passenger_arr[i]->getPassengerID() == p->getPassengerID())
 		{
-			finished_queue->push(passenger_arr[i]);
+			finished_queue->push(p);
 			remove(i);
 		}
 	}
@@ -193,4 +163,38 @@ void Bus::leave_station()
 
 	// Trigger the leave event
 	//leaveEvent->trigger();
+}
+
+void Bus::setArriveTime(int t)
+{
+	EstimatedTimeOfArrival = t;
+}
+
+int Bus::getArriveTime()
+{
+	return EstimatedTimeOfArrival;
+}
+
+void Bus::setInStation(bool Case)
+{
+	InStation = Case;
+}
+
+bool Bus::getInStation()
+{
+	return InStation;
+}
+
+bool Bus::getDirection()
+{
+	return direction;
+}
+
+bool Bus::getBusType()
+{
+	if (bus_type=='M')
+	{
+		return true;
+	}
+	return false;
 }
