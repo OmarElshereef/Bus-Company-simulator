@@ -24,9 +24,12 @@ private:
 	bool closed;		   // closed = 1, open = 0
 	int station;		   // station number [0,11]
 	char bus_type;		   // mixed= M & wheel-chair= W
+	int EstimatedTimeOfArrival;
+	bool InStation;
 
 
 public:
+
 	Bus(int size, int max, int bus_num, int s, char type);
 
 	~Bus();
@@ -80,4 +83,15 @@ public:
 
 	void leave_station();
 
+	void setArriveTime(int);
+
+	int getArriveTime();
+
+	void setInStation(bool);
+
+	bool getInStation();
+
+	bool getDirection();
+
+	bool getBusType();
 };

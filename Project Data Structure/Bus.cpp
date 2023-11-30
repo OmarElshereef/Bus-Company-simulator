@@ -13,10 +13,8 @@ Bus::Bus(int size, int max, int bus_num, int s, char type)
 	direction = 1;
 	direction = true;
 	closed = false;
-	if (type == 'W')
-		bus_type = 0;
-	else
-		bus_type = 1;
+	
+	bus_type = type;
 }
 
 Bus::~Bus()
@@ -165,4 +163,38 @@ void Bus::leave_station()
 
 	// Trigger the leave event
 	//leaveEvent->trigger();
+}
+
+void Bus::setArriveTime(int t)
+{
+	EstimatedTimeOfArrival = t;
+}
+
+int Bus::getArriveTime()
+{
+	return EstimatedTimeOfArrival;
+}
+
+void Bus::setInStation(bool Case)
+{
+	InStation = Case;
+}
+
+bool Bus::getInStation()
+{
+	return InStation;
+}
+
+bool Bus::getDirection()
+{
+	return direction;
+}
+
+bool Bus::getBusType()
+{
+	if (bus_type=='M')
+	{
+		return true;
+	}
+	return false;
 }
