@@ -214,4 +214,4 @@ bool Bus::SetMaxStations(int s)
 
 int Bus::TimeBetweenStations = 0;
 
-static  int max_trips=0;
+int Bus:: max_trips=0;
