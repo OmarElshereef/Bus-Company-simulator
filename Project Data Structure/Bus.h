@@ -15,9 +15,9 @@ private:
 	
 	//ArrivalEvent* arrivalEvent = new ArrivalEvent(0,'a');
 	//LeaveEvent* leaveEvent = new LeaveEvent(0,'a');
-
+	static int TimeBetweenStations;
     int BC;				   // bus capacity (max # of passengers can a bus carry)
-	const int max_trips;   // max trips and then the bus must be unavailable for maintenance
+	static int max_trips;   // max trips and then the bus must be unavailable for maintenance
 	int curr_trips;		   // # trips after last maintenance
 	int num_of_passengers; // # current passengers in the bus
 	int bus_number;		   // In the busses array [0,13]
@@ -25,8 +25,8 @@ private:
 	bool closed;		   // closed = 1, open = 0
 	int station;		   // station number [0,11]
 	char bus_type;		   // mixed= M & wheel-chair= W
-	int EstimatedTimeOfArrival;
-	bool InStation;
+	int EstimatedTimeOfArrival;   //time to reach the next station
+	bool InStation;               //if the bus is instation or not
 
 	int distance; // time for each bus and =0 when arrive station
 
@@ -105,4 +105,8 @@ public:
 	bool getDirection();
 
 	bool getBusType();
+
+	static bool SetTimeBetweenStations(int);
+
+	static bool SetMaxStations(int);
 };

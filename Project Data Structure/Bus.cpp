@@ -1,7 +1,7 @@
 #include "Bus.h"
 
 Bus::Bus(int size, int max, int bus_num, int s, char type)
-	: BC(size), max_trips(max), bus_number(bus_num),station(s)
+	: BC(size), bus_number(bus_num),station(s)
 {
 	passenger_arr = new Passenger * [size];
 	finished_queue = new fifoqueue<Passenger*>();
@@ -198,3 +198,20 @@ bool Bus::getBusType()
 	}
 	return false;
 }
+
+bool Bus::SetTimeBetweenStations(int t)
+{
+	TimeBetweenStations = t;
+	return true;
+}
+
+bool Bus::SetMaxStations(int s)
+{
+	max_trips = s;
+	return false;
+}
+
+
+int Bus::TimeBetweenStations = 0;
+
+int Bus:: max_trips=0;
