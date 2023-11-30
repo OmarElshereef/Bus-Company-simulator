@@ -52,7 +52,7 @@ public:
 
 	void setmaxwait(int);
 
-	void displayData();
+	void display();
 	
 	bool operator == (Passenger&);
 	

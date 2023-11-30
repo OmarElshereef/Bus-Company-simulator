@@ -34,11 +34,11 @@ private:
 
 
 public:
-	Bus(int size = 100, int max = 100, int s = 0, char type = 'M');
+	Bus(int size = 100, int max = 100,int bus_num=0, int s = 0, char type = 'M');
 
 	~Bus();
 	
-	void display_bus();
+	void display();
 
 	bool get_door();
 	
@@ -74,7 +74,7 @@ public:
 
 	int get_distance();
 	void set_distance(int d);
-	void exit_passenger();
+	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
 
 	
 
