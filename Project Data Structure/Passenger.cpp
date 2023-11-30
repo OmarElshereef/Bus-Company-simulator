@@ -84,7 +84,7 @@ void Passenger::SetPassengerPriority(string type)
 	}
 }
 
-void Passenger::displayData()
+void Passenger::display()
 {
 	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority <<" "<< Bus_GetOnTime << " "<< maxWait << " " << arrivetime <<endl;
 }
