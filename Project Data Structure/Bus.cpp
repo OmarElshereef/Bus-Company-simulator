@@ -1,7 +1,7 @@
 #include "Bus.h"
 
 Bus::Bus(int size, int max, int bus_num, int s, char type)
-	: BC(size), max_trips(max), bus_number(bus_num),station(s)
+	: BC(size), bus_number(bus_num),station(s)
 {
 	passenger_arr = new Passenger * [size];
 	finished_queue = new fifoqueue<Passenger*>();
