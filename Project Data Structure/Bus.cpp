@@ -198,3 +198,20 @@ bool Bus::getBusType()
 	}
 	return false;
 }
+
+bool Bus::SetTimeBetweenStations(int t)
+{
+	TimeBetweenStations = t;
+	return true;
+}
+
+bool Bus::SetMaxStations(int s)
+{
+	max_trips = s;
+	return false;
+}
+
+
+int Bus::TimeBetweenStations = 0;
+
+static  int max_trips=0;
