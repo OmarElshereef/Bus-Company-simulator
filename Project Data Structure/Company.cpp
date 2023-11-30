@@ -25,11 +25,23 @@ void Company::readFile()
 	
 	stationList = new Station*[stations];  stationNum = stations;  //setting array for stations
 	
-	for (int i = 0; i < stations; i++)
+	for (int i = 0; i < stations; i++)   //loop for creating stations
 	{
 		stationList[i] = new Station(i);
 	}
 	stationList[0]->setTravelDistance(distance);
+
+	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
+
+	for (int i = 0; i < count_busses; i++)  //loop for creating busses
+	{
+		if (i < mbus)
+			Busses_arr[i] = new Bus(mbuscap, 0, 'M');
+		else
+			Busses_arr[i] = new Bus(wbuscap, 0, 'W');
+	}
+	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);
+
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
@@ -56,13 +68,8 @@ void Company::readFile()
 			if (Ptype == "SP")  //is passenger is SP reads additional type
 				reader >> disability;
 
-			Passenger* coming = new Passenger(Ptype, ID, fromstation, tostation, disability,time);  //new passenger with said data
-			coming->setgetontime(geton); coming->setmaxwait(maxwait);
-
-			coming->display();  //for testing
-			population.push(coming);  //pushes passenger into the population of simulation
-
 			ArrivalEvent arrive(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
+
 			arrive.display();  //for testing
 
 			arrivals.push(arrive);  //pushes event into queue of events
@@ -127,6 +134,18 @@ void Company::time_up()
 		timestep[0] = 0;
 		timestep[1] = 0;
 	}
+}
+
+void Company::display()
+{
+	cout << "displaying company info:" << endl <<"population:"<<endl;
+	population.print();
+	cout << "stations:" << endl;
+	for (int i = 0; i < stationNum; i++)
+		stationList[i]->displayinfo();
+	cout << "busses:" << endl;
+	for (int i = 0; i < count_busses; i++)
+		Busses_arr[i]->display();
 }
 
 Company::~Company()
