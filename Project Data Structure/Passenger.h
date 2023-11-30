@@ -18,6 +18,8 @@ class Passenger
 
 	string PassengerType; //NP for normal passenger,SP for special passenger , WP for wheel chair passenger
 
+	bool direction;
+
 public:
 	
 	Passenger(string passtype = "NP", int PassID = 0, int Start = 0, int End=0, string PriorityType = "no priority", int arriving=0);
@@ -53,7 +55,11 @@ public:
 	void displayData();
 	
 	bool operator == (Passenger&);
+	
 	void operator = (Passenger&);
+	
+	bool getdirection();
+
 	~Passenger();
 	
 };

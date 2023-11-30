@@ -18,10 +18,46 @@ void Station::displayinfo()
 
 void Station::insertpassenger(Passenger& incoming)
 {
-	if (incoming.GetPassengerPriority() == 10)
-		WheelChairQ.push(incoming);
+	if (incoming.getdirection())
+	{
+		if (incoming.GetPassengerPriority() == 10)
+			WheelChairQForward.push(incoming);
+		else
+			stationpassengersForward.push(incoming, incoming.GetPassengerPriority());
+	}
 	else
-		stationpassengers.push(incoming, incoming.GetPassengerPriority());
+	{
+		if (incoming.GetPassengerPriority() == 10)
+			WheelChairQBackward.push(incoming);
+		else
+			stationpassengersBackward.push(incoming, incoming.GetPassengerPriority());
+	}
+}
+
+void Station::EnqueueBus(Bus& incoming)
+{
+	if (incoming.getDirection())
+	{
+		if (incoming.getBusType())
+		{
+			MBusInStationForward.push(incoming);
+		}
+		else
+		{
+			WBusInStationForward.push(incoming);
+		}
+	}
+	else
+	{
+		if (incoming.getBusType())
+		{
+			MBusInStationBackward.push(incoming);
+		}
+		else
+		{
+			WBusInStationBackward.push(incoming);
+		}
+	}
 }
 
 void Station::setTravelDistance(int dist)
@@ -31,7 +67,9 @@ void Station::setTravelDistance(int dist)
 
 void Station::promotePassengers(int curr_time)
 {
-	stationpassengers.promote(curr_time);
+	stationpassengersForward.promote(curr_time);
+
+	stationpassengersBackward.promote(curr_time);
 }
 
 Station::~Station()

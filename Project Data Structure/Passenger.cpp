@@ -22,6 +22,11 @@ void Passenger::operator=(Passenger& Pto)
 	PassengerPriority = Pto.GetPassengerPriority();
 }
 
+bool Passenger::getdirection()
+{
+	return direction;
+}
+
 Passenger::Passenger(string passtype , int PassID , int Start , int End, string PriorityType, int arriving)
 {
 	PassengerType = passtype;
@@ -35,6 +40,15 @@ Passenger::Passenger(string passtype , int PassID , int Start , int End, string 
 	EndStation = End; 
 
 	SetPassengerPriority(PriorityType);
+
+	if (Start<End)
+	{
+		direction = true;
+	}
+	else
+	{
+		direction = false;
+	}
 }
 
 void Passenger::SetPassengerType(string Type)
