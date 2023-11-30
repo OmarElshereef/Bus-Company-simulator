@@ -26,7 +26,7 @@ Bus::~Bus()
 
 }
 
-void Bus::display_bus()
+void Bus::display()
 {
 	string available = "No, not available", mixed = "No, not mixed bus";
 	if (is_available())

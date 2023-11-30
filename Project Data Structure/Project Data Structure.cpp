@@ -11,10 +11,16 @@ int main()
 {
 	Company c;
 	c.readFile();
-	priorityqueue<Passenger> q;
-
-	//Station s(0);
-	//s.insertpassenger();
+	Passenger* p;
+	Station s(0);
+	while (!c.population.isempty())
+	{
+		c.population.pop(p);
+		s.insertpassenger(p);
+	}
+	s.displayinfo();
+	s.promotePassengers(283);
+	s.displayinfo();
 
 	//Bus b(40,10,1,1,'W'); //size, max_trips, bus_number, station_number, type
 

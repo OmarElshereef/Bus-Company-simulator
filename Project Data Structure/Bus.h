@@ -38,7 +38,7 @@ public:
 
 	~Bus();
 	
-	void display_bus();
+	void display();
 
 	bool get_door();
 	

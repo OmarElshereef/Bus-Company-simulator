@@ -1,9 +1,8 @@
 #include "Company.h"
-#include"Station.h"
+
 
 Company::Company()
 {
-	
 }
 
 void Company::readFile()
@@ -57,10 +56,10 @@ void Company::readFile()
 			if (Ptype == "SP")  //is passenger is SP reads additional type
 				reader >> disability;
 
-			Passenger coming(Ptype, ID, fromstation, tostation, disability,time);  //new passenger with said data
-			coming.setgetontime(geton); coming.setmaxwait(maxwait);
+			Passenger* coming = new Passenger(Ptype, ID, fromstation, tostation, disability,time);  //new passenger with said data
+			coming->setgetontime(geton); coming->setmaxwait(maxwait);
 
-			coming.displayData();  //for testing
+			coming->display();  //for testing
 			population.push(coming);  //pushes passenger into the population of simulation
 
 			ArrivalEvent arrive(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
@@ -114,16 +113,6 @@ void Company::set_time(int hh, int mm)
 }
 
 
-void Company::check_bus_arrival()
-{
-	for (int i = 0; i < count_busses; i++)
-	{
-
-		//Busses_arr[i]->exit_passenger();
-	}
-
-}
-
 void Company::time_up()
 {
 	if (timestep[1] < 59)
@@ -139,7 +128,6 @@ void Company::time_up()
 		timestep[1] = 0;
 	}
 }
-
 
 Company::~Company()
 {

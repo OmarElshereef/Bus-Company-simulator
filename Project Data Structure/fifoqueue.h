@@ -176,6 +176,16 @@ public:
 		return head->getItem();
 	}
 
+	void print()
+	{
+		Node<T*>* temp = head;
+		while (temp != nullptr)
+		{
+			temp->getItem()->display();
+			temp = temp->getNext();
+		}
+	}
+
 	T* rear()
 	{
 		return tail->getItem();
