@@ -36,11 +36,6 @@ void Event::settype(char c)
 	type = c;
 }
 
-void Event::display()
-{
-	cout << type << " " << ID << " " << time << endl;
-}
-
 Event::~Event()
 {
 }

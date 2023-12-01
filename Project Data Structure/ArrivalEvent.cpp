@@ -1,5 +1,4 @@
 #include "ArrivalEvent.h"
-
 ArrivalEvent::ArrivalEvent() : Event()
 {
 }
@@ -16,10 +15,16 @@ void ArrivalEvent::setdata(string type, string dis, int from, int to)
 	disability = dis;
 }
 
-Passenger* ArrivalEvent::execute()
+bool ArrivalEvent::execute(Station** list, int n, Passenger*& p)
 {
 	Passenger* temp = new Passenger(PassengerType, ID, StartStation, EndStation, disability, time);
-	return temp;
+	p = temp;
+	return true;
+}
+
+void ArrivalEvent::display()
+{
+	cout << type << " " << ID << " " << time << endl;
 }
 
 

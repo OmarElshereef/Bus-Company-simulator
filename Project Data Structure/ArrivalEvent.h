@@ -1,6 +1,9 @@
 #pragma once
 #include"Event.h"
 #include"Passenger.h"
+#include"Station.h"
+
+class Station;
 class ArrivalEvent:public Event
 {
 	int  StartStation, CurrentStation, EndStation;
@@ -15,7 +18,8 @@ public:
 	ArrivalEvent();
 	ArrivalEvent(int,int,char);
 	void setdata(string,string,int,int);
-	Passenger* execute();
+	bool execute(Station**,int,Passenger*&);
+	void display();
 	char gettype();
 	~ArrivalEvent();
 };

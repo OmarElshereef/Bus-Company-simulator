@@ -45,6 +45,7 @@ void Company::readFile()
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
+	Event* incomingevent;
 	while (true)  //loop until file ends
 	{
 		char type;
@@ -68,11 +69,12 @@ void Company::readFile()
 			if (Ptype == "SP")  //is passenger is SP reads additional type
 				reader >> disability;
 
-			ArrivalEvent arrive(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
 
-			arrive.display();  //for testing
+			incomingevent = new ArrivalEvent(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
 
-			arrivals.push(arrive);  //pushes event into queue of events
+			incomingevent->display();  //for testing
+
+			simevents.push(incomingevent);  //pushes event into queue of events
 
 			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;  //for testing
 		}
@@ -88,10 +90,10 @@ void Company::readFile()
 
 			time += arrtime;
 
-			LeaveEvent leave(time,ID, 'L'); //create leaveevent
-			leave.display();  //for testing
+			incomingevent = new LeaveEvent(time,ID, 'L'); //create leaveevent
+			incomingevent->display();  //for testing
 
-			leaves.push(leave);  //pushes into queue of events
+			simevents.push(incomingevent);  //pushes into queue of events
 
 			//cout << time << " " << ID << endl;  
 		}
@@ -103,7 +105,7 @@ void Company::readFile()
 
 bool Company::takeinpassenger()
 {
-	if (arrivals.isempty())
+	if (simevents.isempty())
 		return false;
 
 }
