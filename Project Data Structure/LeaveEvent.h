@@ -3,7 +3,6 @@
 #include"Passenger.h"
 #include"Station.h"
 
-class Station;
 class LeaveEvent: public Event
 {
 public:

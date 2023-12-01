@@ -3,7 +3,6 @@
 #include"Passenger.h"
 #include"Station.h"
 
-class Station;
 class ArrivalEvent:public Event
 {
 	int  StartStation, CurrentStation, EndStation;

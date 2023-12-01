@@ -3,8 +3,6 @@
 #include"Passenger.h"
 #include<iostream>
 using namespace std;
-
-class Station;
 class Event
 {
 protected:

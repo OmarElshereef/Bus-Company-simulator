@@ -1,11 +1,9 @@
 #pragma once
 #include"Bus.h"
-#include"Event.h"
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
 
-class Bus;
 class Station
 {
 private:
