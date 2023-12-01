@@ -52,6 +52,31 @@ void Bus::set_station(int s)
 	station = s;
 }
 
+void Bus::set_direction(bool d) //d=true => forward or d=false => backward
+{
+	direction = d;
+}
+
+void Bus::upgrade_station()
+{
+	if (direction == true)
+		station++;
+	else
+		station--;
+
+}
+
+int Bus::get_distance()
+{
+	return distance;
+}
+
+void Bus::set_distance(int d)
+{
+	distance = d;
+}
+
+
 int Bus::get_passengers()
 {
 	return num_of_passengers;
