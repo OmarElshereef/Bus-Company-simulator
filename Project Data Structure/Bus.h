@@ -23,6 +23,8 @@ private:
 	int EstimatedTimeOfArrival;   //time to reach the next station
 	bool InStation;               //if the bus is instation or not
 
+	int distance; // time for each bus and =0 when arrive station
+
 public:
 	Bus(int capacity = 100, int s = 0, char type = 'M');
 
