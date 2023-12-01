@@ -1,14 +1,24 @@
 #include "Bus.h"
 
 Bus::Bus(int capacity, int s, char type)
-	: BC(capacity),station(s)
+	: BC(capacity), station(s)
 {
 	passenger_arr = new Passenger * [capacity];
+	finished_queue = new fifoqueue<Passenger*>();
+
+	distance = 0;
 	curr_trips = 0;
 	num_of_passengers = 0;
 	direction = 1;
+	direction = true;
 	closed = false;
-	bus_type = type;
+	if (type == 'W')
+		bus_type = 0;
+	if (type == 'W' || 'w')
+		bus_type = 'W';
+	else
+		bus_type = 1;
+	bus_type = 'M';
 }
 
 Bus::~Bus()
@@ -77,6 +87,19 @@ void Bus::set_distance(int d)
 }
 
 
+void Bus::exit_passenger()
+{
+	int num = get_passengers();
+	for (int i = 0; i < num; i++)
+	{
+		if (passenger_arr[i]->GetEndStation() == station)
+		{
+			finished_queue->push(passenger_arr[i]);
+			remove(i);
+		}
+	}
+}
+
 int Bus::get_passengers()
 {
 	return num_of_passengers;
@@ -138,37 +161,6 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
-{
-	int num = get_passengers();
-	for (int i = 0; i < num; i++)
-	{
-		if (passenger_arr[i]->getPassengerID() == p->getPassengerID())
-		{
-			remove(i);
-		}
-	}
-}
-
-
-void Bus::arrive_at_station()
-{
-	// Call the Company's method to handle the arrival
-	//company->handle_bus_arrival(this);
-
-	// Trigger the arrival event
-	//arrivalEvent->trigger();
-
-}
-
-void Bus::leave_station()
-{
-	// Call the Company's method to handle the departure
-	//company->handle_bus_departure(this);
-
-	// Trigger the leave event
-	//leaveEvent->trigger();
-}
 
 void Bus::setArriveTime(int t)
 {

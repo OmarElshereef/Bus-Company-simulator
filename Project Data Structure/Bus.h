@@ -9,7 +9,7 @@ class Bus
 {
 private:
 	Passenger** passenger_arr;
-	
+		fifoqueue<Passenger*>* finished_queue;
 	
 	static int TimeBetweenStations;
     int BC;				   // bus capacity (max # of passengers can a bus carry)
@@ -67,7 +67,7 @@ public:
 	int get_distance();
 	void set_distance(int d);
 
-	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
+	void exit_passenger();
 
 	void remove(int index);
 	
@@ -75,9 +75,7 @@ public:
 	bool enter_passenger(Passenger* p);
 
 	// Adding functions to interact with the Company and Events:
-	void arrive_at_station();
 
-	void leave_station();
 
 	void setArriveTime(int);
 

@@ -3,6 +3,12 @@
 
 Company::Company()
 {
+	create_busses();
+	timestep[0] = 4;
+	timestep[1] = 0;// timestep in hh:mm = 04:00
+	// company working hours: 4:00 to 22:00
+	Busses_arr = new Bus * [mbus + wbus]; //size of array = m busses + w busses
+	count_busses = 0;
 }
 
 void Company::readFile()
@@ -16,10 +22,10 @@ void Company::readFile()
 		return;
 	}
 
-	int stations, distance;
-	int wbus, mbus, wbuscap, mbuscap;   //defining varaibles to read data into
-	int journies, wbusfix, mbusfix;
-	int maxwait, geton;
+	//int stations, distance;
+	//int wbus, mbus, wbuscap, mbuscap;   //defining varaibles to read data into
+	//int journies, wbusfix, mbusfix;
+	//int maxwait, geton;
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton; // reading initial values in order
 	
@@ -119,7 +125,6 @@ void Company::set_time(int hh, int mm)
 	timestep[1] = mm;
 }
 
-
 void Company::time_up()
 {
 	if (timestep[1] < 59)
@@ -146,6 +151,50 @@ void Company::display()
 	cout << "busses:" << endl;
 	for (int i = 0; i < count_busses; i++)
 		Busses_arr[i]->display();
+}
+
+void Company::create_busses()
+{
+	for (int i = 0; i < wbus; i++) // setting wheelchair busses
+	{
+		Bus* bus = new Bus(wbuscap, 0, 'W'); // size, station number, bus type
+		Busses_arr[i] = bus;
+		count_busses++;
+	}
+	for (int i = 0; i < mbus; i++) // setting mixedbusses busses
+	{
+		Bus* bus = new Bus(mbuscap, 0, 'M'); // size, station number, bus type
+		Busses_arr[i] = bus;
+		count_busses++;
+	}
+}
+
+void Company::check_bus_arrival()
+{
+	for (int i = 0; i < count_busses; i++)
+	{
+		Busses_arr[i]->exit_passenger();
+	}
+}
+
+void Company::change_station()
+{
+	/*
+	This function to change station to the current one and the distance  and the direction if changed
+	*/
+	for (int i = 0; i < count_busses; i++)
+	{
+		if (Busses_arr[i]->get_distance() == distance)
+		{
+			if (Busses_arr[i]->get_station() == stations) //the bus in the last station, it must change the direction! 
+			{
+				Busses_arr[i]->set_direction(false);  // change directon to backward
+			}
+			Busses_arr[i]->upgrade_station();
+			Busses_arr[i]->set_distance(0); //distance here is the time between the two stations
+
+		}
+	}
 }
 
 Company::~Company()
