@@ -1,7 +1,8 @@
 #pragma once
+#include"Station.h"
+#include"Passenger.h"
 #include<iostream>
 using namespace std;
-
 class Event
 {
 protected:
@@ -17,7 +18,8 @@ public:
 	virtual void setID(int);
 	virtual void settime(int);
 	virtual void settype(char);
-    virtual void display();
+    virtual void display() =0;
+	virtual bool execute(Station**, int, Passenger*&) =0;
 	~Event();
 };
 

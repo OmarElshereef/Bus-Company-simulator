@@ -1,5 +1,7 @@
+#pragma once
 #include<iostream>
 #include<fstream>
+#include"Event.h"
 #include"ArrivalEvent.h"
 #include"LeaveEvent.h"
 #include"Passenger.h"
@@ -13,10 +15,10 @@ class Company
 private:
 	Station** stationList;
 	int stationNum;
-	fifoqueue<ArrivalEvent> arrivals;
+
+	fifoqueue<Event*>simevents;
 	fifoqueue<Passenger*> population;
 	fifoqueue<Passenger*>* finished_queue;
-	fifoqueue<LeaveEvent> leaves;
 	Bus** Busses_arr;
 	int count_busses;
 	int timestep[2]; // timestep in hh:mm 

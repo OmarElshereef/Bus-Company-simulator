@@ -3,7 +3,7 @@
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
-class Bus;
+
 class Station
 {
 private:
