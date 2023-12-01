@@ -3,7 +3,7 @@
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
-
+class Bus;
 class Station
 {
 private:
@@ -14,22 +14,20 @@ private:
 	fifoqueue<Bus*> MBusInStationBackward;
 	fifoqueue<Bus*> WBusInStationBackward;
 	priorityqueue<Passenger*> stationpassengersForward;
-	fifoqueue<Passenger*> WheelChairQForward;
+	priorityqueue<Passenger*> WheelChairQForward;
 	priorityqueue<Passenger*> stationpassengersBackward;
-	fifoqueue<Passenger*> WheelChairQBackward;
+	priorityqueue<Passenger*> WheelChairQBackward;
 
 public:
 	Station(int);
 	
-	
+	bool exitpassenger(int);
+
 	void displayinfo();
-	
 	
 	void setTravelDistance(int);
 	
-	
 	void promotePassengers(int);
-	
 	
 	void insertpassenger(Passenger*);
 	

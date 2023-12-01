@@ -1,29 +1,19 @@
 #include "Bus.h"
 
-Bus::Bus(int size, int max, int bus_num, int s, char type)
-	: BC(size), bus_number(bus_num),station(s)
+Bus::Bus(int capacity, int s, char type)
+	: BC(capacity),station(s)
 {
-	passenger_arr = new Passenger * [size];
-	finished_queue = new fifoqueue<Passenger*>();
-	//arrivalEvent = new ArrivalEvent;
-	//leaveEvent = new LeaveEvent;
-
+	passenger_arr = new Passenger * [capacity];
 	curr_trips = 0;
 	num_of_passengers = 0;
 	direction = 1;
-	direction = true;
 	closed = false;
-	
 	bus_type = type;
 }
 
 Bus::~Bus()
 {
 	delete[] passenger_arr;
-	delete finished_queue;
-	//delete arrivalEvent;
-	//delete leaveEvent;
-
 }
 
 void Bus::display()
@@ -130,21 +120,11 @@ void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
 	{
 		if (passenger_arr[i]->getPassengerID() == p->getPassengerID())
 		{
-			finished_queue->push(p);
 			remove(i);
 		}
 	}
 }
 
-void Bus::set_arrival_event(ArrivalEvent * arrivalEvt)
-{
-	//arrivalEvent = arrivalEvt;
-}
-
-void Bus::set_leave_event(LeaveEvent* leaveEvt)
-{
-	//leaveEvent = leaveEvt;
-}
 
 void Bus::arrive_at_station()
 {
@@ -213,5 +193,4 @@ bool Bus::SetMaxStations(int s)
 
 
 int Bus::TimeBetweenStations = 0;
-
 int Bus:: max_trips=0;

@@ -14,6 +14,8 @@ private:
 	Station** stationList;
 	int stationNum;
 	fifoqueue<ArrivalEvent> arrivals;
+	fifoqueue<Passenger*> population;
+	fifoqueue<Passenger*>* finished_queue;
 	fifoqueue<LeaveEvent> leaves;
 	Bus** Busses_arr;
 	int count_busses;
@@ -22,7 +24,6 @@ private:
 	
 
 public:
-	fifoqueue<Passenger*> population;
 
 	Company();
 	
@@ -35,6 +36,7 @@ public:
 
 	void set_time(int hh, int mm); // if needed
 
+	void display();
 	~Company();
 	
 };
