@@ -118,14 +118,14 @@ void Bus::remove(int index)
 {
 	if (index + 1 == num_of_passengers)
 	{
-		delete passenger_arr[index];
+		//delete passenger_arr[index];
 		num_of_passengers--;
 		return;
 	}
 
-	for (int i = index + 1; i < num_of_passengers; i++)
+	for (int i = index ; i < num_of_passengers; i++)
 	{
-		passenger_arr[i] = passenger_arr[i - 1];
+		passenger_arr[i] = passenger_arr[i + 1];
 	}
 	num_of_passengers--;
 	return;
@@ -143,14 +143,17 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-void Bus::exit_passenger(Passenger* p, Passenger** finished_array, int& size)
+void Bus::exit_passenger( fifoqueue<Passenger*> &finished_array)
 {
+
 	int num = get_passengers();
 	for (int i = 0; i < num; i++)
 	{
-		if (passenger_arr[i]->getPassengerID() == p->getPassengerID())
+		if (passenger_arr[i]->GetEndStation() == station)
 		{
+			finished_array.push(passenger_arr[i]);
 			remove(i);
+			num--;
 		}
 	}
 }

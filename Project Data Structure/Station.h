@@ -32,7 +32,7 @@ public:
 	
 	void insertpassenger(Passenger*);
 	
-	void EnqueueBus(Bus* incoming);
+	void EnqueueBus(Bus* incoming,fifoqueue<Passenger*> &finished_queue);
 
 	void DequeueBus(int curr_time);
 

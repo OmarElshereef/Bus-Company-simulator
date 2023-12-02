@@ -17,7 +17,7 @@ private:
 	int stationNum;
 	fifoqueue<Event*>simevents;
 	fifoqueue<Passenger*> population;
-	fifoqueue<Passenger*>* finished_queue;
+	fifoqueue<Passenger*> finished_queue;
 	Bus** Busses_arr;
 	int count_busses;
 	int timestep[2]; // timestep in hh:mm 

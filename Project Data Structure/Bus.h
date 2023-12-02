@@ -64,7 +64,7 @@ public:
 	int get_distance();
 	void set_distance(int d);
 
-	void exit_passenger(Passenger* p, Passenger** finished_array, int& size);
+	void exit_passenger(fifoqueue<Passenger*> &finished_array);
 
 	void remove(int index);
 	

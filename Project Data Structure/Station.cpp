@@ -54,21 +54,23 @@ void Station::insertpassenger(Passenger* incoming)
 	}
 }
 
-void Station::EnqueueBus(Bus* incoming)
+void Station::EnqueueBus(Bus* incoming, fifoqueue<Passenger*> &finished_queue)
 {
-	
+	incoming->exit_passenger(finished_queue);
 	if (incoming->getDirection())
 	{
 		if (incoming->getBusType())
 		{
 			MBusInStationForward.push(incoming);
-			if (!stationpassengersForward.isempty())
+			while (!stationpassengersForward.isempty()&&!incoming->is_full())
 			{
-				Passenger* psg; 
+				
+					Passenger* psg;
 
-			stationpassengersForward.pop(psg);
+					stationpassengersForward.pop(psg);
 
-			incoming->enter_passenger(psg);
+					incoming->enter_passenger(psg);
+				
 			}
 			
 		}
@@ -113,7 +115,9 @@ void Station::EnqueueBus(Bus* incoming)
 		}
 	}
 
-	cout << "bus now in station " << number << endl<<incoming->getArriveTime()<<endl;
+	if (number == 2) {
+		cout << "bus now in station " << number << endl << incoming->getArriveTime() << endl;
+	}
 }
 
 void Station::DequeueBus(int curr_time)

@@ -3,14 +3,19 @@
 
 void Company::executeevent()
 {
-	if (!simevents.isempty())
+	if(!simevents.isempty())
 	{
-		if (simevents.peek()->gettime() == time)
+		while (simevents.peek()->gettime() == time)
 		{
 			Event* event;
 			simevents.pop(event);
 
 			event->execute(stationList);
+
+			if (simevents.isempty())
+			{
+				break;
+			}
 		}
 	}
 }
@@ -26,7 +31,7 @@ void Company::updatebusses()
 	{
 		for (int i = 0; i < count_busses; i++)
 		{
-			stationList[0]->EnqueueBus(Busses_arr[i]);
+			stationList[0]->EnqueueBus(Busses_arr[i], finished_queue);
 		}
 	}
 
@@ -44,13 +49,14 @@ void Company::updatebusses()
 		{
 			if (time == Busses_arr[i]->getArriveTime())
 			{
-				stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
+				stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i], finished_queue);
 			}
 		}
 		
 	}
 	for (int i = 1; i < stationNum; i++)
 	{
+		//stationList[i]->promotePassengers(time);
 		stationList[i]->DequeueBus(time);
 	}
 }
@@ -213,6 +219,8 @@ void Company::display()
 	cout << "busses:" << endl;
 	for (int i = 0; i < count_busses; i++)
 		Busses_arr[i]->display();
+
+	finished_queue.print();
 }
 
 Company::~Company()
