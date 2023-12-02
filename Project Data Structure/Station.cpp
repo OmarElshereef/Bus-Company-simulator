@@ -3,7 +3,12 @@
 using namespace std;
 
 int Station:: travel_distance = 0;
+int Station::station_count = 0;
 
+void Station::setstationcount(int count)
+{
+	station_count = count;
+}
 
 Station::Station(int num):number(num)
 {
@@ -72,6 +77,76 @@ void Station::EnqueueBus(Bus* incoming)
 		{
 			WBusInStationBackward.push(incoming);
 		}
+	}
+
+	cout << "bus now in station " << number << endl;
+}
+
+void Station::DequeueBus(int curr_time)
+{
+	Bus* Mbus = nullptr;
+	Bus* Wbus = nullptr;
+	if (!MBusInStationForward.isempty())
+	{
+		if (MBusInStationForward.peek()->is_full() || stationpassengersForward.isempty())
+		{
+			MBusInStationForward.peek()->setInStation(false);
+			MBusInStationForward.peek()->setArriveTime(travel_distance + curr_time);
+			MBusInStationForward.pop(Mbus);
+		}
+	}
+	if (!MBusInStationBackward.isempty())
+	{
+		if (MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty())
+		{
+			MBusInStationBackward.peek()->setInStation(false);
+			MBusInStationBackward.peek()->setArriveTime(travel_distance + curr_time);
+			MBusInStationBackward.pop(Mbus);
+		}
+	}
+	if (!WBusInStationForward.isempty())
+	{
+		if (WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty())
+		{
+			WBusInStationForward.peek()->setInStation(false);
+			WBusInStationForward.peek()->setArriveTime(travel_distance + curr_time);
+			WBusInStationForward.pop(Wbus);
+		}
+	}
+	if (!WBusInStationBackward.isempty())
+	{
+		if (WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty())
+		{
+			WBusInStationBackward.peek()->setInStation(false);
+			WBusInStationBackward.peek()->setArriveTime(travel_distance + curr_time);
+			WBusInStationBackward.pop(Wbus);
+		}
+	}
+
+	if (Mbus != nullptr)
+	{
+		if (Mbus->get_station() == station_count)
+		{
+			Mbus->set_direction(false);
+		}
+		else if (Mbus->get_station() == 1)
+		{
+			Mbus->set_direction(true);
+		}
+		Mbus->upgrade_station();
+	}
+
+	if (Wbus != nullptr)
+	{
+		if (Wbus->get_station() == station_count)
+		{
+			Wbus->set_direction(false);
+		}
+		else if (Wbus->get_station() == 1)
+		{
+			Wbus->set_direction(true);
+		}
+		Wbus->upgrade_station();
 	}
 }
 

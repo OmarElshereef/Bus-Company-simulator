@@ -15,7 +15,6 @@ class Company
 private:
 	Station** stationList;
 	int stationNum;
-
 	fifoqueue<Event*>simevents;
 	fifoqueue<Passenger*> population;
 	fifoqueue<Passenger*>* finished_queue;
@@ -23,8 +22,9 @@ private:
 	int count_busses;
 	int timestep[2]; // timestep in hh:mm 
 	// company working hours: 4:00 to 22:00
-	
-	int time; 
+	int time;
+	void executeevent();
+	void updatebusses();
 public:
 
 	Company();

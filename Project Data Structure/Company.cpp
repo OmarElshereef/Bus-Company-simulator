@@ -1,9 +1,49 @@
 #include "Company.h"
 
 
+void Company::executeevent()
+{
+	if (!simevents.isempty())
+	{
+		if (simevents.peek()->gettime() == time)
+		{
+			Event* event;
+			simevents.pop(event);
+
+			event->execute(stationList);
+		}
+	}
+}
+
 Company::Company()
 {
 	time = 0; 
+}
+
+void Company::updatebusses()
+{
+	if (time == 0)
+	{
+		for (int i = 0; i < count_busses; i++)
+		{
+			stationList[0]->EnqueueBus(Busses_arr[i]);
+		}
+		return;
+	}
+
+	for (int i = 0; i < count_busses; i++)
+	{
+		if (!Busses_arr[i]->IsInStation())
+		{
+			if (time == Busses_arr[i]->getArriveTime())
+			{
+				stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
+			}
+		}
+		else
+			stationList[Busses_arr[i]->get_station()]->DequeueBus(time);
+	}
+
 }
 
 void Company::readFile()
@@ -30,7 +70,7 @@ void Company::readFile()
 	{
 		stationList[i] = new Station(i);
 	}
-	stationList[0]->setTravelDistance(distance);
+	stationList[0]->setTravelDistance(distance); stationList[0]->setstationcount(stations);
 
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
 
@@ -43,6 +83,7 @@ void Company::readFile()
 	}
 	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);
 
+	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
@@ -114,32 +155,13 @@ bool Company::takeinpassenger()
 
 }
 
+
 void Company::simulation()
 {
 	while (time<=24*60)
 	{
-		if (!simevents.isempty())
-		{
-			if (simevents.peek()->gettime() == time)
-			{
-				Event* event;
-				simevents.pop(event);
-
-				event->execute(stationList);
-			}
-		}
-		/*for (int i = 0; i < count_busses; i++)
-		{
-			if (!Busses_arr[i]->getInStation())
-			{
-				if (time==Busses_arr[i]->getArriveTime())
-				{
-					stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
-				}
-			}
-		}*/
-
-
+		executeevent();
+		updatebusses();
 		time++;
 	}
 }

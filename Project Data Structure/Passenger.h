@@ -48,9 +48,9 @@ public:
 
 	int GetPassengerPriority();
 
-	void setgetontime(int);
+	static void setgetontime(int);
 
-	void setmaxwait(int);
+	static void setmaxwait(int);
 
 	void display();
 	

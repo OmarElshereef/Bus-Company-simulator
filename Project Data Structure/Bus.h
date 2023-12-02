@@ -34,7 +34,6 @@ public:
 	
 
 	void set_door(bool door);
-	
 
 	int get_station();
 	
@@ -83,7 +82,7 @@ public:
 
 	void setInStation(bool);
 
-	bool getInStation();
+	bool IsInStation();
 
 	bool getDirection();
 

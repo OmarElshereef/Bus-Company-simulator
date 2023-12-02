@@ -9,6 +9,7 @@ class Station
 private:
 	static int travel_distance;
 	const int number;
+	static int station_count;
 	fifoqueue<Bus*> MBusInStationForward;
 	fifoqueue<Bus*> WBusInStationForward;
 	fifoqueue<Bus*> MBusInStationBackward;
@@ -33,6 +34,9 @@ public:
 	
 	void EnqueueBus(Bus* incoming);
 
+	void DequeueBus(int curr_time);
+
+	static void setstationcount(int);
 	~Station(); 
 };
 

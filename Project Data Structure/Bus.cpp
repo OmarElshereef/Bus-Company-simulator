@@ -1,14 +1,19 @@
 #include "Bus.h"
 
+
+int Bus::TimeBetweenStations = 0;
+int Bus::max_trips = 0;
+
 Bus::Bus(int capacity, int s, char type)
 	: BC(capacity),station(s)
 {
 	passenger_arr = new Passenger * [capacity];
 	curr_trips = 0;
 	num_of_passengers = 0;
-	direction = 1;
+	direction = true;
 	closed = false;
 	bus_type = type;
+	InStation = true;
 }
 
 Bus::~Bus()
@@ -185,7 +190,7 @@ void Bus::setInStation(bool Case)
 	InStation = Case;
 }
 
-bool Bus::getInStation()
+bool Bus::IsInStation()
 {
 	return InStation;
 }
@@ -215,7 +220,3 @@ bool Bus::SetMaxStations(int s)
 	max_trips = s;
 	return false;
 }
-
-
-int Bus::TimeBetweenStations = 0;
-int Bus:: max_trips=0;
