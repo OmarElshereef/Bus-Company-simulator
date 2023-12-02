@@ -17,7 +17,7 @@ public:
 	ArrivalEvent();
 	ArrivalEvent(int,int,char);
 	void setdata(string,string,int,int);
-	bool execute(Station**,int,Passenger*&);
+	bool execute(Station**,int);
 	void display();
 	char gettype();
 	~ArrivalEvent();

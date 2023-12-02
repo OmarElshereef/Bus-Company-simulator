@@ -8,7 +8,7 @@ class LeaveEvent: public Event
 public:
 	LeaveEvent();
 	LeaveEvent(int,int,char);
-	bool execute(Station**,int,Passenger*&);
+	bool execute(Station**,int);
 	char gettype();
 	void display();
 	~LeaveEvent();

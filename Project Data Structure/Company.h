@@ -24,14 +24,14 @@ private:
 	int timestep[2]; // timestep in hh:mm 
 	// company working hours: 4:00 to 22:00
 	
-
+	int time; 
 public:
 
 	Company();
 	
 	void readFile();
 	bool takeinpassenger();
-
+	void simulation();
 	void time_up();
 
 	int get_time();

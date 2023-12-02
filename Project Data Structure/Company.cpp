@@ -3,6 +3,7 @@
 
 Company::Company()
 {
+	time = 0; 
 }
 
 void Company::readFile()
@@ -108,6 +109,34 @@ bool Company::takeinpassenger()
 	if (simevents.isempty())
 		return false;
 
+}
+
+void Company::simulation()
+{
+	while (time<=24*60)
+	{
+		if (simevents.peek()->gettime()==time)
+		{
+			Event* event;
+			simevents.pop(event);
+
+			event->execute(stationList, stationNum);
+		}
+
+		/*for (int i = 0; i < count_busses; i++)
+		{
+			if (!Busses_arr[i]->getInStation())
+			{
+				if (time==Busses_arr[i]->getArriveTime())
+				{
+					stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
+				}
+			}
+		}*/
+
+
+		time++;
+	}
 }
 
 int Company::get_time()
