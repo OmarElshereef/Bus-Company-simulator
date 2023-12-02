@@ -15,12 +15,13 @@ void ArrivalEvent::setdata(string type, string dis, int from, int to)
 	disability = dis;
 }
 
-bool ArrivalEvent::execute(Station** list, int n)
+bool ArrivalEvent::execute(Station** list)
 {
 	Passenger* temp = new Passenger(PassengerType, ID, StartStation, EndStation, disability, time);
 	
 
 	list[temp->GetStartStation()]->insertpassenger(temp);
+	//list[temp->GetStartStation()]->displayinfo();
 	return true;
 }
 

@@ -19,7 +19,7 @@ public:
 	virtual void settime(int);
 	virtual void settype(char);
     virtual void display() =0;
-	virtual bool execute(Station**, int) =0;
+	virtual bool execute(Station**) =0;
 	~Event();
 };
 

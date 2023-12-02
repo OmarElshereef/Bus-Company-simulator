@@ -8,19 +8,24 @@ LeaveEvent::LeaveEvent(int t=0,int i=0,char c='a') : Event(t,i, c)
 {
 }
 
-bool LeaveEvent::execute(Station** list, int size)
+bool LeaveEvent::execute(Station** list)
 {
 	bool is = false;
-	for (int i = 0; i < size; i++)
-	{
-		is = list[i]->exitpassenger(ID);
-	}
-	return is;
+	
+	
+		is = list[station]->exitpassenger(ID);
+
+		return is;
 }
 
 void LeaveEvent::display()
 {
 	cout << type << " " << ID << " " << time << endl;
+}
+
+void LeaveEvent::setstation(int st)
+{
+	station = st;
 }
 
 char LeaveEvent::gettype()

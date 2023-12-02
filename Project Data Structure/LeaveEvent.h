@@ -5,12 +5,14 @@
 
 class LeaveEvent: public Event
 {
+	int station;
 public:
 	LeaveEvent();
 	LeaveEvent(int,int,char);
-	bool execute(Station**,int);
+	bool execute(Station**);
 	char gettype();
 	void display();
+	void setstation(int st);
 	~LeaveEvent();
 };
 

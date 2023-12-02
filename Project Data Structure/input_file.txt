@@ -5,13 +5,7 @@
 
 35 10
 A NP 4:3 1 2 5
-A SP 4:15 2 4 5 POD
-L 4:5 1
-A WP 4:32 3 5 3
-A SP 5:43 4 7 4 aged
-A SP 4:22 5 2 5 POD
-A SP 4:25 6 4 5 pregnantwomen
-A SP 4:30 7 5 2 aged
-A NP 4:8 8 2 4
+L 4:10 1 2 
+A NP 4:12 4 2 6 
 
 

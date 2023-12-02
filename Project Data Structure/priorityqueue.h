@@ -131,7 +131,6 @@ public:
 		{
 			T dum;
 			pop(T);
-			count--;
 			return true;
 		}
 
@@ -295,7 +294,6 @@ public:
 		{
 			T* dum;
 			pop(dum);
-			count--;
 			return true;
 		}
 

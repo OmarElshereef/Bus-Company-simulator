@@ -72,7 +72,7 @@ void Company::readFile()
 
 
 			incomingevent = new ArrivalEvent(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
-
+			((ArrivalEvent*)incomingevent)->setdata(Ptype,disability,fromstation,tostation);
 			incomingevent->display();  //for testing
 
 			simevents.push(incomingevent);  //pushes event into queue of events
@@ -86,12 +86,13 @@ void Company::readFile()
 			reader >> arrtime >> trash;  //same as arrival reads info of leaveevent
 
 			int time = arrtime * 60;
-
-			reader >> arrtime >> ID;
+			int leavestation;
+			reader >> arrtime >> ID>>leavestation;
 
 			time += arrtime;
 
 			incomingevent = new LeaveEvent(time,ID, 'L'); //create leaveevent
+			((LeaveEvent*)incomingevent)->setstation(leavestation);
 			incomingevent->display();  //for testing
 
 			simevents.push(incomingevent);  //pushes into queue of events
@@ -115,14 +116,16 @@ void Company::simulation()
 {
 	while (time<=24*60)
 	{
-		if (simevents.peek()->gettime()==time)
+		if (!simevents.isempty())
 		{
-			Event* event;
-			simevents.pop(event);
+			if (simevents.peek()->gettime() == time)
+			{
+				Event* event;
+				simevents.pop(event);
 
-			event->execute(stationList, stationNum);
+				event->execute(stationList);
+			}
 		}
-
 		/*for (int i = 0; i < count_busses; i++)
 		{
 			if (!Busses_arr[i]->getInStation())
