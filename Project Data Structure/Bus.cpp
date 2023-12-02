@@ -146,14 +146,12 @@ bool Bus::enter_passenger(Passenger* p)
 void Bus::exit_passenger( fifoqueue<Passenger*> &finished_array)
 {
 
-	int num = get_passengers();
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < num_of_passengers; i++)
 	{
 		if (passenger_arr[i]->GetEndStation() == station)
 		{
 			finished_array.push(passenger_arr[i]);
 			remove(i);
-			num--;
 		}
 	}
 }
