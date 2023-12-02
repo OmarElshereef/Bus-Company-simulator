@@ -99,7 +99,7 @@ bool Bus::is_full()
 
 bool Bus::is_available()
 {
-	return num_of_passengers <= BC;
+	return num_of_passengers < BC;
 }
 
 bool Bus::is_mixed_bus()

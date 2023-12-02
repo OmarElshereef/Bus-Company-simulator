@@ -28,7 +28,14 @@ void Company::updatebusses()
 		{
 			stationList[0]->EnqueueBus(Busses_arr[i]);
 		}
-		return;
+	}
+
+	if (time<=15*count_busses)
+	{
+		if(time%15==0)
+		{
+			stationList[0]->DequeueBus(time);
+		}
 	}
 
 	for (int i = 0; i < count_busses; i++)
@@ -40,10 +47,12 @@ void Company::updatebusses()
 				stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
 			}
 		}
-		else
-			stationList[Busses_arr[i]->get_station()]->DequeueBus(time);
+		
 	}
-
+	for (int i = 1; i < stationNum; i++)
+	{
+		stationList[i]->DequeueBus(time);
+	}
 }
 
 void Company::readFile()
@@ -64,9 +73,9 @@ void Company::readFile()
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton; // reading initial values in order
 	
-	stationList = new Station*[stations];  stationNum = stations;  //setting array for stations
+	stationList = new Station*[stations+1];  stationNum = stations+1;  //setting array for stations
 	
-	for (int i = 0; i < stations; i++)   //loop for creating stations
+	for (int i = 0; i < stations+1; i++)   //loop for creating stations
 	{
 		stationList[i] = new Station(i);
 	}
