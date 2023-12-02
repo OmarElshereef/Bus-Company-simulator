@@ -46,8 +46,10 @@ void Company::readFile()
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
+	int lines;
+	reader >> lines;
 	Event* incomingevent;
-	while (true)  //loop until file ends
+	for(int i=0;i<lines;i++)  //loop until file ends
 	{
 		char type;
 		reader >> type;   // read event type character
