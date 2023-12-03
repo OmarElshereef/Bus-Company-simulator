@@ -11,8 +11,10 @@ int main()
 {
 	Company c;
 	c.readFile();
-	c.simulation();
-	c.display();
+	c.simulation_phase_1();
+	//c.simulation();
+	//c.display();
+
 
 	/*Station **t=new Station*[1];
 	Passenger* psg= new Passenger();

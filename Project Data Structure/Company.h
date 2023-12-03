@@ -39,6 +39,13 @@ public:
 	void set_time(int hh, int mm); // if needed
 
 	void display();
+
+	//Adding funcs
+	void simulation_phase_1();
+	int generate_ramdom();
+	void move_to_finished_queue();
+	void display_finished_queue();
+
 	~Company();
 	
 };

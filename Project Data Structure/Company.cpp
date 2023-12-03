@@ -1,4 +1,6 @@
 #include "Company.h"
+#include <random>
+using namespace std;
 
 
 void Company::executeevent()
@@ -222,6 +224,74 @@ void Company::display()
 
 	finished_queue.print();
 }
+
+void Company::simulation_phase_1()
+{
+	while (time <= 24 * 60)
+	{
+		executeevent();
+		move_to_finished_queue();
+		//display_finished_queue();
+		cout << endl << endl << "-------------------------------------------------------------------";
+		time++;
+	}
+}
+
+int Company::generate_ramdom()
+{
+	// Seed the random number generator with a random device
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<> dis(1, 100);
+
+	// Generate a random number between 1 and 100
+	return dis(gen);
+}
+
+void Company::move_to_finished_queue()
+{
+	for (int i = 0; i < stationNum; i++)
+	{
+		//create a random number for each station:
+		int randomNumber = generate_ramdom();
+
+		// get a passenger 
+		Passenger* p = stationList[i]->get_random_passenger(randomNumber);
+
+		//if nullptr (there are no passengers in the stationList)
+		if (!p) continue;
+
+		else
+		{
+			finished_queue.push(p);
+
+			//display the passenger we got
+			cout << "\nfor a Random Number " << randomNumber << ":\nPassenger we got is:\n";
+			p->display();
+		}
+	}
+}
+
+void Company::display_finished_queue()
+{
+	fifoqueue<Passenger*> tempQ;
+	Passenger* p;
+
+	while (!finished_queue.isempty())
+	{
+		finished_queue.pop(p);
+		tempQ.push(p);
+		p->display();
+	}
+
+	while (!tempQ.isempty())
+	{
+		tempQ.pop(p);
+		finished_queue.push(p);
+	}
+}
+
+
 
 Company::~Company()
 {
