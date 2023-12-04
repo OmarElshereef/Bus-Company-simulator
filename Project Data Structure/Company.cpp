@@ -300,7 +300,7 @@ void Company::simulate_phase_1()
 
 	
 		finished_queue.print();
-
+		printer.Print("pressany key to continue...");
 		getchar();
 		time++;
 	}
