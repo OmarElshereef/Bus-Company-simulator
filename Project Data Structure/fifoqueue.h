@@ -1,5 +1,6 @@
 #include "Node.h"
 #include <iostream>
+#include"UI.h"
 #pragma once
 using namespace std;
 
@@ -7,6 +8,7 @@ template <class T>
 class fifoqueue
 {
 private:
+	UI printer;
 	Node<T>* head;
 	Node<T>* tail;
 	int count;
@@ -109,6 +111,7 @@ template <class T>
 class fifoqueue<T*>
 {
 private:
+	UI printer;
 	Node<T*>* head;
 	Node<T*>* tail;
 	int count;
@@ -184,6 +187,7 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
+		printer.Print("\n");
 	}
 
 	T* rear()

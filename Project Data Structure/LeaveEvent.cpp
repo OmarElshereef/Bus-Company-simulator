@@ -20,7 +20,7 @@ bool LeaveEvent::execute(Station** list)
 
 void LeaveEvent::display()
 {
-	cout << type << " " << ID << " " << time << endl;
+	
 }
 
 void LeaveEvent::setstation(int st)

@@ -1,5 +1,6 @@
 #include "Station.h"
 #include<iostream>
+#include<string>
 using namespace std;
 
 int Station:: travel_distance = 0;
@@ -125,10 +126,55 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 
 void Station::displayinfo()
 {
-	cout << "Station number:" << number << endl;
-	cout << "people in queue waiting front:" <<endl; stationpassengersForward.print(); WheelChairQForward.print();
-	cout << "people in queue waiting back:"<<endl; stationpassengersBackward.print(); WheelChairQBackward.print();
-	//cout << "busses in queue waitingm front:";
+	
+	printer.Print("==============Station#" + to_string(number)+"=================\n");
+
+	printer.Print(stationpassengersForward.sizebypri(3)+ stationpassengersForward.sizebypri(2)+ stationpassengersForward.sizebypri(1)+ stationpassengersBackward.sizebypri(3) + stationpassengersBackward.sizebypri(2) + stationpassengersBackward.sizebypri(1));
+
+	printer.Print("  Waiting SP: FWD[");
+
+	if (stationpassengersForward.PrintByPriority(3))
+		printer.Print("(AG) , ");
+	if (stationpassengersForward.PrintByPriority(2))
+		printer.Print("(PD) , ");
+	if (stationpassengersForward.PrintByPriority(1))
+		printer.Print("(PW)");
+
+	printer.Print("]  BCK[");
+
+	if (stationpassengersBackward.PrintByPriority(3))
+		printer.Print("(AG) , ");
+	if (stationpassengersBackward.PrintByPriority(2))
+		printer.Print("(PD) , ");
+	if (stationpassengersBackward.PrintByPriority(1))
+		printer.Print("(PW)");
+
+	printer.Print("]\n");
+
+	printer.Print(stationpassengersForward.sizebypri(0)+ stationpassengersBackward.sizebypri(0));
+
+	printer.Print("  Waiting NP: FWD[");
+
+	stationpassengersForward.PrintByPriority(0);
+
+	printer.Print("]  BCK[");
+
+	stationpassengersBackward.PrintByPriority(0);
+
+	printer.Print("]\n");
+
+	printer.Print(WheelChairQBackward.sizebypri(10) + WheelChairQForward.sizebypri(10));
+
+	printer.Print("  Waiting WP: FWD[");
+
+	WheelChairQForward.PrintByPriority(10);
+
+	printer.Print("]  BCK[");
+
+	WheelChairQBackward.PrintByPriority(10);
+
+	printer.Print("]\n");
+	
 }
 
 void Station::insertpassenger(Passenger* incoming)
@@ -210,9 +256,6 @@ void Station::EnqueueBus(Bus* incoming, fifoqueue<Passenger*> &finished_queue)
 		}
 	}
 
-	if (number == 2) {
-		cout << "bus now in station " << number << endl << incoming->getArriveTime() << endl;
-	}
 }
 
 void Station::DequeueBus(int curr_time)

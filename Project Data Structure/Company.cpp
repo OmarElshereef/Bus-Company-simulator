@@ -1,5 +1,5 @@
 #include "Company.h"
-
+#include <cstdio>
 
 bool Company::executeevent()
 {
@@ -78,7 +78,7 @@ void Company::readFile()
 
 	if (!reader.is_open())
 	{
-		cout << "error cannot open file"; //if file couldn't be opened print error message then quit
+		printer.Print("error cannot open file"); //if file couldn't be opened print error message then quit
 		return;
 	}
 
@@ -110,7 +110,7 @@ void Company::readFile()
 
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
-	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
+	
 	int lines;
 	reader >> lines;
 	Event* incomingevent;
@@ -141,11 +141,11 @@ void Company::readFile()
 
 			incomingevent = new ArrivalEvent(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
 			((ArrivalEvent*)incomingevent)->setdata(Ptype,disability,fromstation,tostation);
-			incomingevent->display();  //for testing
+			
 
 			simevents.push(incomingevent);  //pushes event into queue of events
 
-			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;  //for testing
+			
 		}
 		else if (type == 'L')  // if event is leave
 		{
@@ -161,11 +161,11 @@ void Company::readFile()
 
 			incomingevent = new LeaveEvent(time,ID, 'L'); //create leaveevent
 			((LeaveEvent*)incomingevent)->setstation(leavestation);
-			incomingevent->display();  //for testing
+			
 
 			simevents.push(incomingevent);  //pushes into queue of events
 
-			//cout << time << " " << ID << endl;  
+		 
 		}
 		else
 			break;
@@ -279,11 +279,29 @@ void Company::simulate_phase_1()
 			}
 			
 		}
+		printer.Print("time ["); 
+		printer.Print(time/60);
+		printer.Print(":");
+		printer.Print(time%60);
+		printer.Print("]\n");
+
+		//printer.DisplayStations(stationList, stationNum);
+
+		for (int i = 1; i < stationNum; i++)
+		{
+			stationList[i]->displayinfo();
+		}
+
+
+
+
+		printer.Print("finished queue:\n");
 		
-		cout << "time [" << time / 60 << ":" << time % 60 << "]" << endl;
-		cout << "random value: " << rndval << endl;
-		cout << "finished queue:" << endl;
+
+	
 		finished_queue.print();
+
+		getchar();
 		time++;
 	}
 	
@@ -291,12 +309,12 @@ void Company::simulate_phase_1()
 
 void Company::display()
 {
-	cout << "displaying company info:" << endl <<"population:"<<endl;
+	
 	population.print();
-	cout << "stations:" << endl;
+	
 	for (int i = 0; i < stationNum; i++)
 		stationList[i]->displayinfo();
-	cout << "busses:" << endl;
+	
 	for (int i = 0; i < count_busses; i++)
 		Busses_arr[i]->display();
 

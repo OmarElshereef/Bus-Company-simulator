@@ -26,7 +26,7 @@ bool ArrivalEvent::execute(Station** list)
 
 void ArrivalEvent::display()
 {
-	cout << type << " " << ID << " " << time << endl;
+	
 }
 
 

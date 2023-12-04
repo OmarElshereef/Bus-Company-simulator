@@ -86,7 +86,8 @@ void Passenger::SetPassengerPriority(string type)
 
 void Passenger::display()
 {
-	cout << PassengerType << " " << PassengerId << " " << StartStation << " " << EndStation << " "<< PassengerPriority <<" "<< Bus_GetOnTime << " "<< maxWait << " " << arrivetime <<endl;
+	printer.Print(PassengerId);
+	printer.Print("  ");
 }
 
 int Passenger::getPassengerID()

@@ -8,12 +8,13 @@
 #include"Passenger.h"
 #include"Station.h"
 #include"Bus.h"
-
+#include"UI.h"
 using namespace std;
 
 class Company
 {
 private:
+	UI printer;
 	Station** stationList;
 	int stationNum;
 	fifoqueue<Event*>simevents;
