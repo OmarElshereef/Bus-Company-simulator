@@ -285,20 +285,12 @@ void Company::simulate_phase_1()
 		printer.Print(time%60);
 		printer.Print("]\n");
 
-		//printer.DisplayStations(stationList, stationNum);
-
 		for (int i = 1; i < stationNum; i++)
 		{
 			stationList[i]->displayinfo();
 		}
 
-
-
-
 		printer.Print("finished queue:\n");
-		
-
-	
 		finished_queue.print();
 		printer.Print("pressany key to continue...");
 		getchar();
