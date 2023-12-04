@@ -1,8 +1,11 @@
 #include "Company.h"
 
 
-void Company::executeevent()
+bool Company::executeevent()
 {
+	if (simevents.isempty())
+		return false;
+
 	if(!simevents.isempty())
 	{
 		while (simevents.peek()->gettime() == time)
@@ -17,12 +20,14 @@ void Company::executeevent()
 				break;
 			}
 		}
+		return true;
 	}
 }
 
 Company::Company()
 {
-	time = 0; 
+	time = 0;
+	lines_read = 0;
 }
 
 void Company::updatebusses()
@@ -54,6 +59,10 @@ void Company::updatebusses()
 		}
 		
 	}
+}
+
+void Company::updatestations()
+{
 	for (int i = 1; i < stationNum; i++)
 	{
 		//stationList[i]->promotePassengers(time);
@@ -102,10 +111,9 @@ void Company::readFile()
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
-	int lines;
-	reader >> lines;
+	reader >> lines_read;
 	Event* incomingevent;
-	for(int i=0;i<lines;i++)  //loop until file ends
+	for(int i=0;i<lines_read;i++)  //loop until file ends
 	{
 		char type;
 		reader >> type;   // read event type character
@@ -181,32 +189,100 @@ void Company::simulation()
 	}
 }
 
-int Company::get_time()
+void Company::simulate_phase_1()
 {
-	return timestep[0] * 60 + timestep[1];
-}
+	int rndval;
+	time = 240;
+	Passenger* isleft=nullptr;
+	int type;
 
-void Company::set_time(int hh, int mm)
-{
-	timestep[0] = hh;
-	timestep[1] = mm;
-}
-
-
-void Company::time_up()
-{
-	if (timestep[1] < 59)
-		timestep[1]++;
-	else if (timestep[1] == 59)
+	while (time < 1320)
 	{
-		timestep[0]++;
-		timestep[1] = 0;
+		type = -1;
+		isleft = nullptr;
+
+		if (!executeevent() && lines_read == 0)
+			return;
+
+		rndval = int((rand() % 60 + 1));;
+
+		if(rndval >=1 && rndval <=25)
+		{
+			type = 3;
+		}
+		else if (rndval >= 35 && rndval <= 45)
+		{
+			type = 10;
+		}
+		else if (rndval >= 50 && rndval <= 60)
+		{
+			type = 0;
+		}
+
+		if (type != -1)
+		{
+			if (type == 3)
+			{
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						lines_read--;
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+				if (isleft)
+					continue;
+				type--;
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						lines_read--;
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+				if (isleft)
+					continue;
+				type--;
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						lines_read--;
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						lines_read--;
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+			}
+			
+		}
+		
+		cout << "time [" << time / 60 << ":" << time % 60 << "]" << endl;
+		cout << "random value: " << rndval << endl;
+		cout << "finished queue:" << endl;
+		finished_queue.print();
+		time++;
 	}
-	else if (timestep[0] == 23 && timestep[1] == 59) // 23:59
-	{
-		timestep[0] = 0;
-		timestep[1] = 0;
-	}
+	
 }
 
 void Company::display()

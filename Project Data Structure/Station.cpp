@@ -28,6 +28,101 @@ bool Station::exitpassenger(int id)
 	return false;
 }
 
+void Station::exitpassengerbytype(Passenger*& leaving, int type)
+{
+	bool stop = false;
+	fifoqueue<Passenger*> tempQ;
+	Passenger* moved = nullptr;
+
+	if (type != 10)
+	{
+		while (!stationpassengersForward.isempty())
+		{
+			stationpassengersForward.pop(moved);
+			if (!stop && moved->GetPassengerPriority() == type)
+			{
+				leaving = moved;
+				stop = true;
+			}
+			else
+				tempQ.push(moved);
+		}
+		while (!tempQ.isempty())
+		{
+			tempQ.pop(moved);
+			stationpassengersForward.push(moved, moved->GetPassengerPriority());
+		}
+
+		if (stop)
+			return;
+
+		while (!stationpassengersBackward.isempty())
+		{
+			stationpassengersBackward.pop(moved);
+			if (!stop && moved->GetPassengerPriority() == type)
+			{
+				leaving = moved;
+				stop = true;
+			}
+			else
+				tempQ.push(moved);
+		}
+		while (!tempQ.isempty())
+		{
+			tempQ.pop(moved);
+			stationpassengersBackward.push(moved, moved->GetPassengerPriority());
+		}
+
+		if (stop)
+			return;
+	}
+
+	else
+	{
+		while (!WheelChairQForward.isempty())
+		{
+			WheelChairQForward.pop(moved);
+			if (!stop && moved->GetPassengerPriority() == type)
+			{
+				leaving = moved;
+				stop = true;
+			}
+			else
+				tempQ.push(moved);
+		}
+		while (!tempQ.isempty())
+		{
+			tempQ.pop(moved);
+			WheelChairQForward.push(moved, moved->GetPassengerPriority());
+		}
+
+		if (stop)
+			return;
+
+		while (!WheelChairQBackward.isempty())
+		{
+			WheelChairQBackward.pop(moved);
+			if (!stop && moved->GetPassengerPriority() == type)
+			{
+				leaving = moved;
+				stop = true;
+			}
+			else
+				tempQ.push(moved);
+		}
+		while (!tempQ.isempty())
+		{
+			tempQ.pop(moved);
+			WheelChairQBackward.push(moved, moved->GetPassengerPriority());
+		}
+
+		if (stop)
+			return;
+
+	}
+
+}
+
 void Station::displayinfo()
 {
 	cout << "Station number:" << number << endl;
@@ -183,59 +278,56 @@ void Station::setTravelDistance(int dist)
 
 void Station::promotePassengers(int curr_time)
 {
-	if (!stationpassengersForward.isempty())
+	fifoqueue<Passenger*> notpromotedQ;
+	fifoqueue<Passenger*> promotedQ;
+	Passenger* temp;
+
+	while (!stationpassengersForward.isempty())
 	{
-		fifoqueue<Passenger*> notpromotedQ;
-		fifoqueue<Passenger*> promotedQ;
-		Passenger* temp;
-
-		while (!stationpassengersForward.isempty())
+		stationpassengersForward.pop(temp);
+		if (curr_time - temp->getarrivetime() == temp->getmaxwait())
 		{
-			stationpassengersForward.pop(temp);
-			if (curr_time - temp->getarrivetime() == temp->getmaxwait())
-			{
-				temp->UpgradePriority();
-				promotedQ.push(temp);
-			}
-			else
-				notpromotedQ.push(temp);
+			temp->UpgradePriority();
+			promotedQ.push(temp);
 		}
+		else
+			notpromotedQ.push(temp);
+	}
 
-		while (!promotedQ.isempty())
-		{
-			promotedQ.pop(temp);
-			stationpassengersForward.push(temp,temp->GetPassengerPriority());
-		}
+	while (!promotedQ.isempty())
+	{
+		promotedQ.pop(temp);
+		stationpassengersForward.push(temp, temp->GetPassengerPriority());
+	}
 
-		while (!notpromotedQ.isempty())
-		{
-			notpromotedQ.pop(temp);
-			stationpassengersForward.push(temp, temp->GetPassengerPriority());
-		}
+	while (!notpromotedQ.isempty())
+	{
+		notpromotedQ.pop(temp);
+		stationpassengersForward.push(temp, temp->GetPassengerPriority());
+	}
 
-		while (!stationpassengersBackward.isempty())
+	while (!stationpassengersBackward.isempty())
+	{
+		stationpassengersBackward.pop(temp);
+		if (curr_time - temp->getarrivetime() == temp->getmaxwait())
 		{
-			stationpassengersBackward.pop(temp);
-			if (curr_time - temp->getarrivetime() == temp->getmaxwait())
-			{
-				temp->UpgradePriority();
-				promotedQ.push(temp);
-			}
-			else
-				notpromotedQ.push(temp);
+			temp->UpgradePriority();
+			promotedQ.push(temp);
 		}
+		else
+			notpromotedQ.push(temp);
+	}
 
-		while (!promotedQ.isempty())
-		{
-			promotedQ.pop(temp);
-			stationpassengersBackward.push(temp, temp->GetPassengerPriority());
-		}
+	while (!promotedQ.isempty())
+	{
+		promotedQ.pop(temp);
+		stationpassengersBackward.push(temp, temp->GetPassengerPriority());
+	}
 
-		while (!notpromotedQ.isempty())
-		{
-			notpromotedQ.pop(temp);
-			stationpassengersBackward.push(temp, temp->GetPassengerPriority());
-		}
+	while (!notpromotedQ.isempty())
+	{
+		notpromotedQ.pop(temp);
+		stationpassengersBackward.push(temp, temp->GetPassengerPriority());
 	}
 }
 

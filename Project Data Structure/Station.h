@@ -24,6 +24,8 @@ public:
 	
 	bool exitpassenger(int);
 
+	void exitpassengerbytype(Passenger*&, int);
+
 	void displayinfo();
 	
 	void setTravelDistance(int);

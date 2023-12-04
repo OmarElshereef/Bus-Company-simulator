@@ -1,4 +1,5 @@
 #pragma once
+#include<random>
 #include<iostream>
 #include<fstream>
 #include"Event.h"
@@ -20,10 +21,9 @@ private:
 	fifoqueue<Passenger*> finished_queue;
 	Bus** Busses_arr;
 	int count_busses;
-	int timestep[2]; // timestep in hh:mm 
-	// company working hours: 4:00 to 22:00
 	int time;
-	void executeevent();
+	int lines_read;
+	bool executeevent();
 	void updatebusses();
 public:
 
@@ -32,12 +32,8 @@ public:
 	void readFile();
 	bool takeinpassenger();
 	void simulation();
-	void time_up();
-
-	int get_time();
-
-	void set_time(int hh, int mm); // if needed
-
+	void simulate_phase_1();
+	void updatestations();
 	void display();
 	~Company();
 	
