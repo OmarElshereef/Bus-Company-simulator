@@ -132,7 +132,11 @@ int Passenger::GetPassengerPriority()
 
 void Passenger::UpgradePriority()
 {
-	PassengerPriority = 3;
+	if (PassengerPriority == 0)
+	{
+		PassengerPriority = 3;
+	}
+
 }
 
 void Passenger::setPassengerID(int id)
