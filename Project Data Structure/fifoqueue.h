@@ -74,12 +74,12 @@ public:
 	void print()
 	{
 		Node<T>* temp = head;
-		while (temp)
+		while (temp != nullptr)
 		{
-			cout << temp->getItem() << " ";
+			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-		cout << endl;
+		printer.Print("\n");
 	}
 
 	T peek()
