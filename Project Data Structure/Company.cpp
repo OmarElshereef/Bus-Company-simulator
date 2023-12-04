@@ -10,11 +10,12 @@ bool Company::executeevent()
 	{
 		while (simevents.peek()->gettime() == time)
 		{
-			Event* event;
-			simevents.pop(event);
+			Event* currevent;
+			simevents.pop(currevent);
+			currevent->execute(stationList);
 
-			event->execute(stationList);
-
+			if (dynamic_cast<LeaveEvent*>(currevent) != nullptr)
+				lines_read--;
 			if (simevents.isempty())
 			{
 				break;
@@ -110,10 +111,10 @@ void Company::readFile()
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
 	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
-	
-	reader >> lines_read;
+	int lines;
+	reader >> lines;
 	Event* incomingevent;
-	for(int i=0;i<lines_read;i++)  //loop until file ends
+	for(int i=0;i<lines;i++)  //loop until file ends
 	{
 		char type;
 		reader >> type;   // read event type character
@@ -122,6 +123,7 @@ void Company::readFile()
 		
 		if (type == 'A')   //if event is arrival
 		{
+			lines_read++;
 			string Ptype, disability = "";  char trash;
 			int arrtime, ID, fromstation, tostation;
 
@@ -196,13 +198,15 @@ void Company::simulate_phase_1()
 	Passenger* isleft=nullptr;
 	int type;
 
-	while (time < 1320)
+	while (time <= 1320)
 	{
 		type = -1;
 		isleft = nullptr;
 
-		if (!executeevent() && lines_read == 0)
+		if (simevents.isempty() && lines_read == 0)
 			return;
+
+		executeevent();
 
 		rndval = int((rand() % 60 + 1));;
 
