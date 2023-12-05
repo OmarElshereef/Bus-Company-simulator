@@ -20,13 +20,12 @@ bool ArrivalEvent::execute(Station** list)
 	Passenger* temp = new Passenger(PassengerType, ID, StartStation, EndStation, disability, time);
 
 	list[temp->GetStartStation()]->insertpassenger(temp);
-	//list[temp->GetStartStation()]->displayinfo();
 	return true;
 }
 
 void ArrivalEvent::display()
 {
-	cout << type << " " << ID << " " << time << endl;
+	
 }
 
 

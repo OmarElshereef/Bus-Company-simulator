@@ -150,8 +150,43 @@ public:
 		return false;
 	}
 
-	bool searchforpromoted()
-	{}
+
+	int sizebypri(int priority)
+	{
+		int t = 0;
+		Node<T>* temp = head;
+		while (temp)
+		{
+			if (temp->getItem()->GetPassengerPriority() == priority)
+			{
+				t++;
+			}
+			temp = temp->getNext();
+		}
+
+		return t;
+	}
+
+	bool PrintByPriority(int pri)
+	{
+		bool t = false;
+		Node<T>* temp = head;
+		while (temp != nullptr)
+		{
+			if (temp->getPriority() == pri)
+			{
+				temp->getItem()->display();
+				temp = temp->getNext();
+				t = true;
+			}
+			else if (temp->getPriority() <= pri)
+			{
+				return t;
+			}
+
+		}
+		return t;
+	}
 
 	~priorityqueue()
 	{
@@ -167,8 +202,6 @@ public:
 		}
 	}
 };
-
-
 
 template <class T>
 class priorityqueue<T*>
@@ -311,6 +344,43 @@ public:
 		}
 
 		return false;
+	}
+
+	int sizebypri(int priority)
+	{
+		int t=0 ; 
+		Node<T*>* temp = head;
+		while (temp)
+		{
+			if (temp->getItem()->GetPassengerPriority() == priority)
+			{
+				t++;
+			}
+			temp = temp->getNext();
+		}
+
+		return t;
+	}
+
+	bool PrintByPriority(int pri)
+	{
+		bool t = false;
+		Node<T*>* temp = head;
+		while (temp != nullptr)
+		{
+		      if (temp->getPriority()==pri)
+		      {
+			temp->getItem()->display();
+			
+			t = true; 
+		      }
+		   else if(temp->getPriority() <= pri)
+		   {
+			return t;
+		   }
+			  temp = temp->getNext();
+		}
+		return t;
 	}
 
 	~priorityqueue()

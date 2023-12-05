@@ -3,10 +3,12 @@
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
+#include"UI.h"
 
 class Station
 {
 private:
+	UI printer;
 	static int travel_distance;
 	const int number;
 	static int station_count;
@@ -15,14 +17,16 @@ private:
 	fifoqueue<Bus*> MBusInStationBackward;
 	fifoqueue<Bus*> WBusInStationBackward;
 	priorityqueue<Passenger*> stationpassengersForward;
-	priorityqueue<Passenger*> WheelChairQForward;
+	fifoqueue<Passenger*> WheelChairQForward;
 	priorityqueue<Passenger*> stationpassengersBackward;
-	priorityqueue<Passenger*> WheelChairQBackward;
+	fifoqueue<Passenger*> WheelChairQBackward;
 
 public:
 	Station(int);
 	
 	bool exitpassenger(int);
+
+	void exitpassengerbytype(Passenger*&, int);
 
 	void displayinfo();
 	

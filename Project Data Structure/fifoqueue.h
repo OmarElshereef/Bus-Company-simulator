@@ -1,5 +1,6 @@
 #include "Node.h"
 #include <iostream>
+#include"UI.h"
 #pragma once
 using namespace std;
 
@@ -7,6 +8,7 @@ template <class T>
 class fifoqueue
 {
 private:
+	UI printer;
 	Node<T>* head;
 	Node<T>* tail;
 	int count;
@@ -72,12 +74,12 @@ public:
 	void print()
 	{
 		Node<T>* temp = head;
-		while (temp)
+		while (temp != nullptr)
 		{
-			cout << temp->getItem() << " ";
+			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-		cout << endl;
+		printer.Print("\n");
 	}
 
 	T peek()
@@ -109,6 +111,7 @@ template <class T>
 class fifoqueue<T*>
 {
 private:
+	UI printer;
 	Node<T*>* head;
 	Node<T*>* tail;
 	int count;
@@ -184,6 +187,44 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
+		//printer.Print("\n");
+	}
+	int sizebypri(int priority)
+	{
+		return count;
+	}
+
+	bool PrintByPriority(int pri)
+	{
+		print();
+		return true;
+	}
+	bool remove(T* item)
+	{
+		if (isempty())
+			return false;
+
+		if (*(head->getItem()) == *item)
+		{
+			T* dum;
+			pop(dum);
+			return true;
+		}
+
+		Node<T*>* temp = head;
+		while (temp->getNext())
+		{
+			if (*(temp->getNext()->getItem()) == *item)
+			{
+				Node<T*>* ptr = temp->getNext();
+				temp->setNext(ptr->getNext());
+				delete ptr; // modify if passenger not deleted on leave
+				count--;
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	T* rear()

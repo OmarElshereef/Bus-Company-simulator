@@ -1,30 +1,35 @@
+
 #include "Company.h"
-#include <random>
-using namespace std;
+#include <cstdio>
 
-
-void Company::executeevent()
+bool Company::executeevent()
 {
+	if (simevents.isempty())
+		return false;
+
 	if(!simevents.isempty())
 	{
 		while (simevents.peek()->gettime() == time)
 		{
-			Event* event;
-			simevents.pop(event);
+			Event* currevent;
+			simevents.pop(currevent);
+			
 
-			event->execute(stationList);
-
+			if (currevent->execute(stationList) &&dynamic_cast<LeaveEvent*>(currevent) != nullptr )
+				lines_read--;
 			if (simevents.isempty())
 			{
 				break;
 			}
 		}
+		return true;
 	}
 }
 
 Company::Company()
 {
-	time = 0; 
+	time = 0;
+	lines_read = 0;
 }
 
 void Company::updatebusses()
@@ -56,6 +61,10 @@ void Company::updatebusses()
 		}
 		
 	}
+}
+
+void Company::updatestations()
+{
 	for (int i = 1; i < stationNum; i++)
 	{
 		//stationList[i]->promotePassengers(time);
@@ -70,7 +79,7 @@ void Company::readFile()
 
 	if (!reader.is_open())
 	{
-		cout << "error cannot open file"; //if file couldn't be opened print error message then quit
+		printer.Print("error cannot open file"); //if file couldn't be opened print error message then quit
 		return;
 	}
 
@@ -102,7 +111,6 @@ void Company::readFile()
 
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
-	cout << stations <<" "<< distance <<" "<< wbus <<" "<< mbus <<" "<< wbuscap <<" "<< mbuscap <<" "<< journies <<" "<< wbusfix <<" "<< mbusfix<<endl;  //printing read info for testing
 	
 	int lines;
 	reader >> lines;
@@ -116,6 +124,7 @@ void Company::readFile()
 		
 		if (type == 'A')   //if event is arrival
 		{
+			lines_read++;
 			string Ptype, disability = "";  char trash;
 			int arrtime, ID, fromstation, tostation;
 
@@ -133,11 +142,11 @@ void Company::readFile()
 
 			incomingevent = new ArrivalEvent(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
 			((ArrivalEvent*)incomingevent)->setdata(Ptype,disability,fromstation,tostation);
-			incomingevent->display();  //for testing
+			
 
 			simevents.push(incomingevent);  //pushes event into queue of events
 
-			//cout << Ptype << " "<< time << " " << ID << " " << fromstation << " " << tostation << " " << disability << endl;  //for testing
+			
 		}
 		else if (type == 'L')  // if event is leave
 		{
@@ -153,11 +162,11 @@ void Company::readFile()
 
 			incomingevent = new LeaveEvent(time,ID, 'L'); //create leaveevent
 			((LeaveEvent*)incomingevent)->setstation(leavestation);
-			incomingevent->display();  //for testing
+			
 
 			simevents.push(incomingevent);  //pushes into queue of events
 
-			//cout << time << " " << ID << endl;  
+		 
 		}
 		else
 			break;
@@ -183,115 +192,139 @@ void Company::simulation()
 	}
 }
 
-int Company::get_time()
+void Company::simulate_phase_1()
 {
-	return timestep[0] * 60 + timestep[1];
-}
+	int rndval;
+	time = 240;
+	Passenger* isleft=nullptr;
+	int type;
 
-void Company::set_time(int hh, int mm)
-{
-	timestep[0] = hh;
-	timestep[1] = mm;
-}
-
-
-void Company::time_up()
-{
-	if (timestep[1] < 59)
-		timestep[1]++;
-	else if (timestep[1] == 59)
+	while (time <= 1320)
 	{
-		timestep[0]++;
-		timestep[1] = 0;
+		type = -1;
+		isleft = nullptr;
+		if (simevents.isempty() && lines_read == 0)
+			return;
+
+		executeevent();
+
+		rndval = int((rand() % 60 + 1));;
+
+		if(rndval >=1 && rndval <=25)
+		{
+			type = 3;
+		}
+		else if (rndval >= 35 && rndval <= 45)
+		{
+			type = 10;
+		}
+		else if (rndval >= 50 && rndval <= 60)
+		{
+			type = 0;
+		}
+
+		if (type != -1)
+		{
+			if (type == 3)
+			{
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						if (lines_read!=0)
+						{
+							lines_read--;
+						}
+						
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+				if (isleft == nullptr)
+				{
+					type--;
+					for (int i = 0; i < stationNum; i++)
+					{
+						stationList[i]->exitpassengerbytype(isleft, type);
+						if (isleft)
+						{
+							if (lines_read != 0)
+							{
+								lines_read--;
+							}
+							finished_queue.push(isleft);
+							break;
+						}
+					}
+					if (isleft == nullptr)
+					{
+						type--;
+						for (int i = 0; i < stationNum; i++)
+						{
+							stationList[i]->exitpassengerbytype(isleft, type);
+							if (isleft)
+							{
+								if (lines_read != 0)
+								{
+									lines_read--;
+								}
+								finished_queue.push(isleft);
+								break;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < stationNum; i++)
+				{
+					stationList[i]->exitpassengerbytype(isleft, type);
+					if (isleft)
+					{
+						lines_read--;
+						finished_queue.push(isleft);
+						break;
+					}
+				}
+			}
+			
+		}
+		printer.Print("time ["); 
+		printer.Print(time/60);
+		printer.Print(":");
+		printer.Print(time%60);
+		printer.Print("]\n");
+
+		for (int i = 1; i < stationNum; i++)
+		{
+			stationList[i]->displayinfo();
+		}
+
+		printer.Print("finished queue:\n");
+		finished_queue.print();
+		printer.Print("\n press any key to continue...");
+	
+		getchar();
+		time++;
 	}
-	else if (timestep[0] == 23 && timestep[1] == 59) // 23:59
-	{
-		timestep[0] = 0;
-		timestep[1] = 0;
-	}
+	
 }
 
 void Company::display()
 {
-	cout << "displaying company info:" << endl <<"population:"<<endl;
+	
 	population.print();
-	cout << "stations:" << endl;
+	
 	for (int i = 0; i < stationNum; i++)
 		stationList[i]->displayinfo();
-	cout << "busses:" << endl;
+	
 	for (int i = 0; i < count_busses; i++)
 		Busses_arr[i]->display();
 
 	finished_queue.print();
 }
-
-void Company::simulation_phase_1()
-{
-	while (time <= 24 * 60)
-	{
-		executeevent();
-		move_to_finished_queue();
-		//display_finished_queue();
-		cout << endl << endl << "-------------------------------------------------------------------";
-		time++;
-	}
-}
-
-int Company::generate_ramdom()
-{
-	// Seed the random number generator with a random device
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_int_distribution<> dis(1, 100);
-
-	// Generate a random number between 1 and 100
-	return dis(gen);
-}
-
-void Company::move_to_finished_queue()
-{
-	for (int i = 0; i < stationNum; i++)
-	{
-		//create a random number for each station:
-		int randomNumber = generate_ramdom();
-
-		// get a passenger 
-		Passenger* p = stationList[i]->get_random_passenger(randomNumber);
-
-		//if nullptr (there are no passengers in the stationList)
-		if (!p) continue;
-
-		else
-		{
-			finished_queue.push(p);
-
-			//display the passenger we got
-			cout << "\nfor a Random Number " << randomNumber << ":\nPassenger we got is:\n";
-			p->display();
-		}
-	}
-}
-
-void Company::display_finished_queue()
-{
-	fifoqueue<Passenger*> tempQ;
-	Passenger* p;
-
-	while (!finished_queue.isempty())
-	{
-		finished_queue.pop(p);
-		tempQ.push(p);
-		p->display();
-	}
-
-	while (!tempQ.isempty())
-	{
-		tempQ.pop(p);
-		finished_queue.push(p);
-	}
-}
-
-
 
 Company::~Company()
 {
