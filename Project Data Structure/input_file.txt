@@ -1,19 +1,40 @@
 9 12
-0 1
+10 5
 5 5
 12 3 2
 35 10
-13
-A NP 4:9 1 2 4   
-A WP 4:10 2 2 5 
-A NP 4:11 3 2 5 
-A NP 4:12 4 2 5 
-A NP 4:13 5 2 5 
-A WP 4:15 6 2 5 
-A NP 4:20 7 2 5 
-A SP 4:25 8 2 5 POD
-L 4:26 7 2
-A NP 4:30 9 2 5 
-A NP 4:31 10 2 5
-A WP 4:32 11 2 5
-A NP 4:33 12 2 5
+34
+A NP 4:00 1 2 5
+A SP 4:01 2 2 4 aged
+A SP 4:02 3 5 2 pregnantwomen
+A SP 4:03 4 5 3 POD 
+A NP 4:04 5 1 8 
+A NP 4:05 6 3 7 
+L 4:07 5 1  
+L 4:08 6 3 
+A WP 4:10 7 5 2 
+A SP 4:15 8 9 3 aged
+A SP 4:16 9 5 2 pregnantwomen
+A SP 4:17 10 5 3 POD 
+A NP 4:18 11 1 8 
+A NP 4:19 12 3 7 
+L 4:20 12 3 
+A WP 4:25 13 7 8 
+A SP 4:26 14 8 7 pregnantwomen
+A NP 4:28 15 4 9 
+L 4:31 15 4
+L 4:32 3 2  
+A NP 4:36 16 2 5
+A SP 4:37 17 2 4 aged
+A SP 4:38 16 5 2 pregnantwomen
+A SP 4:39 19 5 3 POD 
+A NP 4:40 20 1 8 
+A NP 4:41 21 3 7 
+L 4:43 20 1   
+A WP 4:44 22 5 2 
+A SP 4:45 23 9 3 aged
+A SP 4:47 25 5 3 POD 
+A NP 4:48 26 1 8 
+A NP 4:49 27 3 7 
+L 4:50 27 3
+A NP 4:51 28 4 8 

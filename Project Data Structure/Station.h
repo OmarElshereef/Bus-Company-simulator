@@ -17,9 +17,9 @@ private:
 	fifoqueue<Bus*> MBusInStationBackward;
 	fifoqueue<Bus*> WBusInStationBackward;
 	priorityqueue<Passenger*> stationpassengersForward;
-	priorityqueue<Passenger*> WheelChairQForward;
+	fifoqueue<Passenger*> WheelChairQForward;
 	priorityqueue<Passenger*> stationpassengersBackward;
-	priorityqueue<Passenger*> WheelChairQBackward;
+	fifoqueue<Passenger*> WheelChairQBackward;
 
 public:
 	Station(int);

@@ -94,7 +94,7 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 		while (!tempQ.isempty())
 		{
 			tempQ.pop(moved);
-			WheelChairQForward.push(moved, moved->GetPassengerPriority());
+			WheelChairQForward.push(moved);
 		}
 
 		if (stop)
@@ -114,7 +114,7 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 		while (!tempQ.isempty())
 		{
 			tempQ.pop(moved);
-			WheelChairQBackward.push(moved, moved->GetPassengerPriority());
+			WheelChairQBackward.push(moved);
 		}
 
 		if (stop)
@@ -182,14 +182,14 @@ void Station::insertpassenger(Passenger* incoming)
 	if (incoming->getdirection())
 	{
 		if (incoming->GetPassengerPriority() == 10)
-			WheelChairQForward.push(incoming,10);
+			WheelChairQForward.push(incoming);
 		else
 			stationpassengersForward.push(incoming, incoming->GetPassengerPriority());
 	}
 	else
 	{
 		if (incoming->GetPassengerPriority() == 10)
-			WheelChairQBackward.push(incoming,10);
+			WheelChairQBackward.push(incoming);
 		else
 			stationpassengersBackward.push(incoming, incoming->GetPassengerPriority());
 	}

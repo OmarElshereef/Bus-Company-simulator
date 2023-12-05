@@ -371,14 +371,14 @@ public:
 		      if (temp->getPriority()==pri)
 		      {
 			temp->getItem()->display();
-			temp = temp->getNext();
+			
 			t = true; 
 		      }
 		   else if(temp->getPriority() <= pri)
 		   {
 			return t;
 		   }
-		 
+			  temp = temp->getNext();
 		}
 		return t;
 	}
