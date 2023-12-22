@@ -187,7 +187,44 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-		printer.Print("\n");
+		//printer.Print("\n");
+	}
+	int sizebypri(int priority)
+	{
+		return count;
+	}
+
+	bool PrintByPriority(int pri)
+	{
+		print();
+		return true;
+	}
+	bool remove(T* item)
+	{
+		if (isempty())
+			return false;
+
+		if (*(head->getItem()) == *item)
+		{
+			T* dum;
+			pop(dum);
+			return true;
+		}
+
+		Node<T*>* temp = head;
+		while (temp->getNext())
+		{
+			if (*(temp->getNext()->getItem()) == *item)
+			{
+				Node<T*>* ptr = temp->getNext();
+				temp->setNext(ptr->getNext());
+				delete ptr; // modify if passenger not deleted on leave
+				count--;
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	T* rear()

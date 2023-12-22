@@ -1,3 +1,4 @@
+
 #include "Company.h"
 #include <cstdio>
 
@@ -12,10 +13,9 @@ bool Company::executeevent()
 		{
 			Event* currevent;
 			simevents.pop(currevent);
+			
 
-			currevent->execute(stationList);
-
-			if (dynamic_cast<LeaveEvent*>(currevent) != nullptr)
+			if (currevent->execute(stationList) &&dynamic_cast<LeaveEvent*>(currevent) != nullptr )
 				lines_read--;
 			if (simevents.isempty())
 			{
@@ -207,7 +207,6 @@ void Company::simulate_phase_1()
 	{
 		type = -1;
 		isleft = nullptr;
-
 		if (simevents.isempty() && lines_read == 0)
 			return;
 
@@ -237,35 +236,47 @@ void Company::simulate_phase_1()
 					stationList[i]->exitpassengerbytype(isleft, type);
 					if (isleft)
 					{
-						lines_read--;
+						if (lines_read!=0)
+						{
+							lines_read--;
+						}
+						
 						finished_queue.push(isleft);
 						break;
 					}
 				}
-				if (isleft)
-					continue;
-				type--;
-				for (int i = 0; i < stationNum; i++)
+				if (isleft == nullptr)
 				{
-					stationList[i]->exitpassengerbytype(isleft, type);
-					if (isleft)
+					type--;
+					for (int i = 0; i < stationNum; i++)
 					{
-						lines_read--;
-						finished_queue.push(isleft);
-						break;
+						stationList[i]->exitpassengerbytype(isleft, type);
+						if (isleft)
+						{
+							if (lines_read != 0)
+							{
+								lines_read--;
+							}
+							finished_queue.push(isleft);
+							break;
+						}
 					}
-				}
-				if (isleft)
-					continue;
-				type--;
-				for (int i = 0; i < stationNum; i++)
-				{
-					stationList[i]->exitpassengerbytype(isleft, type);
-					if (isleft)
+					if (isleft == nullptr)
 					{
-						lines_read--;
-						finished_queue.push(isleft);
-						break;
+						type--;
+						for (int i = 0; i < stationNum; i++)
+						{
+							stationList[i]->exitpassengerbytype(isleft, type);
+							if (isleft)
+							{
+								if (lines_read != 0)
+								{
+									lines_read--;
+								}
+								finished_queue.push(isleft);
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -297,7 +308,8 @@ void Company::simulate_phase_1()
 
 		printer.Print("finished queue:\n");
 		finished_queue.print();
-		printer.Print("pressany key to continue...");
+		printer.Print("\n press any key to continue...");
+	
 		getchar();
 		time++;
 	}

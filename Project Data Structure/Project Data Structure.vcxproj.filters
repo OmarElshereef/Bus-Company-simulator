@@ -42,9 +42,6 @@
     <ClCompile Include="Event.cpp">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Header Files\Classes\functionality Classes</Filter>
-    </ClCompile>
     <ClCompile Include="ArrivalEvent.cpp">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="Station.cpp">
       <Filter>Header Files\Classes\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +80,6 @@
     <ClInclude Include="Event.h">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Header Files\Classes\functionality Classes</Filter>
-    </ClInclude>
     <ClInclude Include="ArrivalEvent.h">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
@@ -91,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Station.h">
       <Filter>Header Files\Classes\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
