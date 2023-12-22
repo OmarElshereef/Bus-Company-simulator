@@ -145,6 +145,8 @@ public:
 				count--;
 				return true;
 			}
+			else
+				temp = (temp->getNext());
 		}
 
 		return false;
@@ -179,10 +181,12 @@ public:
 				temp = temp->getNext();
 				t = true;
 			}
-			else if (temp->getPriority() <= pri)
+			else if (temp->getPriority() > pri)
 			{
 				return t;
 			}
+			else if(temp->getPriority() < pri)
+			temp = temp->getNext();
 
 		}
 		return t;
@@ -341,6 +345,7 @@ public:
 				count--;
 				return true;
 			}
+			temp = temp->getNext();
 		}
 
 		return false;
@@ -368,17 +373,20 @@ public:
 		Node<T*>* temp = head;
 		while (temp != nullptr)
 		{
-		      if (temp->getPriority()==pri)
-		      {
-			temp->getItem()->display();
-			temp = temp->getNext();
-			t = true; 
-		      }
-		   else if(temp->getPriority() <= pri)
-		   {
-			return t;
-		   }
-		 
+			if (temp->getPriority() == pri)
+			{
+				temp->getItem()->display();
+				temp = temp->getNext();
+				t = true;
+			}
+			else if (temp->getPriority() > pri)
+			{
+				return t;
+			}
+			else if(temp->getPriority() < pri)
+			{
+				temp = temp->getNext();
+			}
 		}
 		return t;
 	}

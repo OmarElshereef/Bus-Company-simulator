@@ -12,6 +12,7 @@ bool Company::executeevent()
 		{
 			Event* currevent;
 			simevents.pop(currevent);
+
 			currevent->execute(stationList);
 
 			if (dynamic_cast<LeaveEvent*>(currevent) != nullptr)
@@ -180,14 +181,18 @@ bool Company::takeinpassenger()
 
 }
 
-
 void Company::simulation()
 {
+	time = 240;
 	while (time<=24*60)
 	{
 		executeevent();
 		updatebusses();
+		display();
+		printer.Print("press any key to continue...");
+		getchar();
 		time++;
+
 	}
 }
 
@@ -301,14 +306,17 @@ void Company::simulate_phase_1()
 
 void Company::display()
 {
-	
-	population.print();
-	
+	printer.Print("time [");
+	printer.Print(time / 60);
+	printer.Print(":");
+	printer.Print(time % 60);
+	printer.Print("]\n");
+
 	for (int i = 0; i < stationNum; i++)
 		stationList[i]->displayinfo();
 	
-	for (int i = 0; i < count_busses; i++)
-		Busses_arr[i]->display();
+	//for (int i = 0; i < count_busses; i++)
+		//Busses_arr[i]->display();
 
 	finished_queue.print();
 }

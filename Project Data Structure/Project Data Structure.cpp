@@ -11,20 +11,6 @@ int main()
 {
 	Company c;
 	c.readFile();
-	c.simulate_phase_1();
-	/*Station **t=new Station*[1];
-	Passenger* psg= new Passenger();
-
-	t[0] = new Station(0);
-	ArrivalEvent err(0,0,'A');
-	err.setdata("NP","",0,5);
-	err.execute(t, 1);
-
-	t[0]->displayinfo();*/
-
-	/*t->insertpassenger(psg);
-
-	t->displayinfo();*/
-	
+	c.simulation();
 }
 
