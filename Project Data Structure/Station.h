@@ -12,6 +12,7 @@ private:
 	static int travel_distance;
 	const int number;
 	static int station_count;
+	static int boardTime;
 	fifoqueue<Bus*> MBusInStationForward;
 	fifoqueue<Bus*> WBusInStationForward;
 	fifoqueue<Bus*> MBusInStationBackward;
@@ -41,6 +42,10 @@ public:
 	void DequeueBus(int curr_time);
 
 	static void setstationcount(int);
+
+	void setboardtime(int);
+
+	void refreshstation(fifoqueue<Passenger*>& finished_queue);
 	~Station(); 
 };
 

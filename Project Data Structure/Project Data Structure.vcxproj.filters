@@ -25,16 +25,19 @@
     <Filter Include="Header Files\Classes\functionality Classes">
       <UniqueIdentifier>{4c16c328-1580-4401-b57f-73a02c43febf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Classes\entities\Bus">
+      <UniqueIdentifier>{63a53f6b-9993-4069-bb84-fe5c1269262a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classes\entities\Passenger">
+      <UniqueIdentifier>{b08cfe44-ee1c-4b55-9b09-1be9e2891b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Classes\entities\Station">
+      <UniqueIdentifier>{bad28d7a-0734-4bd0-a3a7-ea0e570e47b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project Data Structure.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Passenger.cpp">
-      <Filter>Header Files\Classes\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Bus.cpp">
-      <Filter>Header Files\Classes\entities</Filter>
     </ClCompile>
     <ClCompile Include="Company.cpp">
       <Filter>Header Files\Classes\functionality Classes</Filter>
@@ -48,11 +51,17 @@
     <ClCompile Include="LeaveEvent.cpp">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Station.cpp">
-      <Filter>Header Files\Classes\entities</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bus.cpp">
+      <Filter>Header Files\Classes\entities\Bus</Filter>
+    </ClCompile>
+    <ClCompile Include="Passenger.cpp">
+      <Filter>Header Files\Classes\entities\Passenger</Filter>
+    </ClCompile>
+    <ClCompile Include="Station.cpp">
+      <Filter>Header Files\Classes\entities\Station</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,12 +77,6 @@
     <ClInclude Include="Time.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="Passenger.h">
-      <Filter>Header Files\Classes\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Bus.h">
-      <Filter>Header Files\Classes\entities</Filter>
-    </ClInclude>
     <ClInclude Include="Company.h">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
@@ -86,11 +89,17 @@
     <ClInclude Include="LeaveEvent.h">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Station.h">
-      <Filter>Header Files\Classes\entities</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bus.h">
+      <Filter>Header Files\Classes\entities\Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="Passenger.h">
+      <Filter>Header Files\Classes\entities\Passenger</Filter>
+    </ClInclude>
+    <ClInclude Include="Station.h">
+      <Filter>Header Files\Classes\entities\Station</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

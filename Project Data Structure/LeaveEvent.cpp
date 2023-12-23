@@ -11,11 +11,8 @@ LeaveEvent::LeaveEvent(int t=0,int i=0,char c='a') : Event(t,i, c)
 bool LeaveEvent::execute(Station** list)
 {
 	bool is = false;
-	
-	
-		is = list[station]->exitpassenger(ID);
-
-		return is;
+	is = list[station]->exitpassenger(ID);
+	return is;
 }
 
 void LeaveEvent::display()

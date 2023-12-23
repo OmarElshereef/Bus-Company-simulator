@@ -381,11 +381,11 @@ public:
 			}
 			else if (temp->getPriority() > pri)
 			{
-				return t;
+				temp = temp->getNext();
 			}
 			else if(temp->getPriority() < pri)
 			{
-				temp = temp->getNext();
+				return t;
 			}
 		}
 		return t;

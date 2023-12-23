@@ -4,16 +4,17 @@
 int Bus::TimeBetweenStations = 0;
 int Bus::max_trips = 0;
 
-Bus::Bus(int capacity, int s, char type)
-	: BC(capacity),station(s)
+Bus::Bus(int capacity, int s, char type, int num)
+	: BC(capacity), station(s)
 {
+	number = num;
 	passenger_arr = new Passenger * [capacity];
 	curr_trips = 0;
 	num_of_passengers = 0;
 	direction = true;
-	closed = false;
 	bus_type = type;
 	InStation = true;
+	doneemptying = true;
 }
 
 Bus::~Bus()
@@ -21,30 +22,25 @@ Bus::~Bus()
 	delete[] passenger_arr;
 }
 
+void Bus::setemptying(bool done)
+{
+	doneemptying = done;
+}
+
+bool Bus::isdoneemptying()
+{
+	return doneemptying;
+}
+
 void Bus::display()
 {
-	string available = "No, not available", mixed = "No, not mixed bus";
-	if (is_available())
-		available = "Yes";
-	if (is_mixed_bus())
-		mixed = "Yes, mixed bus";
-
-	cout << "Reading Bus Data: "<< endl
-		<< "Station Number: " << get_station() << endl
-		<< "Number of Passengers: " << get_passengers()<< endl
-		<< "Is available?: " << available << endl
-		<< "Station Number: " << mixed << endl
-		<< "Station Number: " << maintenance_time() << endl;
-}
-
-bool Bus::get_door()
-{
-	return closed; // closed=1 , open=0
-}
-
-void Bus::set_door(bool door)
-{
-	closed = door; // closed=1 , open=0
+	printer.Print("bus #" + to_string(number) + "\t");
+	printer.Print("direction: " + to_string(direction) +"\t");
+	if (InStation)
+		printer.Print("station: " + to_string(station) + "\t");
+	else
+		printer.Print("not in station\t");
+	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\n");
 }
 
 int Bus::get_station()
@@ -62,12 +58,28 @@ void Bus::set_direction(bool d) //d=true => forward or d=false => backward
 	direction = d;
 }
 
-void Bus::upgrade_station()
+void Bus::upgrade_station(int size, int time)
 {
 	if (direction == true)
-		station++;
+	{
+		if (station == size)
+		{
+			setArriveTime(time + 1);
+			direction = false;
+		}
+		else
+			station++;
+	}
 	else
+	{
+		if (station == 1)
+		{
+			setArriveTime(time + 1);
+			direction = true;
+		}
+		else
 		station--;
+	}
 
 }
 
@@ -116,12 +128,7 @@ bool Bus::maintenance_time()
 
 void Bus::remove(int index)
 {
-	if (index + 1 == num_of_passengers)
-	{
-		//delete passenger_arr[index];
-		num_of_passengers--;
-		return;
-	}
+	passenger_arr[index] = nullptr;
 
 	for (int i = index ; i < num_of_passengers; i++)
 	{
@@ -143,37 +150,25 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-void Bus::exit_passenger( fifoqueue<Passenger*> &finished_array)
+bool Bus::exit_passenger(fifoqueue<Passenger*> &finished_array, int permin)
 {
-
+	bool flag = true;
+	int done = 0;
 	for (int i = 0; i < num_of_passengers; i++)
 	{
+		if (done == permin)
+			break;
+
 		if (passenger_arr[i]->GetEndStation() == station)
 		{
 			finished_array.push(passenger_arr[i]);
 			remove(i);
+			flag = false;
+			i--;
+			done++;
 		}
 	}
-}
-
-
-void Bus::arrive_at_station()
-{
-	// Call the Company's method to handle the arrival
-	//company->handle_bus_arrival(this);
-
-	// Trigger the arrival event
-	//arrivalEvent->trigger();
-
-}
-
-void Bus::leave_station()
-{
-	// Call the Company's method to handle the departure
-	//company->handle_bus_departure(this);
-
-	// Trigger the leave event
-	//leaveEvent->trigger();
+	return flag;
 }
 
 void Bus::setArriveTime(int t)

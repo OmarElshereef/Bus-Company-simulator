@@ -34,15 +34,15 @@ Company::Company()
 
 void Company::updatebusses()
 {
-	if (time == 0)
+	if (time == 240)
 	{
 		for (int i = 0; i < count_busses; i++)
-		{
+		{  
 			stationList[0]->EnqueueBus(Busses_arr[i], finished_queue);
 		}
 	}
 
-	if (time<=15*count_busses)
+	if (time<=(240)+15*count_busses)
 	{
 		if(time%15==0)
 		{
@@ -67,7 +67,8 @@ void Company::updatestations()
 {
 	for (int i = 1; i < stationNum; i++)
 	{
-		//stationList[i]->promotePassengers(time);
+		stationList[i]->promotePassengers(time);
+		stationList[i]->refreshstation(finished_queue);
 		stationList[i]->DequeueBus(time);
 	}
 }
@@ -88,7 +89,7 @@ void Company::readFile()
 	int journies, wbusfix, mbusfix;
 	int maxwait, geton;
 
-	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >>maxwait>>geton; // reading initial values in order
+	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >> maxwait>> geton; // reading initial values in order
 	
 	stationList = new Station*[stations+1];  stationNum = stations+1;  //setting array for stations
 	
@@ -96,16 +97,16 @@ void Company::readFile()
 	{
 		stationList[i] = new Station(i);
 	}
-	stationList[0]->setTravelDistance(distance); stationList[0]->setstationcount(stations);
+	stationList[0]->setTravelDistance(distance); stationList[0]->setstationcount(stations); stationList[0]->setboardtime(geton);
 
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
 
 	for (int i = 0; i < count_busses; i++)  //loop for creating busses
 	{
 		if (i < mbus)
-			Busses_arr[i] = new Bus(mbuscap, 0, 'M');
+			Busses_arr[i] = new Bus(mbuscap, 0, 'M',i+1);
 		else
-			Busses_arr[i] = new Bus(wbuscap, 0, 'W');
+			Busses_arr[i] = new Bus(wbuscap, 0, 'W',i+1);
 	}
 	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);
 
@@ -188,6 +189,7 @@ void Company::simulation()
 	{
 		executeevent();
 		updatebusses();
+		updatestations();
 		display();
 		printer.Print("press any key to continue...");
 		getchar();
@@ -327,8 +329,8 @@ void Company::display()
 	for (int i = 0; i < stationNum; i++)
 		stationList[i]->displayinfo();
 	
-	//for (int i = 0; i < count_busses; i++)
-		//Busses_arr[i]->display();
+	for (int i = 0; i < count_busses; i++)
+		Busses_arr[i]->display();
 
 	finished_queue.print();
 }
