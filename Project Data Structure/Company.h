@@ -22,6 +22,8 @@ private:
 	fifoqueue<Passenger*> finished_queue;
 	Bus** Busses_arr;
 	int count_busses;
+	int count_Mbus;
+	int count_wbus;
 	int time;
 	int lines_read;
 	bool executeevent();
@@ -31,11 +33,19 @@ public:
 	Company();
 	
 	void readFile();
+
+	void writeFile();
+
 	bool takeinpassenger();
+
 	void simulation();
+
 	void simulate_phase_1();
+
 	void updatestations();
+
 	void display();
+
 	~Company();
 	
 };

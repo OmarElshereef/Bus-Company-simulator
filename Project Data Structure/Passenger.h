@@ -17,6 +17,12 @@ class Passenger
 	
 	int arrivetime;
 
+	int finishtime;
+
+	bool promoted;
+
+	int movetime;
+
 	string PassengerType; //NP for normal passenger,SP for special passenger , WP for wheel chair passenger
 
 	bool direction;
@@ -26,6 +32,10 @@ public:
 	Passenger(string passtype = "NP", int PassID = 0, int Start = 0, int End=0, string PriorityType = "no priority", int arriving=0);
 	
 	void SetPassengerType(string Type);
+
+	bool getpromoted();
+
+	void setpromoted(bool);
 
 	void SetPassengerPriority(string type);
 
@@ -43,6 +53,10 @@ public:
 
 	int getarrivetime();
 
+	int getmovetime();
+
+	void setmovetime(int);
+
 	int GetCurrentStation(); 
 
 	string GetPassengerType();
@@ -52,6 +66,10 @@ public:
 	static void setgetontime(int);
 
 	static void setmaxwait(int);
+
+	void setfinishtime(int);
+
+	int getfinishtime();
 
 	void display();
 	

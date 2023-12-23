@@ -138,10 +138,11 @@ void Bus::remove(int index)
 	return;
 }
 
-bool Bus::enter_passenger(Passenger* p)
+bool Bus::enter_passenger(Passenger* p, int curr_time)
 {
 	if (is_available())
 	{
+		p->setmovetime(curr_time);
 		int num = get_passengers();
 		passenger_arr[num] = p;
 		set_passengers(num + 1);
@@ -150,7 +151,7 @@ bool Bus::enter_passenger(Passenger* p)
 	return false;
 }
 
-bool Bus::exit_passenger(fifoqueue<Passenger*> &finished_array, int permin)
+bool Bus::exit_passenger(fifoqueue<Passenger*> &finished_array, int permin, int curr_time)
 {
 	bool flag = true;
 	int done = 0;
@@ -161,6 +162,7 @@ bool Bus::exit_passenger(fifoqueue<Passenger*> &finished_array, int permin)
 
 		if (passenger_arr[i]->GetEndStation() == station)
 		{
+			passenger_arr[i]->setfinishtime(curr_time);
 			finished_array.push(passenger_arr[i]);
 			remove(i);
 			flag = false;

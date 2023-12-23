@@ -56,6 +56,16 @@ void Passenger::SetPassengerType(string Type)
 	PassengerType = Type;
 }
 
+bool Passenger::getpromoted()
+{
+	return promoted;
+}
+
+void Passenger::setpromoted(bool p)
+{
+	promoted = p;
+}
+
 void Passenger::SetPassengerPriority(string type)
 
 {
@@ -115,6 +125,16 @@ int Passenger::getarrivetime()
 	return arrivetime;
 }
 
+int Passenger::getmovetime()
+{
+	return movetime;
+}
+
+void Passenger::setmovetime(int t)
+{
+	movetime = t;
+}
+
 int Passenger::GetCurrentStation()
 {
 	return CurrentStation;
@@ -152,6 +172,16 @@ void Passenger::setgetontime(int geton)
 void Passenger::setmaxwait(int wait)
 {
 	maxWait = wait;
+}
+
+void Passenger::setfinishtime(int t)
+{
+	finishtime = t;
+}
+
+int Passenger::getfinishtime()
+{
+	return finishtime;
 }
 
 Passenger ::~Passenger()

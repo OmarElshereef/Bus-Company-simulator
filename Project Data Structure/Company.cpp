@@ -68,7 +68,7 @@ void Company::updatestations()
 	for (int i = 1; i < stationNum; i++)
 	{
 		stationList[i]->promotePassengers(time);
-		stationList[i]->refreshstation(finished_queue);
+		stationList[i]->refreshstation(finished_queue,time);
 		stationList[i]->DequeueBus(time);
 	}
 }
@@ -100,6 +100,7 @@ void Company::readFile()
 	stationList[0]->setTravelDistance(distance); stationList[0]->setstationcount(stations); stationList[0]->setboardtime(geton);
 
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
+	count_Mbus = mbus; count_wbus = wbus;
 
 	for (int i = 0; i < count_busses; i++)  //loop for creating busses
 	{
@@ -175,6 +176,45 @@ void Company::readFile()
 
 }
 
+void Company::writeFile()
+{
+	ofstream writer("output_file.txt");
+	writer << "FT\t\t" << "ID\t\t" << "AT\t\t" << "WT\t\t" << "TT" << endl;
+	Passenger* temp;
+	int totalsize = finished_queue.size();
+	int sizeNP = 0;
+	int sizeSP = 0;
+	int sizeWP = 0;
+	int totalwait = 0;
+	int totaltrip = 0;
+	int totalpromoted = 0;
+
+	while (!finished_queue.isempty())
+	{
+		finished_queue.pop(temp);
+		totalwait += (temp->getmovetime() - temp->getarrivetime());
+		totaltrip += (temp->getfinishtime() - temp->getmovetime());
+		if (temp->getpromoted())
+			totalpromoted++;
+		if (temp->GetPassengerPriority() == 0)
+			sizeNP++;
+		if (temp->GetPassengerPriority() == 10)
+			sizeWP++;
+		if (temp->GetPassengerPriority() == 1 || temp->GetPassengerPriority() == 2 || temp->GetPassengerPriority() == 3)
+			sizeSP++;
+
+		writer << temp->getfinishtime()/60<<":"<<temp->getfinishtime()%60 << "\t\t" << temp->getPassengerID() << "\t\t" << temp->getarrivetime()/60 <<":"<< temp->getarrivetime()%60
+			<<"\t\t" << (temp->getmovetime() - temp->getarrivetime())/60 <<":"<<(temp->getfinishtime() - temp->getarrivetime()) % 60 <<"\t\t"
+			<< (temp->getfinishtime() - temp->getmovetime())/60 <<":"<< (temp->getfinishtime() - temp->getmovetime()) % 60 << endl;
+	}
+
+	writer << "Passengers: " << totalsize <<"[NP: "<<sizeNP<<", SP: "<<sizeSP<<", WP: "<<sizeWP<<"]"<<endl;
+	writer << "Passenger avg wait time = " << totalwait / totalsize / 60 << ":" << totalwait / totalsize % 60 << endl;
+	writer << "Passenger avg trip time = " << totaltrip / totalsize / 60 << ":" << totaltrip / totalsize % 60 << endl;
+	writer << "Auto-promoted Passengers: " << totalpromoted / totalsize * 100 << "%" << endl;
+	writer << "Busses: " << count_busses << " [WBus: " << count_wbus << ", MBus: " << count_Mbus <<"]" << endl;
+}
+
 bool Company::takeinpassenger()
 {
 	if (simevents.isempty())
@@ -185,7 +225,7 @@ bool Company::takeinpassenger()
 void Company::simulation()
 {
 	time = 240;
-	while (time<=24*60)
+	while (time<=10*60)
 	{
 		executeevent();
 		updatebusses();

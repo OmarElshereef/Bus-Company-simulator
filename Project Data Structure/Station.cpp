@@ -226,13 +226,13 @@ void Station::EnqueueBus(Bus* incoming, fifoqueue<Passenger*> &finished_queue)
 
 }
 
-void Station::refreshstation(fifoqueue<Passenger*> &finished_queue)
+void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time)
 {
 	int perminute = 60 / boardTime;
 
 	if (!MBusInStationForward.isempty())
 	{
-		if (MBusInStationForward.peek()->exit_passenger(finished_queue, perminute))
+		if (MBusInStationForward.peek()->exit_passenger(finished_queue, perminute,curr_time))
 			MBusInStationForward.peek()->setemptying(true);
 
 		for (int i = 0; i < perminute; i++)
@@ -244,14 +244,14 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue)
 
 			stationpassengersForward.pop(psg);
 
-			MBusInStationForward.peek()->enter_passenger(psg);
+			MBusInStationForward.peek()->enter_passenger(psg,curr_time);
 
 		}
 	}
 
 	if (!MBusInStationBackward.isempty())
 	{
-		if (MBusInStationBackward.peek()->exit_passenger(finished_queue, perminute))
+		if (MBusInStationBackward.peek()->exit_passenger(finished_queue, perminute,curr_time))
 			MBusInStationBackward.peek()->setemptying(true);
 
 		for (int i = 0; i < perminute; i++)
@@ -263,14 +263,14 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue)
 
 			stationpassengersBackward.pop(psg);
 
-			MBusInStationBackward.peek()->enter_passenger(psg);
+			MBusInStationBackward.peek()->enter_passenger(psg,curr_time);
 
 		}
 	}
 	
 	if (!WBusInStationForward.isempty())
 	{ 
-		if (WBusInStationForward.peek()->exit_passenger(finished_queue, perminute))
+		if (WBusInStationForward.peek()->exit_passenger(finished_queue, perminute,curr_time))
 			WBusInStationForward.peek()->setemptying(true);
 
 		for (int i = 0; i < perminute; i++)
@@ -282,14 +282,14 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue)
 
 			WheelChairQForward.pop(psg);
 
-			WBusInStationForward.peek()->enter_passenger(psg);
+			WBusInStationForward.peek()->enter_passenger(psg,curr_time);
 
 		}
 	}
 
 	if (!WBusInStationBackward.isempty())
 	{
-		if (WBusInStationBackward.peek()->exit_passenger(finished_queue, perminute))
+		if (WBusInStationBackward.peek()->exit_passenger(finished_queue, perminute,curr_time))
 			WBusInStationBackward.peek()->setemptying(true);
 
 		for (int i = 0; i < perminute; i++)
@@ -301,7 +301,7 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue)
 
 			WheelChairQBackward.pop(psg);
 
-			WBusInStationBackward.peek()->enter_passenger(psg);
+			WBusInStationBackward.peek()->enter_passenger(psg,curr_time);
 		}
 	}
 }
@@ -371,8 +371,9 @@ void Station::promotePassengers(int curr_time)
 	while (!stationpassengersForward.isempty())
 	{
 		stationpassengersForward.pop(temp);
-		if (curr_time - temp->getarrivetime() == temp->getmaxwait())
+		if (curr_time - temp->getarrivetime() == temp->getmaxwait() && temp->GetPassengerPriority() == 0)
 		{
+			temp->setpromoted(true);
 			temp->UpgradePriority();
 			promotedQ.push(temp);
 		}
@@ -395,8 +396,9 @@ void Station::promotePassengers(int curr_time)
 	while (!stationpassengersBackward.isempty())
 	{
 		stationpassengersBackward.pop(temp);
-		if (curr_time - temp->getarrivetime() == temp->getmaxwait())
+		if (curr_time - temp->getarrivetime() == temp->getmaxwait() && temp->GetPassengerPriority() == 0)
 		{
+			temp->setpromoted(true);
 			temp->UpgradePriority();
 			promotedQ.push(temp);
 		}

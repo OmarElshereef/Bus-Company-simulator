@@ -45,7 +45,7 @@ public:
 
 	void setboardtime(int);
 
-	void refreshstation(fifoqueue<Passenger*>& finished_queue);
+	void refreshstation(fifoqueue<Passenger*>& finished_queue, int curr_time);
 	~Station(); 
 };
 

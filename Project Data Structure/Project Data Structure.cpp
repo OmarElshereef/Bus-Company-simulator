@@ -12,5 +12,6 @@ int main()
 	Company c;
 	c.readFile();
 	c.simulation();
+	c.writeFile();
 }
 

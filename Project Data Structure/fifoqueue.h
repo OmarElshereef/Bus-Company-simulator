@@ -187,8 +187,8 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-		//printer.Print("\n");
 	}
+
 	int sizebypri(int priority)
 	{
 		return count;
