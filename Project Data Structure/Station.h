@@ -8,19 +8,19 @@
 class Station
 {
 private:
-	UI printer;
-	static int travel_distance;
-	const int number;
-	static int station_count;
-	static int boardTime;
-	fifoqueue<Bus*> MBusInStationForward;
-	fifoqueue<Bus*> WBusInStationForward;
-	fifoqueue<Bus*> MBusInStationBackward;
-	fifoqueue<Bus*> WBusInStationBackward;
-	priorityqueue<Passenger*> stationpassengersForward;
-	fifoqueue<Passenger*> WheelChairQForward;
-	priorityqueue<Passenger*> stationpassengersBackward;
-	fifoqueue<Passenger*> WheelChairQBackward;
+	UI printer;                       //print using ui class
+	static int travel_distance;       //travel distance between each station
+	const int number;                //number of the current station
+	static int station_count;        //number of stations in total
+	static int boardTime;            //geton/off time
+	fifoqueue<Bus*> MBusInStationForward;      //Mbusses in station heading forward
+	fifoqueue<Bus*> WBusInStationForward;       //Wbusses in station heading backwards
+	fifoqueue<Bus*> MBusInStationBackward;      //Mbusses in station heading forward
+	fifoqueue<Bus*> WBusInStationBackward;        //Wbusses in station heading backwards
+	priorityqueue<Passenger*> stationpassengersForward;      //normal passengers going forward
+	fifoqueue<Passenger*> WheelChairQForward;             //wheel chair passengers going forward
+	priorityqueue<Passenger*> stationpassengersBackward;     //normal passengers going backward
+	fifoqueue<Passenger*> WheelChairQBackward;         //wheel chair passengers going backward
 
 public:
 	Station(int);
@@ -37,7 +37,7 @@ public:
 	
 	void insertpassenger(Passenger*);
 	
-	void EnqueueBus(Bus* incoming,fifoqueue<Passenger*> &finished_queue);
+	void EnqueueBus(Bus* incoming);
 
 	void DequeueBus(int curr_time);
 

@@ -24,6 +24,8 @@ private:
 	int count_busses;
 	int count_Mbus;
 	int count_wbus;
+	int capacityM;
+	int capacityW;
 	int time;
 	int lines_read;
 	bool executeevent();

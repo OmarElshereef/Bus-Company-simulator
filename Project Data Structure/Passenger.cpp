@@ -49,6 +49,8 @@ Passenger::Passenger(string passtype , int PassID , int Start , int End, string 
 	{
 		direction = false;
 	}
+
+	promoted = false;
 }
 
 void Passenger::SetPassengerType(string Type)

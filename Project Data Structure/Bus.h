@@ -21,6 +21,10 @@ private:
 	bool InStation;               //if the bus is instation or not
 	bool doneemptying;
 	int distance;   // time for each bus and =0 when arrive station
+	bool door;
+	bool offhours;
+	int busytime;
+	float utilization;
 
 public:
 	Bus(int capacity = 100, int s = 0, char type = 'M', int num=0);
@@ -43,6 +47,10 @@ public:
 	
 	int get_passengers();
 	
+	void setutilization();
+
+	float getutilization();
+
 	void set_passengers(int p);
 	
 	bool is_full();
@@ -50,6 +58,8 @@ public:
 	bool is_available();
 	
 	bool is_mixed_bus();
+
+	bool isempty();
 
 	bool maintenance_time(); // check if a bus need maintenance or not
 
@@ -69,11 +79,19 @@ public:
 
 	void setInStation(bool);
 
+	void plusbusytime();
+
+	int getbusytime();
+
 	bool IsInStation();
 
 	bool getDirection();
 
 	bool getBusType();
+
+	void setoffhoursmode(int);
+
+	bool getoffhoursmode();
 
 	static bool SetTimeBetweenStations(int);
 

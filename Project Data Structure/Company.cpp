@@ -38,7 +38,7 @@ void Company::updatebusses()
 	{
 		for (int i = 0; i < count_busses; i++)
 		{  
-			stationList[0]->EnqueueBus(Busses_arr[i], finished_queue);
+			stationList[0]->EnqueueBus(Busses_arr[i]);
 		}
 	}
 
@@ -50,16 +50,44 @@ void Company::updatebusses()
 		}
 	}
 
-	for (int i = 0; i < count_busses; i++)
+	if (time <= 22 * 60)
 	{
-		if (!Busses_arr[i]->IsInStation())
+		for (int i = 0; i < count_busses; i++)
 		{
-			if (time == Busses_arr[i]->getArriveTime())
+			if (!Busses_arr[i]->isempty())
 			{
-				stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i], finished_queue);
+				Busses_arr[i]->plusbusytime();
+				Busses_arr[i]->setutilization();
+			}
+			if (!Busses_arr[i]->IsInStation())
+			{
+				if (time == Busses_arr[i]->getArriveTime())
+				{
+					stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
+				}
 			}
 		}
-		
+	}
+
+	else if (time > 22 * 60)
+	{
+		for (int i = 0; i < count_busses; i++)
+		{
+			if (!Busses_arr[i]->isempty())
+			{
+				Busses_arr[i]->plusbusytime();
+				Busses_arr[i]->setutilization();
+			}
+			if (Busses_arr[i]->isempty() && !Busses_arr[i]->getoffhoursmode())
+			{
+				Busses_arr[i]->setoffhoursmode(time);
+			}
+
+			if (time == Busses_arr[i]->getArriveTime())
+			{
+				stationList[0]->EnqueueBus(Busses_arr[i]);
+			}
+		}
 	}
 }
 
@@ -109,7 +137,7 @@ void Company::readFile()
 		else
 			Busses_arr[i] = new Bus(wbuscap, 0, 'W',i+1);
 	}
-	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);
+	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);   capacityM = mbuscap;  capacityW = wbuscap;
 
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
@@ -188,7 +216,9 @@ void Company::writeFile()
 	int totalwait = 0;
 	int totaltrip = 0;
 	int totalpromoted = 0;
-
+	int totalbusybus = 0;
+	float totalutilizationM = 0.0;
+	float totalutilizationW = 0.0;
 	while (!finished_queue.isempty())
 	{
 		finished_queue.pop(temp);
@@ -211,8 +241,22 @@ void Company::writeFile()
 	writer << "Passengers: " << totalsize <<"[NP: "<<sizeNP<<", SP: "<<sizeSP<<", WP: "<<sizeWP<<"]"<<endl;
 	writer << "Passenger avg wait time = " << totalwait / totalsize / 60 << ":" << totalwait / totalsize % 60 << endl;
 	writer << "Passenger avg trip time = " << totaltrip / totalsize / 60 << ":" << totaltrip / totalsize % 60 << endl;
-	writer << "Auto-promoted Passengers: " << totalpromoted / totalsize * 100 << "%" << endl;
+	writer << "Auto-promoted Passengers: " << int(float(totalpromoted) / totalsize * 100) << "%" << endl;
 	writer << "Busses: " << count_busses << " [WBus: " << count_wbus << ", MBus: " << count_Mbus <<"]" << endl;
+
+	for (int i = 0; i < count_busses; i++)
+	{
+		totalbusybus += Busses_arr[i]->getbusytime();
+		if (Busses_arr[i]->getBusType())
+			totalutilizationM += Busses_arr[i]->getutilization();
+		else
+		    totalutilizationW += Busses_arr[i]->getutilization();
+	}
+
+	float actualutilization = ((totalutilizationM / capacityM) + (totalutilizationW / capacityW)) / 2;
+	writer << "Avg busy time = " << int(float(totalbusybus) / (18 * 60) * 100) << "%" << endl;
+	writer << "Avg utilization = " << actualutilization/ 100 << "%" << endl;
+
 }
 
 bool Company::takeinpassenger()
@@ -225,14 +269,14 @@ bool Company::takeinpassenger()
 void Company::simulation()
 {
 	time = 240;
-	while (time<=10*60)
+	while (time<=24*60)
 	{
 		executeevent();
 		updatebusses();
 		updatestations();
 		display();
-		printer.Print("press any key to continue...");
-		getchar();
+		printer.Print("\npress any key to continue...");
+		//getchar();
 		time++;
 
 	}
@@ -372,6 +416,7 @@ void Company::display()
 	for (int i = 0; i < count_busses; i++)
 		Busses_arr[i]->display();
 
+	printer.Print("finished Passeners: ");
 	finished_queue.print();
 }
 

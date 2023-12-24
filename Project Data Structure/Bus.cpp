@@ -15,6 +15,9 @@ Bus::Bus(int capacity, int s, char type, int num)
 	bus_type = type;
 	InStation = true;
 	doneemptying = true;
+	offhours = false;
+	busytime = 0;
+	utilization = 0;
 }
 
 Bus::~Bus()
@@ -99,6 +102,16 @@ int Bus::get_passengers()
 	return num_of_passengers;
 }
 
+void Bus::setutilization()
+{
+	utilization += num_of_passengers;
+}
+
+float Bus::getutilization()
+{
+	return utilization;
+}
+
 void Bus::set_passengers(int p)
 {
 	num_of_passengers = p;
@@ -119,6 +132,11 @@ bool Bus::is_mixed_bus()
 	if(bus_type == 'M')
 		return true;
 	return false;
+}
+
+bool Bus::isempty()
+{
+	return num_of_passengers ==0;
 }
 
 bool Bus::maintenance_time()
@@ -188,6 +206,16 @@ void Bus::setInStation(bool Case)
 	InStation = Case;
 }
 
+void Bus::plusbusytime()
+{
+	busytime++;
+}
+
+int Bus::getbusytime()
+{
+	return busytime;
+}
+
 bool Bus::IsInStation()
 {
 	return InStation;
@@ -205,6 +233,18 @@ bool Bus::getBusType()
 		return true;
 	}
 	return false;
+}
+
+void Bus::setoffhoursmode(int curr_time)
+{
+	direction == false;
+	setArriveTime(station*TimeBetweenStations+curr_time);
+	offhours = true;
+}
+
+bool Bus::getoffhoursmode()
+{
+	return offhours;
 }
 
 bool Bus::SetTimeBetweenStations(int t)

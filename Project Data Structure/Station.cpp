@@ -196,7 +196,7 @@ void Station::insertpassenger(Passenger* incoming)
 	}
 }
 
-void Station::EnqueueBus(Bus* incoming, fifoqueue<Passenger*> &finished_queue)
+void Station::EnqueueBus(Bus* incoming)
 {
 	if (incoming->getDirection())
 	{
@@ -226,7 +226,7 @@ void Station::EnqueueBus(Bus* incoming, fifoqueue<Passenger*> &finished_queue)
 
 }
 
-void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time)
+void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time)     //does the usual operations in a station 
 {
 	int perminute = 60 / boardTime;
 
