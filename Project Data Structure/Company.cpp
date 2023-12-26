@@ -7,6 +7,7 @@ bool Company::executeevent()
 	if (simevents.isempty())
 		return false;
 
+
 	if(!simevents.isempty())
 	{
 		while (simevents.peek()->gettime() == time)
