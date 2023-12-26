@@ -419,6 +419,127 @@ void Station::promotePassengers(int curr_time)
 	}
 }
 
+Passenger* Station::get_random_passenger(int number)
+{
+	// (1) Move one SP passenger to the Finish list
+	if (number >= 1 && number <= 25)
+	{
+		if (!stationpassengersForward.isempty())
+		{
+			while (!stationpassengersForward.isempty())
+			{
+				fifoqueue<Passenger*> tempQ;
+				Passenger* p;
+				if (stationpassengersForward.peek()->GetPassengerPriority() >= 1 || stationpassengersForward.peek()->GetPassengerPriority() <= 3)
+				{
+					Passenger* p;
+					stationpassengersForward.pop(p);
+					while (!tempQ.isempty())
+					{
+						tempQ.push(p);
+						stationpassengersForward.pop(p);
+					}
+					return p;
+				}
+				stationpassengersForward.pop(p);
+				tempQ.push(p);
+			}
+		}
+
+		else if (!stationpassengersBackward.isempty())
+		{
+
+			while (!stationpassengersBackward.isempty())
+			{
+				fifoqueue<Passenger*> tempQ;
+				Passenger* p;
+				if (stationpassengersBackward.peek()->GetPassengerPriority() >= 1 || stationpassengersBackward.peek()->GetPassengerPriority() <= 3)
+				{
+					Passenger* p;
+					stationpassengersBackward.pop(p);
+					while (!tempQ.isempty())
+					{
+						tempQ.push(p);
+						stationpassengersBackward.pop(p);
+					}
+					return p;
+				}
+				stationpassengersBackward.pop(p);
+				tempQ.push(p);
+			}
+		}
+	}
+
+	// (2) Move one WP passenger to the Finish list
+	else if (number >= 35 && number <= 45)
+	{
+		if (!WheelChairQForward.isempty())
+		{
+			Passenger* p;
+			WheelChairQForward.pop(p);
+			return p;
+		}
+
+		else if (!WheelChairQBackward.isempty())
+		{
+
+			Passenger* p;
+			WheelChairQBackward.pop(p);
+			return p;
+		}
+	}
+
+	// (3) Move one NP passenger to the Finish list
+	else if (number >= 50 && number <= 60)
+	{
+		if (!stationpassengersForward.isempty())
+		{
+			while (!stationpassengersForward.isempty())
+			{
+				fifoqueue<Passenger*> tempQ;
+				Passenger* p;
+				if (stationpassengersForward.peek()->GetPassengerPriority() == 0)
+				{
+					stationpassengersForward.pop(p);
+					while (!tempQ.isempty())
+					{
+						tempQ.push(p);
+						stationpassengersForward.pop(p);
+					}
+					return p;
+				}
+				stationpassengersForward.pop(p);
+				tempQ.push(p);
+			}
+		}
+
+		else if (!stationpassengersBackward.isempty())
+		{
+
+			while (!stationpassengersBackward.isempty())
+			{
+				fifoqueue<Passenger*> tempQ;
+				Passenger* p;
+				if (stationpassengersBackward.peek()->GetPassengerPriority() == 0)
+				{
+					stationpassengersBackward.pop(p);
+					while (!tempQ.isempty())
+					{
+						tempQ.push(p);
+						stationpassengersBackward.pop(p);
+					}
+					return p;
+				}
+				stationpassengersBackward.pop(p);
+				tempQ.push(p);
+			}
+		}
+	}
+
+	return nullptr;
+}
+
+
 Station::~Station()
 {
 }

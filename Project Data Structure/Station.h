@@ -41,6 +41,8 @@ public:
 
 	void DequeueBus(int curr_time);
 
+	Passenger* get_random_passenger(int random_number);
+
 	static void setstationcount(int);
 
 	void setboardtime(int);
