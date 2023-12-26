@@ -91,6 +91,7 @@ void Company::updatebusses()
 	}
 }
 
+
 void Company::updatestations()
 {
 	for (int i = 1; i < stationNum; i++)
