@@ -45,6 +45,10 @@ public:
 
 	static void setstationcount(int);
 
+	//mahmoud phase 2
+	void clear_passengers();
+	//mahmoud phase 2
+
 	void setboardtime(int);
 
 	void refreshstation(fifoqueue<Passenger*>& finished_queue, int curr_time);

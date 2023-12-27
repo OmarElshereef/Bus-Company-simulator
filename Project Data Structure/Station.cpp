@@ -357,6 +357,32 @@ void Station::setTravelDistance(int dist)
 	travel_distance = dist;
 }
 
+//mahmoud phase 2
+void Station::clear_passengers()
+{
+	Passenger* temp;
+
+	while (!stationpassengersForward.isempty())
+	{
+		stationpassengersForward.pop(temp);
+	}
+	while (!stationpassengersBackward.isempty())
+	{
+		stationpassengersBackward.pop(temp);
+	}
+	while (!WheelChairQForward.isempty())
+	{
+		WheelChairQForward.pop(temp);
+	}
+	while (!WheelChairQBackward.isempty())
+	{
+		WheelChairQBackward.pop(temp);
+	}
+
+}
+//mahmoud phase 2
+
+
 void Station::setboardtime(int time)
 {
 	boardTime = time;

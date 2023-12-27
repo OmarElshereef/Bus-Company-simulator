@@ -72,10 +72,12 @@ void Company::updatebusses()
 
 	else if (time > 22 * 60)
 	{
+		
 		for (int i = 0; i < count_busses; i++)
 		{
 			if (!Busses_arr[i]->isempty())
 			{
+				
 				Busses_arr[i]->plusbusytime();
 				Busses_arr[i]->setutilization();
 			}
@@ -93,10 +95,15 @@ void Company::updatebusses()
 }
 
 
-void Company::updatestations()
+void Company::updatestations() 
 {
 	for (int i = 1; i < stationNum; i++)
 	{
+		if (time > 22 * 60)
+		{
+			stationList[i]->clear_passengers();
+		}
+
 		stationList[i]->promotePassengers(time);
 		stationList[i]->refreshstation(finished_queue,time);
 		stationList[i]->DequeueBus(time);
@@ -120,6 +127,11 @@ void Company::readFile()
 	int maxwait, geton;
 
 	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >> maxwait>> geton; // reading initial values in order
+	
+	//mahmoud phase 2
+	set_maintenance_time(wbusfix, mbusfix);
+	
+	//mahmoud phase 2
 	
 	stationList = new Station*[stations+1];  stationNum = stations+1;  //setting array for stations
 	
@@ -421,6 +433,58 @@ void Company::display()
 	printer.Print("finished Passeners: ");
 	finished_queue.print();
 }
+
+
+//mahmoud phase 2
+
+void Company::maintenance()
+{
+	for (int i = 0; i < count_busses; i++)
+	{
+		if (Busses_arr[i]->maintenance_time())
+		{
+			checkup_list.push(Busses_arr[i]);
+			stationList[0]->EnqueueBus(Busses_arr[i]);
+			Busses_arr[i]->upgrade_station(stationNum, time);
+		}
+	}
+}
+void Company::set_maintenance_time(int wbus, int mbus)
+{
+	checkup_time_Wbus = wbus;
+	checkup_time_Mbus = mbus;
+}
+int Company::get_maintenance_time(Bus *b)
+{
+	if(b->getBusType()) return checkup_time_Mbus;
+	return checkup_time_Wbus;
+}
+
+void Company::check_checkup_list()
+{
+	fifoqueue<Bus*> temp;
+	Bus* b;
+	while(checkup_list.pop(b))
+	{
+		temp.push(b);
+
+		if (b->maintenance_done(time))
+		{
+			b->upgrade_station(stationNum, time);
+		}
+	}
+
+	while (temp.pop(b))
+	{
+		checkup_list.push(b);
+	}
+
+
+}
+
+
+//mahmoud phase 2
+
 
 Company::~Company()
 {

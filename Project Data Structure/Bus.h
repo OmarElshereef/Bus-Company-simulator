@@ -20,11 +20,11 @@ private:
 	int EstimatedTimeOfArrival;   //time to reach the next station
 	bool InStation;               //if the bus is instation or not
 	bool doneemptying;
-	int distance;   // time for each bus and =0 when arrive station
 	bool door;
 	bool offhours;
 	int busytime;
 	float utilization;
+	int checkup_time;
 
 public:
 	Bus(int capacity = 100, int s = 0, char type = 'M', int num=0);
@@ -37,13 +37,15 @@ public:
 
 	void display();
 
+	void upgrade_trips();
+
 	int get_station();
 	
 	void set_station(int s);
 
 	void set_direction(bool d);
 
-	void upgrade_station(int, int);
+	void upgrade_station(int size, int time);
 	
 	int get_passengers();
 	
@@ -63,9 +65,8 @@ public:
 
 	bool maintenance_time(); // check if a bus need maintenance or not
 
-	int get_distance();
+	bool maintenance_done(int time); // check if maintenance duration finished or not
 
-	void set_distance(int d);
 
 	bool exit_passenger(fifoqueue<Passenger*> &finished_array, int permin, int curr_time);
 
@@ -92,6 +93,9 @@ public:
 	void setoffhoursmode(int);
 
 	bool getoffhoursmode();
+
+	int getTimeBetweenStations();
+
 
 	static bool SetTimeBetweenStations(int);
 
