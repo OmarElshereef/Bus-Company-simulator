@@ -34,13 +34,6 @@ Company::Company()
 
 void Company::updatebusses()
 {
-	if (time == 240)
-	{
-		for (int i = 0; i < count_busses; i++)
-		{  
-			stationList[0]->EnqueueBus(Busses_arr[i]);
-		}
-	}
 
 	if (time<=(240)+15*count_busses)
 	{
@@ -63,7 +56,7 @@ void Company::updatebusses()
 			{
 				if (time == Busses_arr[i]->getArriveTime())
 				{
-					stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i]);
+					stationList[Busses_arr[i]->get_station()]->EnqueueBus(Busses_arr[i],time);
 				}
 			}
 		}
@@ -85,16 +78,16 @@ void Company::updatebusses()
 
 			if (time == Busses_arr[i]->getArriveTime())
 			{
-				stationList[0]->EnqueueBus(Busses_arr[i]);
+				stationList[0]->EnqueueBus(Busses_arr[i],time);
 			}
 		}
 	}
 }
 
-
 void Company::updatestations()
 {
-	for (int i = 1; i < stationNum; i++)
+
+	for (int i = 0; i < stationNum; i++)
 	{
 		stationList[i]->promotePassengers(time);
 		stationList[i]->refreshstation(finished_queue,time);
@@ -131,18 +124,28 @@ void Company::readFile()
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
 	count_Mbus = mbus; count_wbus = wbus;
 
+	int pls = 240;
 	for (int i = 0; i < count_busses; i++)  //loop for creating busses
 	{
 		if (i < mbus)
-			Busses_arr[i] = new Bus(mbuscap, 0, 'M',i+1);
+		{
+			Busses_arr[i] = new Bus(mbuscap, 0, 'M', i + 1);
+			stationList[0]->EnqueueBus(Busses_arr[i], time);
+			Busses_arr[i]->setmaintenancetime(mbusfix);
+		}
 		else
-			Busses_arr[i] = new Bus(wbuscap, 0, 'W',i+1);
+		{
+			Busses_arr[i] = new Bus(wbuscap, 0, 'W', i + 1);
+			stationList[0]->EnqueueBus(Busses_arr[i], time);
+			Busses_arr[i]->setmaintenancetime(wbusfix);
+		}
+		Busses_arr[i]->initializefixtime(pls);
+		pls += 15;
 	}
 	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);   capacityM = mbuscap;  capacityW = wbuscap;
 
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
 
-	
 	int lines;
 	reader >> lines;
 	Event* incomingevent;
@@ -277,7 +280,7 @@ void Company::simulation()
 		updatestations();
 		display();
 		printer.Print("\npress any key to continue...");
-		//getchar();
+		getchar();
 		time++;
 
 	}
