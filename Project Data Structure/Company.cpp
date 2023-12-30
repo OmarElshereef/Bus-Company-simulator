@@ -240,7 +240,7 @@ void Company::writeFile()
 {
 	ofstream writer("output_file.txt");
 	writer << "Sample Output File:" << endl;
-	writer << endl << "----------------------------------------------------------------------" << endl;
+	writer << endl << "------------------------------------------------------------------------------------" << endl;
 
 	writer << "FT\t\t" << "ID\t\t" << "AT\t\t" << "WT\t\t" << "TT" << endl;
 	Passenger* temp;
@@ -272,7 +272,7 @@ void Company::writeFile()
 			<<"\t\t" << " | " << (temp->getmovetime() - temp->getarrivetime())/60 <<":"<<(temp->getfinishtime() - temp->getarrivetime()) % 60 <<"\t\t" << " | "
 			<< (temp->getfinishtime() - temp->getmovetime())/60 <<":"<< (temp->getfinishtime() - temp->getmovetime()) % 60 << endl;
 	}
-	writer << "----------------------------------------------------------------------" << endl;
+	writer << "-----------------------------------------------------------------------------" << endl;
 
 	writer << "Passengers: " << totalsize <<"[NP: "<<sizeNP<<", SP: "<<sizeSP<<", WP: "<<sizeWP<<"]"<<endl;
 	writer << "Passenger avg wait time = " << totalwait / totalsize / 60 << ":" << totalwait / totalsize % 60 << endl;
@@ -290,7 +290,7 @@ void Company::writeFile()
 	}
 
 	float actualutilization = ((totalutilizationM / capacityM) + (totalutilizationW / capacityW)) / 2;
-	writer << "Avg busy time = " << int(float(totalbusybus) / (18 * 60) * 100) << "%" << endl;
+	writer << "Avg busy time = " << int(float(totalbusybus) / (18 * 60 * count_busses) * 100) << "%" << endl;
 	writer << "Avg utilization = " << actualutilization/ 100 << "%" << endl;
 
 }
