@@ -18,7 +18,8 @@ Bus::Bus(int capacity, int s, char type, int num)
 	offhours = false;
 	busytime = 0;
 	utilization = 0;
-	checkup_time = 0;
+	maintain = false;
+	maintenancetime = 0;
 }
 
 Bus::~Bus()
@@ -31,32 +32,57 @@ void Bus::setemptying(bool done)
 	doneemptying = done;
 }
 
+void Bus::initializefixtime(int f)
+{
+	fixtime = f;
+}
+
+void Bus::setfixtime(int f)
+{
+	fixtime = f+maintenancetime;
+}
+
+int Bus::getfixtime()
+{
+	return fixtime;
+}
+
 bool Bus::isdoneemptying()
 {
 	return doneemptying;
 }
 
-void Bus::display()
+void Bus::setmaintenancetime(int t)
 {
-	printer.Print("bus #" + to_string(number) + "\t");
-	printer.Print("direction: " + to_string(direction) +"\t");
-	if (InStation)
-		printer.Print("station: " + to_string(station) + "\t");
-	else
-		printer.Print("not in station\t");
-	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\n");
+	maintenancetime = t;
 }
 
-void Bus::upgrade_trips()
+int Bus::getnumber()
 {
-	if (maintenance_time())
-	{
-		curr_trips = 0;
-	}
+	return number;
+}
+
+int Bus::getmaintenancetime()
+{
+	return maintenancetime;
+}
+
+void Bus::display()
+{
+	printer.Print("BUS" + to_string(number) + "[");
+	if (direction)
+		printer.Print("FWD, ");
 	else
+		printer.Print("BCK, ");
+
+	printer.Print("] {");
+	for (int i=0; i < num_of_passengers-1; i++)
 	{
-		curr_trips++;
+		printer.Print(to_string(passenger_arr[i]->getPassengerID()) + ", ");
 	}
+	if(num_of_passengers!=0)
+	printer.Print(to_string(passenger_arr[num_of_passengers - 1]->getPassengerID()));
+	printer.Print("}\n");
 }
 
 int Bus::get_station()
@@ -76,43 +102,60 @@ void Bus::set_direction(bool d) //d=true => forward or d=false => backward
 
 void Bus::upgrade_station(int size, int time)
 {
-	upgrade_trips();
-
-	if (maintenance_time())
-	{
-		set_station(0);
-		set_direction(true);// going back to station 0 and direction will be true after maintenance duration
-		
-		setArriveTime(getTimeBetweenStations() * get_station() + time);//ArriveTime = #stations * time needed for each station + current time
-		
-		return;
-	}
-
 	if (direction == true)
 	{
 		if (station == size)
 		{
+			setArriveTime(time + 1);
+			if (curr_trips == max_trips - 1 && !offhours)
+			{
+				curr_trips++;
+				maintain = true;
+			}
+			else
+				curr_trips++;
 			direction = false;
-			station--;
+
 		}
 		else
 			station++;
 	}
-
 	else
 	{
 		if (station == 1)
 		{
+			if (maintain)
+			{
+				direction = true;
+				station--;
+				return;
+			}
+
+			setArriveTime(time + 1);
+			if (curr_trips == max_trips && !offhours)
+			{
+				maintain = true;
+				station--;
+			}
+			else
+				curr_trips++;
 			direction = true;
 		}
+		else
 		station--;
 	}
-	setArriveTime(time + getTimeBetweenStations());
 
 }
 
+int Bus::get_distance()
+{
+	return distance;
+}
 
-
+void Bus::set_distance(int d)
+{
+	distance = d;
+}
 
 int Bus::get_passengers()
 {
@@ -161,13 +204,19 @@ bool Bus::maintenance_time()
 	return max_trips == curr_trips;
 }
 
-bool Bus::maintenance_done(int time)
+void Bus::resetcurrtrips()
 {
-	if(checkup_time == time)
-		return true;
+	curr_trips = 0;
+}
 
-	checkup_time++;
-	return false;
+bool Bus::getmaintain()
+{
+	return maintain;
+}
+
+void Bus::setmaintain(bool m)
+{
+	maintain = m;
 }
 
 void Bus::remove(int index)
@@ -273,15 +322,15 @@ bool Bus::getoffhoursmode()
 	return offhours;
 }
 
-int Bus::getTimeBetweenStations()
-{
-	return TimeBetweenStations;
-}
-
 bool Bus::SetTimeBetweenStations(int t)
 {
 	TimeBetweenStations = t;
 	return true;
+}
+
+int Bus::gettimebetweenstations()
+{
+	return TimeBetweenStations;
 }
 
 bool Bus::SetMaxStations(int s)

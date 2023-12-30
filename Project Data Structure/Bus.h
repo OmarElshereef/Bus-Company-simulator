@@ -20,24 +20,35 @@ private:
 	int EstimatedTimeOfArrival;   //time to reach the next station
 	bool InStation;               //if the bus is instation or not
 	bool doneemptying;
+	int distance;   // time for each bus and =0 when arrive station
 	bool door;
 	bool offhours;
 	int busytime;
 	float utilization;
-	int checkup_time;
-
+	bool maintain;
+	int fixtime;
+	int maintenancetime;
 public:
+
 	Bus(int capacity = 100, int s = 0, char type = 'M', int num=0);
 
 	~Bus();
 	
+	void setmaintenancetime(int);
+
+	int getmaintenancetime();
+
+	void initializefixtime(int);
+
+	void setfixtime(int);
+
+	int getfixtime();
+
 	void setemptying(bool);
 
 	bool isdoneemptying();
 
 	void display();
-
-	void upgrade_trips();
 
 	int get_station();
 	
@@ -45,7 +56,7 @@ public:
 
 	void set_direction(bool d);
 
-	void upgrade_station(int size, int time);
+	void upgrade_station(int, int);
 	
 	int get_passengers();
 	
@@ -65,8 +76,13 @@ public:
 
 	bool maintenance_time(); // check if a bus need maintenance or not
 
-	bool maintenance_done(int time); // check if maintenance duration finished or not
+	int get_distance();
 
+	bool getmaintain();
+
+	void setmaintain(bool m);
+
+	void set_distance(int d);
 
 	bool exit_passenger(fifoqueue<Passenger*> &finished_array, int permin, int curr_time);
 
@@ -88,16 +104,19 @@ public:
 
 	bool getDirection();
 
+	void resetcurrtrips();
+
 	bool getBusType();
+
+	int getnumber();
 
 	void setoffhoursmode(int);
 
 	bool getoffhoursmode();
 
-	int getTimeBetweenStations();
-
-
 	static bool SetTimeBetweenStations(int);
+
+	int gettimebetweenstations();
 
 	static bool SetMaxStations(int);
 
