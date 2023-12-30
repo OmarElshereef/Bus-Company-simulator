@@ -108,6 +108,8 @@ public:
 
 	bool getBusType();
 
+	int getnumber();
+
 	void setoffhoursmode(int);
 
 	bool getoffhoursmode();

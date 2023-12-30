@@ -18,6 +18,7 @@ public :
 	{
 		Print("welcome!\nselect a simulation mode:\n1)interactive mode\n2)silent mode\n");
 		cin >> sim;
+		getchar();
 	}
 	template <typename t > 
 	void Print(t object)

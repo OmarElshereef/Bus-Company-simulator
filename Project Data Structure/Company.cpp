@@ -461,10 +461,11 @@ void Company::display()
 	for (int i = 1; i < stationNum; i++)
 	{
 		stationList[i]->displayinfo();
-		printer.Print("press any key to display the next station\n");
-		getchar();
+
 	}
-	printer.Print("finished Passeners: ");
+	printer.Print("-----------------------------------------------------------------------------------\n2) Busses in Check up: ");
+	stationList[0]->displaycheckup();
+	printer.Print("-----------------------------------------------------------------------------------\n3) finished Passeners: ");
 	finished_queue.print();
 }
 

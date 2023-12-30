@@ -57,6 +57,11 @@ void Bus::setmaintenancetime(int t)
 	maintenancetime = t;
 }
 
+int Bus::getnumber()
+{
+	return number;
+}
+
 int Bus::getmaintenancetime()
 {
 	return maintenancetime;

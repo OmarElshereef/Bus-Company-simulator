@@ -47,6 +47,8 @@ public:
 
 	void refreshstation(fifoqueue<Passenger*>& finished_queue, int curr_time);
 
+	void displaycheckup();
+
 	~Station(); 
 };
 

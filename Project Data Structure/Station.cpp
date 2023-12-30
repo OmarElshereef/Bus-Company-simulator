@@ -127,7 +127,6 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 
 void Station::displayinfo()
 {
-	
 	printer.Print("==============Station#" + to_string(number)+"=================\n");
 
 	printer.Print(stationpassengersForward.sizebypri(3)+ stationpassengersForward.sizebypri(2)+ stationpassengersForward.sizebypri(1)+ stationpassengersBackward.sizebypri(3) + stationpassengersBackward.sizebypri(2) + stationpassengersBackward.sizebypri(1));
@@ -232,6 +231,71 @@ void Station::displayinfo()
 		WBusInStationBackward.push(bebe);
 	}
 	
+}
+
+void Station::displaycheckup()
+{
+	if (number != 0)
+		return;
+
+	fifoqueue<Bus*> temp;
+	Bus* bebe;
+	while (!MBusInStationForward.isempty())
+	{
+		MBusInStationForward.pop(bebe);
+		if(bebe->getmaintain())
+		printer.Print(to_string(bebe->getnumber())+", ");
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		MBusInStationForward.push(bebe);
+	}
+
+	while (!MBusInStationBackward.isempty())
+	{
+		MBusInStationBackward.pop(bebe);
+		if (bebe->getmaintain())
+		printer.Print(to_string(bebe->getnumber()) + ", ");
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		MBusInStationBackward.push(bebe);
+	}
+
+	while (!WBusInStationForward.isempty())
+	{
+		WBusInStationForward.pop(bebe);
+		if (bebe->getmaintain())
+		printer.Print(to_string(bebe->getnumber()) + ", ");	
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		WBusInStationForward.push(bebe);
+	}
+
+	while (!WBusInStationBackward.isempty())
+	{
+		WBusInStationBackward.pop(bebe);
+		if (bebe->getmaintain())
+		printer.Print(to_string(bebe->getnumber()) + ", ");	
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		WBusInStationBackward.push(bebe);
+	}
+	printer.Print("\n");
 }
 
 void Station::insertpassenger(Passenger* incoming)
