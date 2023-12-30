@@ -124,6 +124,7 @@ void Company::readFile()
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
 	count_Mbus = mbus; count_wbus = wbus;
 
+	fifoqueue
 	int pls = 240;
 	for (int i = 0; i < count_busses; i++)  //loop for creating busses
 	{
