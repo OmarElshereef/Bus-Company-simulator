@@ -239,6 +239,9 @@ void Company::readFile()
 void Company::writeFile()
 {
 	ofstream writer("output_file.txt");
+	writer << "Sample Output File:" << endl;
+	writer << endl << "----------------------------------------------------------------------" << endl;
+
 	writer << "FT\t\t" << "ID\t\t" << "AT\t\t" << "WT\t\t" << "TT" << endl;
 	Passenger* temp;
 	int totalsize = finished_queue.size();
@@ -265,10 +268,11 @@ void Company::writeFile()
 		if (temp->GetPassengerPriority() == 1 || temp->GetPassengerPriority() == 2 || temp->GetPassengerPriority() == 3)
 			sizeSP++;
 
-		writer << temp->getfinishtime()/60<<":"<<temp->getfinishtime()%60 << "\t\t" << temp->getPassengerID() << "\t\t" << temp->getarrivetime()/60 <<":"<< temp->getarrivetime()%60
-			<<"\t\t" << (temp->getmovetime() - temp->getarrivetime())/60 <<":"<<(temp->getfinishtime() - temp->getarrivetime()) % 60 <<"\t\t"
+		writer << temp->getfinishtime()/60<<":"<<temp->getfinishtime()%60 << "\t\t" << " | " << temp->getPassengerID() << "\t\t" << " | " << temp->getarrivetime()/60 <<":"<< temp->getarrivetime()%60
+			<<"\t\t" << " | " << (temp->getmovetime() - temp->getarrivetime())/60 <<":"<<(temp->getfinishtime() - temp->getarrivetime()) % 60 <<"\t\t" << " | "
 			<< (temp->getfinishtime() - temp->getmovetime())/60 <<":"<< (temp->getfinishtime() - temp->getmovetime()) % 60 << endl;
 	}
+	writer << "----------------------------------------------------------------------" << endl;
 
 	writer << "Passengers: " << totalsize <<"[NP: "<<sizeNP<<", SP: "<<sizeSP<<", WP: "<<sizeWP<<"]"<<endl;
 	writer << "Passenger avg wait time = " << totalwait / totalsize / 60 << ":" << totalwait / totalsize % 60 << endl;
