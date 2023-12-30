@@ -25,12 +25,25 @@ private:
 	bool offhours;
 	int busytime;
 	float utilization;
-
+	bool maintain;
+	int fixtime;
+	int maintenancetime;
 public:
+
 	Bus(int capacity = 100, int s = 0, char type = 'M', int num=0);
 
 	~Bus();
 	
+	void setmaintenancetime(int);
+
+	int getmaintenancetime();
+
+	void initializefixtime(int);
+
+	void setfixtime(int);
+
+	int getfixtime();
+
 	void setemptying(bool);
 
 	bool isdoneemptying();
@@ -65,6 +78,10 @@ public:
 
 	int get_distance();
 
+	bool getmaintain();
+
+	void setmaintain(bool m);
+
 	void set_distance(int d);
 
 	bool exit_passenger(fifoqueue<Passenger*> &finished_array, int permin, int curr_time);
@@ -87,6 +104,8 @@ public:
 
 	bool getDirection();
 
+	void resetcurrtrips();
+
 	bool getBusType();
 
 	void setoffhoursmode(int);
@@ -94,6 +113,8 @@ public:
 	bool getoffhoursmode();
 
 	static bool SetTimeBetweenStations(int);
+
+	int gettimebetweenstations();
 
 	static bool SetMaxStations(int);
 

@@ -18,6 +18,8 @@ Bus::Bus(int capacity, int s, char type, int num)
 	offhours = false;
 	busytime = 0;
 	utilization = 0;
+	maintain = false;
+	maintenancetime = 0;
 }
 
 Bus::~Bus()
@@ -30,9 +32,34 @@ void Bus::setemptying(bool done)
 	doneemptying = done;
 }
 
+void Bus::initializefixtime(int f)
+{
+	fixtime = f;
+}
+
+void Bus::setfixtime(int f)
+{
+	fixtime = f+maintenancetime;
+}
+
+int Bus::getfixtime()
+{
+	return fixtime;
+}
+
 bool Bus::isdoneemptying()
 {
 	return doneemptying;
+}
+
+void Bus::setmaintenancetime(int t)
+{
+	maintenancetime = t;
+}
+
+int Bus::getmaintenancetime()
+{
+	return maintenancetime;
 }
 
 void Bus::display()
@@ -43,7 +70,10 @@ void Bus::display()
 		printer.Print("station: " + to_string(station) + "\t");
 	else
 		printer.Print("not in station\t");
-	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\n");
+	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\t");
+	if (maintain)
+		printer.Print("needs maintenance");
+	printer.Print("\n");
 }
 
 int Bus::get_station()
@@ -68,7 +98,15 @@ void Bus::upgrade_station(int size, int time)
 		if (station == size)
 		{
 			setArriveTime(time + 1);
+			if (curr_trips == max_trips - 1 && !offhours)
+			{
+				curr_trips++;
+				maintain = true;
+			}
+			else
+				curr_trips++;
 			direction = false;
+
 		}
 		else
 			station++;
@@ -77,7 +115,21 @@ void Bus::upgrade_station(int size, int time)
 	{
 		if (station == 1)
 		{
+			if (maintain)
+			{
+				direction = true;
+				station--;
+				return;
+			}
+
 			setArriveTime(time + 1);
+			if (curr_trips == max_trips && !offhours)
+			{
+				maintain = true;
+				station--;
+			}
+			else
+				curr_trips++;
 			direction = true;
 		}
 		else
@@ -95,7 +147,6 @@ void Bus::set_distance(int d)
 {
 	distance = d;
 }
-
 
 int Bus::get_passengers()
 {
@@ -142,6 +193,21 @@ bool Bus::isempty()
 bool Bus::maintenance_time()
 {
 	return max_trips == curr_trips;
+}
+
+void Bus::resetcurrtrips()
+{
+	curr_trips = 0;
+}
+
+bool Bus::getmaintain()
+{
+	return maintain;
+}
+
+void Bus::setmaintain(bool m)
+{
+	maintain = m;
 }
 
 void Bus::remove(int index)
@@ -251,6 +317,11 @@ bool Bus::SetTimeBetweenStations(int t)
 {
 	TimeBetweenStations = t;
 	return true;
+}
+
+int Bus::gettimebetweenstations()
+{
+	return TimeBetweenStations;
 }
 
 bool Bus::SetMaxStations(int s)

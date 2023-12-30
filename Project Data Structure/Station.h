@@ -37,7 +37,7 @@ public:
 	
 	void insertpassenger(Passenger*);
 	
-	void EnqueueBus(Bus* incoming);
+	void EnqueueBus(Bus* incoming, int);
 
 	void DequeueBus(int curr_time);
 
@@ -48,6 +48,7 @@ public:
 	void setboardtime(int);
 
 	void refreshstation(fifoqueue<Passenger*>& finished_queue, int curr_time);
+
 	~Station(); 
 };
 

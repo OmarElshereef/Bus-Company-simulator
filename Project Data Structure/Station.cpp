@@ -196,8 +196,20 @@ void Station::insertpassenger(Passenger* incoming)
 	}
 }
 
-void Station::EnqueueBus(Bus* incoming)
+void Station::EnqueueBus(Bus* incoming, int curr_time)
 {
+	if (number == 0)
+	{
+		incoming->setfixtime(curr_time);
+	}
+
+	if (incoming->isempty() && incoming->getmaintain() && number != 0)
+	{
+		incoming->setArriveTime(curr_time + incoming->gettimebetweenstations());
+		incoming->upgrade_station(station_count, curr_time);
+		return;
+	}
+
 	if (incoming->getDirection())
 	{
 		if (incoming->getBusType())
@@ -237,7 +249,7 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time
 
 		for (int i = 0; i < perminute; i++)
 		{
-			if (MBusInStationForward.peek()->is_full() || stationpassengersForward.isempty())
+			if (MBusInStationForward.peek()->is_full() || stationpassengersForward.isempty() || !MBusInStationForward.peek()->isdoneemptying() || MBusInStationForward.peek()->getmaintain())
 				break;
 
 			Passenger* psg;
@@ -256,7 +268,7 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time
 
 		for (int i = 0; i < perminute; i++)
 		{
-			if (MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty())
+			if (MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty() || !MBusInStationBackward.peek()->isdoneemptying() || MBusInStationBackward.peek()->getmaintain())
 				break;
 
 			Passenger* psg;
@@ -275,7 +287,7 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time
 
 		for (int i = 0; i < perminute; i++)
 		{
-			if (WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty())
+			if (WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty() || !WBusInStationForward.peek()->isdoneemptying() || WBusInStationForward.peek()->getmaintain())
 				break;
 
 			Passenger* psg;
@@ -294,7 +306,7 @@ void Station::refreshstation(fifoqueue<Passenger*> &finished_queue,int curr_time
 
 		for (int i = 0; i < perminute; i++)
 		{
-			if (WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty())
+			if (WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty() || !WBusInStationBackward.peek()->isdoneemptying() || WBusInStationBackward.peek()->getmaintain())
 				break;
 
 			Passenger* psg;
@@ -311,7 +323,7 @@ void Station::DequeueBus(int curr_time)
 	Bus* Mbus = nullptr;
 	if (!MBusInStationForward.isempty())
 	{
-		if ((number==0) || (MBusInStationForward.peek()->is_full() || stationpassengersForward.isempty()) && MBusInStationForward.peek()->isdoneemptying())
+		if ((number==0 && MBusInStationForward.peek()->getfixtime() == curr_time) || ((MBusInStationForward.peek()->is_full() || stationpassengersForward.isempty()) && (MBusInStationForward.peek()->isdoneemptying() && number !=0)))
 		{
 			MBusInStationForward.peek()->setInStation(false);
 			MBusInStationForward.peek()->setArriveTime(travel_distance + curr_time);
@@ -320,7 +332,7 @@ void Station::DequeueBus(int curr_time)
 	}
 	else if (!MBusInStationBackward.isempty())
 	{
-		if ((number==0) || (MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty()) && MBusInStationBackward.peek()->isdoneemptying())
+		if ((number==0 && MBusInStationBackward.peek()->getfixtime() == curr_time) || ((MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty()) && (MBusInStationBackward.peek()->isdoneemptying() && number != 0)))
 		{
 			MBusInStationBackward.peek()->setInStation(false);
 			MBusInStationBackward.peek()->setArriveTime(travel_distance + curr_time);
@@ -329,16 +341,16 @@ void Station::DequeueBus(int curr_time)
 	}
 	else  if (!WBusInStationForward.isempty())
 	{
-		if ((number == 0) || (WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty()) && WBusInStationForward.peek()->isdoneemptying())
+		if ((number == 0 && WBusInStationForward.peek()->getfixtime() == curr_time) || ((WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty()) && (WBusInStationForward.peek()->isdoneemptying() && number !=0)))
 		{
 			WBusInStationForward.peek()->setInStation(false);
 			WBusInStationForward.peek()->setArriveTime(travel_distance + curr_time);
 			WBusInStationForward.pop(Mbus);
 		}
 	}
-	 else if (!WBusInStationBackward.isempty())
+	else if (!WBusInStationBackward.isempty())
 	{
-		if ((number ==0) || (WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty()) && WBusInStationBackward.peek()->isdoneemptying())
+		if ((number ==0 && WBusInStationBackward.peek()->getfixtime() == curr_time) || ((WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty()) && (WBusInStationBackward.peek()->isdoneemptying() && number !=0)))
 		{
 			WBusInStationBackward.peek()->setInStation(false);
 			WBusInStationBackward.peek()->setArriveTime(travel_distance + curr_time);
@@ -348,6 +360,11 @@ void Station::DequeueBus(int curr_time)
 
 	if (Mbus != nullptr)
 	{
+		if (number == 0)
+		{
+			Mbus->resetcurrtrips();
+			Mbus->setmaintain(false);
+		}
 		Mbus->upgrade_station(station_count,curr_time);
 	}
 }
