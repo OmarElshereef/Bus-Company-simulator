@@ -8,10 +8,12 @@ int Bus::max_trips = 0;
 Bus::Bus(int capacity, int s, char type, int num)
 	: BC(capacity), station(s)
 {
+	if (capacity == 0) { printer.Print("\n\n\ncapacity=0!!!!!\n\n\n"); exit(0); }
 	number = num;
 	passenger_arr = new Passenger * [capacity];
 	curr_trips = 0;
-	num_of_passengers = 0;
+	distance = 0;
+	num_of_passengers = 10;
 	direction = true;
 	bus_type = type;
 	InStation = true;
@@ -21,6 +23,8 @@ Bus::Bus(int capacity, int s, char type, int num)
 	utilization = 0;
 	maintain = false;
 	maintenancetime = 0;
+	EstimatedTimeOfArrival = 0;
+	fixtime=0;
 }
 
 Bus::~Bus()
@@ -208,13 +212,15 @@ void Bus::remove(int index)
 {
 	passenger_arr[index] = nullptr;
 
-	for (int i = index ; i < num_of_passengers; i++)
+	for (int i = index; i < num_of_passengers - 1; i++)
 	{
 		passenger_arr[i] = passenger_arr[i + 1];
 	}
+
 	num_of_passengers--;
 	return;
 }
+
 
 bool Bus::enter_passenger(Passenger* p, int curr_time)
 {
@@ -229,28 +235,37 @@ bool Bus::enter_passenger(Passenger* p, int curr_time)
 	return false;
 }
 
-bool Bus::exit_passenger(fifoqueue<Passenger*> &finished_array, int permin, int curr_time)
+bool Bus::exit_passenger(fifoqueue<Passenger*>& finished_array, int permin, int curr_time)
 {
 	bool flag = true;
 	int done = 0;
-	for (int i = 0; i < num_of_passengers; i++)
-	{
-		if (done == permin)
-			break;
 
-		if (passenger_arr[i]->GetEndStation() == station)
+	for (int i = 0; i < num_of_passengers && done < permin;)
+	{
+		if (passenger_arr[i] != nullptr)
 		{
-			passenger_arr[i]->setfinishtime(curr_time);
-			finished_array.push(passenger_arr[i]);
-			remove(i);
-			flag = false;
-			i--;
-			done++;
+			if (passenger_arr[i]->GetEndStation() == station)
+			{
+				passenger_arr[i]->setfinishtime(curr_time);
+				finished_array.push(passenger_arr[i]);
+				remove(i);
+				flag = false;
+				done++;
+			}
+			else
+			{
+				i++;  // Move to the next index only if no removal occurred
+			}
+		}
+		else
+		{
+			// Handle the case where passenger_arr[i] is nullptr
+			// (Possibly log an error or skip processing)
+			i++;
 		}
 	}
 	return flag;
 }
-
 void Bus::setArriveTime(int t)
 {
 	EstimatedTimeOfArrival = t;

@@ -21,7 +21,6 @@ private:
 	bool InStation;               //if the bus is instation or not
 	bool doneemptying;
 	int distance;   // time for each bus and =0 when arrive station
-	bool door;
 	bool offhours;
 	int busytime;
 	float utilization;

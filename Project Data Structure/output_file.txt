@@ -1,0 +1,12 @@
+Sample Output File:
+
+----------------------------------------------------------------------
+FT		ID		AT		WT		TT
+----------------------------------------------------------------------
+Passengers: 1[NP: 0, SP: 0, WP: 0]
+Passenger avg wait time = 0:0
+Passenger avg trip time = 0:0
+Auto-promoted Passengers: 0%
+Busses: 4 [WBus: 2, MBus: 2]
+Avg busy time = 0%
+Avg utilization = 0%

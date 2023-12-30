@@ -30,9 +30,19 @@ bool Company::executeevent()
 }
 
 Company::Company()
+	: Busses_arr(nullptr),  // Initialize Busses_arr to nullptr
+	stationList(nullptr)  // Initialize stationList to nullptr
 {
-	time = 0;
-	lines_read = 0;
+	stationNum=0;
+	count_busses=0;
+	count_Mbus=0;
+	count_wbus=0;
+	capacityM=0;
+	capacityW=0;
+	time=0;
+	lines_read=0;
+	checkup_time_Wbus = 0;
+	checkup_time_Mbus = 0;
 }
 
 void Company::updatebusses()
@@ -98,6 +108,7 @@ void Company::updatestations()
 	}
 }
 
+
 void Company::readFile()
 {
 	ifstream reader;
@@ -105,7 +116,7 @@ void Company::readFile()
 
 	if (!reader.is_open())
 	{
-		printer.Print_error(); //if file couldn't be opened print error message then quit
+		printer.Print("error cannot open file"); //if file couldn't be opened print error message then quit
 		return;
 	}
 
@@ -114,11 +125,11 @@ void Company::readFile()
 	int journies, wbusfix, mbusfix;
 	int maxwait, geton;
 
-	reader >> stations >> distance >> mbus >> wbus >> mbuscap >> wbuscap >> journies >> mbusfix >> wbusfix >> maxwait>> geton; // reading initial values in order
-	
-	stationList = new Station*[stations+1];  stationNum = stations+1;  //setting array for stations
-	
-	for (int i = 0; i < stations+1; i++)   //loop for creating stations
+	reader >> stations >> distance >> mbus >> wbus >> mbuscap >> wbuscap >> journies >> mbusfix >> wbusfix >> maxwait >> geton; // reading initial values in order
+
+	stationList = new Station * [stations + 1];  stationNum = stations + 1;  //setting array for stations
+
+	for (int i = 0; i < stations + 1; i++)   //loop for creating stations
 	{
 		stationList[i] = new Station(i);
 	}
@@ -128,7 +139,7 @@ void Company::readFile()
 	count_Mbus = mbus; count_wbus = wbus;
 
 	bool turn = true;
-	int gap= abs(mbus-wbus);
+	int gap = abs(mbus - wbus);
 	int index = 0;
 
 	int pls = 240;
@@ -153,7 +164,7 @@ void Company::readFile()
 		pls += 15;
 	}
 
-	for(int i=index ; i<count_busses;i++)
+	for (int i = index; i < count_busses; i++)
 	{
 		if (mbus > wbus)
 		{
@@ -180,13 +191,13 @@ void Company::readFile()
 	int lines;
 	reader >> lines;
 	Event* incomingevent;
-	for(int i=0;i<lines;i++)  //loop until file ends
+	for (int i = 0; i < lines; i++)  //loop until file ends
 	{
 		char type;
 		reader >> type;   // read event type character
 		if (reader.eof())  //if file ends break
 			break;
-		
+
 		if (type == 'A')   //if event is arrival
 		{
 			lines_read++;
@@ -205,13 +216,13 @@ void Company::readFile()
 				reader >> disability;
 
 
-			incomingevent = new ArrivalEvent(time,ID, 'A');  //creates an arrivalevent for the passenger with set time
-			((ArrivalEvent*)incomingevent)->setdata(Ptype,disability,fromstation,tostation);
-			
+			incomingevent = new ArrivalEvent(time, ID, 'A');  //creates an arrivalevent for the passenger with set time
+			((ArrivalEvent*)incomingevent)->setdata(Ptype, disability, fromstation, tostation);
+
 
 			simevents.push(incomingevent);  //pushes event into queue of events
 
-			
+
 		}
 		else if (type == 'L')  // if event is leave
 		{
@@ -221,17 +232,17 @@ void Company::readFile()
 
 			int time = arrtime * 60;
 			int leavestation;
-			reader >> arrtime >> ID>>leavestation;
+			reader >> arrtime >> ID >> leavestation;
 
 			time += arrtime;
 
-			incomingevent = new LeaveEvent(time,ID, 'L'); //create leaveevent
+			incomingevent = new LeaveEvent(time, ID, 'L'); //create leaveevent
 			((LeaveEvent*)incomingevent)->setstation(leavestation);
-			
+
 
 			simevents.push(incomingevent);  //pushes into queue of events
 
-		 
+
 		}
 		else
 			break;
@@ -248,6 +259,7 @@ void Company::writeFile()
 	writer << "FT\t\t" << "ID\t\t" << "AT\t\t" << "WT\t\t" << "TT" << endl;
 	Passenger* temp;
 	int totalsize = finished_queue.size();
+	if (totalsize == 0) totalsize = 1;
 	int sizeNP = 0;
 	int sizeSP = 0;
 	int sizeWP = 0;
@@ -318,7 +330,7 @@ void Company::simulation()
 			updatestations();
 			display();
 			printer.getchar();
-			getchar();
+			(void)getchar();
 			time++;
 		}
 	}
