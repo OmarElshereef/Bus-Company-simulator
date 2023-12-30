@@ -1,5 +1,5 @@
 #pragma once
-#include"UI.h"
+
 #include"Passenger.h"
 #include "fifoqueue.h"
 
@@ -7,7 +7,7 @@ class Bus
 {
 private:
 	Passenger** passenger_arr;	
-	UI printer;
+	
 	int number;
 	static int TimeBetweenStations;
     int BC;				   // bus capacity (max # of passengers can a bus carry)

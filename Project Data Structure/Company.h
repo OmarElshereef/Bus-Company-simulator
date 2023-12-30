@@ -8,13 +8,14 @@
 #include"Passenger.h"
 #include"Station.h"
 #include"Bus.h"
-#include"UI.h"
+
+
 using namespace std;
 
 class Company
 {
 private:
-	UI printer;
+	
 	Station** stationList;
 	int stationNum;
 	fifoqueue<Event*>simevents;
@@ -42,11 +43,11 @@ public:
 
 	void simulation();
 
-	void simulate_phase_1();
+	//void simulate_phase_1();
 
 	void updatestations();
 
-	void display();
+	//void display();
 
 	//Adding funcs
 	void simulation_phase_1();

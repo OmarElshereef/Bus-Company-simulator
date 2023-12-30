@@ -51,9 +51,6 @@
     <ClCompile Include="LeaveEvent.cpp">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Bus.cpp">
       <Filter>Header Files\Classes\entities\Bus</Filter>
     </ClCompile>
@@ -62,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="Station.cpp">
       <Filter>Header Files\Classes\entities\Station</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +89,6 @@
     <ClInclude Include="LeaveEvent.h">
       <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Bus.h">
       <Filter>Header Files\Classes\entities\Bus</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Station.h">
       <Filter>Header Files\Classes\entities\Station</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files\Classes\functionality Classes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

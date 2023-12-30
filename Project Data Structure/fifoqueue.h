@@ -71,7 +71,7 @@ public:
 		return true;
 	}
 
-	void print()
+	/*void print()
 	{
 		Node<T>* temp = head;
 		while (temp != nullptr)
@@ -80,7 +80,7 @@ public:
 			temp = temp->getNext();
 		}
 		printer.Print("\n");
-	}
+	}*/
 
 	T peek()
 	{
@@ -179,7 +179,7 @@ public:
 		return head->getItem();
 	}
 
-	void print()
+	/*void print()
 	{
 		Node<T*>* temp = head;
 		while (temp != nullptr)
@@ -187,18 +187,18 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-	}
+	}*/
 
 	int sizebypri(int priority)
 	{
 		return count;
 	}
 
-	bool PrintByPriority(int pri)
+	/*bool PrintByPriority(int pri)
 	{
 		print();
 		return true;
-	}
+	}*/
 	bool remove(T* item)
 	{
 		if (isempty())

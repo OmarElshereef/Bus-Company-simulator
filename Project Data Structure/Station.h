@@ -3,12 +3,11 @@
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
-#include"UI.h"
 
 class Station
 {
 private:
-	UI printer;                       //print using ui class
+                 
 	static int travel_distance;       //travel distance between each station
 	const int number;                //number of the current station
 	static int station_count;        //number of stations in total

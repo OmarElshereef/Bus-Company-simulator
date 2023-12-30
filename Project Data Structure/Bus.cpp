@@ -64,7 +64,7 @@ int Bus::getmaintenancetime()
 
 void Bus::display()
 {
-	printer.Print("bus #" + to_string(number) + "\t");
+	/*printer.Print("bus #" + to_string(number) + "\t");
 	printer.Print("direction: " + to_string(direction) +"\t");
 	if (InStation)
 		printer.Print("station: " + to_string(station) + "\t");
@@ -73,7 +73,7 @@ void Bus::display()
 	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\t");
 	if (maintain)
 		printer.Print("needs maintenance");
-	printer.Print("\n");
+	printer.Print("\n");*/
 }
 
 int Bus::get_station()

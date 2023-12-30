@@ -98,8 +98,7 @@ void Passenger::SetPassengerPriority(string type)
 
 void Passenger::display()
 {
-	printer.Print(PassengerId);
-	printer.Print("  ");
+	
 }
 
 int Passenger::getPassengerID()

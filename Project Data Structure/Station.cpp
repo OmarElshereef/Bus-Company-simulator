@@ -128,7 +128,7 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 void Station::displayinfo()
 {
 	
-	printer.Print("==============Station#" + to_string(number)+"=================\n");
+	/*printer.Print("==============Station#" + to_string(number)+"=================\n");
 
 	printer.Print(stationpassengersForward.sizebypri(3)+ stationpassengersForward.sizebypri(2)+ stationpassengersForward.sizebypri(1)+ stationpassengersBackward.sizebypri(3) + stationpassengersBackward.sizebypri(2) + stationpassengersBackward.sizebypri(1));
 
@@ -174,7 +174,7 @@ void Station::displayinfo()
 
 	WheelChairQBackward.PrintByPriority(10);
 
-	printer.Print("]\n");
+	printer.Print("]\n");*/
 	
 }
 

@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
-#include"UI.h"
+
 using namespace std;
 
 class Passenger
 {
-	UI printer;
+
 	static int Bus_GetOnTime;
 	static int maxWait;
 

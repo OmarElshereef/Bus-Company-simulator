@@ -70,7 +70,7 @@ public:
 		}
 	}
 
-	void print()
+	/*void print()
 	{
 		Node<T>* temp = head;
 		while (temp)
@@ -79,7 +79,7 @@ public:
 			temp = temp->getNext();
 		}
 		cout << endl;
-	}
+	}*/
 
 	int size()
 	{
@@ -169,7 +169,7 @@ public:
 		return t;
 	}
 
-	bool PrintByPriority(int pri)
+	/*bool PrintByPriority(int pri)
 	{
 		bool t = false;
 		Node<T>* temp = head;
@@ -190,7 +190,7 @@ public:
 
 		}
 		return t;
-	}
+	}*/
 
 	~priorityqueue()
 	{
@@ -307,7 +307,7 @@ public:
 		return head->getItem();
 	}
 
-	void print()
+	/*void print()
 	{
 		Node<T*>* temp = head;
 		while (temp != nullptr)
@@ -315,7 +315,7 @@ public:
 			temp->getItem()->display();
 			temp = temp->getNext();
 		}
-	}
+	}*/
 
 	T* rear()
 	{
@@ -367,7 +367,7 @@ public:
 		return t;
 	}
 
-	bool PrintByPriority(int pri)
+	/*bool PrintByPriority(int pri)
 	{
 		bool t = false;
 		Node<T*>* temp = head;
@@ -389,7 +389,7 @@ public:
 			}
 		}
 		return t;
-	}
+	}*/
 
 	~priorityqueue()
 	{
