@@ -2,6 +2,7 @@
 #include "Node.h"
 #include <iostream>
 using namespace std;
+#include "UI.h"
 
 template <class T>
 class priorityqueue
@@ -68,6 +69,7 @@ public:
 				temp = temp->getNext();
 			}
 		}
+		return false;
 	}
 
 	void print()
@@ -269,6 +271,7 @@ public:
 			}
 			temp = temp->getNext();
 		}
+				return false;
 	}
 
 	int size()

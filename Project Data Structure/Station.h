@@ -3,7 +3,8 @@
 #include"Passenger.h"
 #include"fifoqueue.h"
 #include"priorityqueue.h"
-#include"UI.h"
+
+class UI;
 
 class Station
 {
@@ -17,8 +18,10 @@ private:
 	fifoqueue<Bus*> WBusInStationForward;       //Wbusses in station heading backwards
 	fifoqueue<Bus*> MBusInStationBackward;      //Mbusses in station heading forward
 	fifoqueue<Bus*> WBusInStationBackward;        //Wbusses in station heading backwards
+
 	priorityqueue<Passenger*> stationpassengersForward;      //normal passengers going forward
 	fifoqueue<Passenger*> WheelChairQForward;             //wheel chair passengers going forward
+
 	priorityqueue<Passenger*> stationpassengersBackward;     //normal passengers going backward
 	fifoqueue<Passenger*> WheelChairQBackward;         //wheel chair passengers going backward
 

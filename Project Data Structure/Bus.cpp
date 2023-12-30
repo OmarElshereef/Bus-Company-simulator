@@ -1,4 +1,5 @@
 #include "Bus.h"
+#include"UI.h"
 
 
 int Bus::TimeBetweenStations = 0;
@@ -67,23 +68,7 @@ int Bus::getmaintenancetime()
 	return maintenancetime;
 }
 
-void Bus::display()
-{
-	printer.Print("BUS" + to_string(number) + "[");
-	if (direction)
-		printer.Print("FWD, ");
-	else
-		printer.Print("BCK, ");
 
-	printer.Print("] {");
-	for (int i=0; i < num_of_passengers-1; i++)
-	{
-		printer.Print(to_string(passenger_arr[i]->getPassengerID()) + ", ");
-	}
-	if(num_of_passengers!=0)
-	printer.Print(to_string(passenger_arr[num_of_passengers - 1]->getPassengerID()));
-	printer.Print("}\n");
-}
 
 int Bus::get_station()
 {
@@ -312,7 +297,7 @@ bool Bus::getBusType()
 
 void Bus::setoffhoursmode(int curr_time)
 {
-	direction == false;
+	direction = false;
 	setArriveTime(station*TimeBetweenStations+curr_time);
 	offhours = true;
 }
@@ -337,4 +322,9 @@ bool Bus::SetMaxStations(int s)
 {
 	max_trips = s;
 	return false;
+}
+
+Passenger** Bus::get_passenger_arr()
+{
+	return passenger_arr;
 }

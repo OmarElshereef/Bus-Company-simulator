@@ -1,4 +1,5 @@
 #include "Passenger.h"
+#include"UI.h"
 
 int Passenger::Bus_GetOnTime = 0;
 int Passenger::maxWait = 0;
@@ -53,6 +54,10 @@ Passenger::Passenger(string passtype , int PassID , int Start , int End, string 
 	promoted = false;
 }
 
+void Passenger::SetUI(UI* printer)
+{
+}
+
 void Passenger::SetPassengerType(string Type)
 {
 	PassengerType = Type;
@@ -98,8 +103,8 @@ void Passenger::SetPassengerPriority(string type)
 
 void Passenger::display()
 {
-	printer.Print(PassengerId);
-	printer.Print("  ");
+	//printer.Print(PassengerId);
+	//printer.Print("  ");
 }
 
 int Passenger::getPassengerID()

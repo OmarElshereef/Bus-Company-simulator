@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
-#include"UI.h"
-using namespace std;
+class UI;
 
+using namespace std;
 class Passenger
 {
-	UI printer;
+	//UI printer;
 	static int Bus_GetOnTime;
 	static int maxWait;
 
@@ -30,7 +30,7 @@ class Passenger
 public:
 	
 	Passenger(string passtype = "NP", int PassID = 0, int Start = 0, int End=0, string PriorityType = "no priority", int arriving=0);
-	
+	void SetUI(UI* printer);
 	void SetPassengerType(string Type);
 
 	bool getpromoted();

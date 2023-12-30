@@ -2,6 +2,8 @@
 #include"Event.h"
 #include"Passenger.h"
 #include"Station.h"
+class UI;
+
 
 class LeaveEvent: public Event
 {

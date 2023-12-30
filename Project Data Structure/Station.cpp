@@ -1,4 +1,6 @@
 #include "Station.h"
+#include"UI.h"
+#include"Bus.h"
 #include<iostream>
 #include<string>
 using namespace std;
@@ -127,175 +129,18 @@ void Station::exitpassengerbytype(Passenger*& leaving, int type)
 
 void Station::displayinfo()
 {
-	printer.Print("==============Station#" + to_string(number)+"=================\n");
 
-	printer.Print(stationpassengersForward.sizebypri(3)+ stationpassengersForward.sizebypri(2)+ stationpassengersForward.sizebypri(1)+ stationpassengersBackward.sizebypri(3) + stationpassengersBackward.sizebypri(2) + stationpassengersBackward.sizebypri(1));
-
-	printer.Print("  Waiting SP: FWD[");
-
-	if (stationpassengersForward.PrintByPriority(3))
-		printer.Print("(AG) , ");
-	if (stationpassengersForward.PrintByPriority(2))
-		printer.Print("(PD) , ");
-	if (stationpassengersForward.PrintByPriority(1))
-		printer.Print("(PW)");
-
-	printer.Print("]  BCK[");
-
-	if (stationpassengersBackward.PrintByPriority(3))
-		printer.Print("(AG) , ");
-	if (stationpassengersBackward.PrintByPriority(2))
-		printer.Print("(PD) , ");
-	if (stationpassengersBackward.PrintByPriority(1))
-		printer.Print("(PW)");
-
-	printer.Print("]\n");
-
-	printer.Print(stationpassengersForward.sizebypri(0)+ stationpassengersBackward.sizebypri(0));
-
-	printer.Print("  Waiting NP: FWD[");
-
-	stationpassengersForward.PrintByPriority(0);
-
-	printer.Print("]  BCK[");
-
-	stationpassengersBackward.PrintByPriority(0);
-
-	printer.Print("]\n");
-
-	printer.Print(WheelChairQBackward.sizebypri(10) + WheelChairQForward.sizebypri(10));
-
-	printer.Print("  Waiting WP: FWD[");
-
-	WheelChairQForward.PrintByPriority(10);
-
-	printer.Print("]  BCK[");
-
-	WheelChairQBackward.PrintByPriority(10);
-
-	printer.Print("]\n");
-
-	int total = MBusInStationForward.size() + MBusInStationBackward.size() + WBusInStationForward.size() + WBusInStationBackward.size();
-	printer.Print(to_string(total) + " in this station:\n");
-	fifoqueue<Bus*> temp;
-	Bus* bebe;
-	while (!MBusInStationForward.isempty())
-	{
-		MBusInStationForward.pop(bebe);
-		bebe->display();
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		MBusInStationForward.push(bebe);
-	}
-
-	while (!MBusInStationBackward.isempty())
-	{
-		MBusInStationBackward.pop(bebe);
-		bebe->display();
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		MBusInStationBackward.push(bebe);
-	}
-
-	while (!WBusInStationForward.isempty())
-	{
-		WBusInStationForward.pop(bebe);
-		bebe->display();
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		WBusInStationForward.push(bebe);
-	}
-
-	while (!WBusInStationBackward.isempty())
-	{
-		WBusInStationBackward.pop(bebe);
-		bebe->display();
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		WBusInStationBackward.push(bebe);
-	}
 	
 }
+
 
 void Station::displaycheckup()
 {
 	if (number != 0)
 		return;
 
-	fifoqueue<Bus*> temp;
-	Bus* bebe;
-	while (!MBusInStationForward.isempty())
-	{
-		MBusInStationForward.pop(bebe);
-		if(bebe->getmaintain())
-		printer.Print(to_string(bebe->getnumber())+", ");
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		MBusInStationForward.push(bebe);
-	}
-
-	while (!MBusInStationBackward.isempty())
-	{
-		MBusInStationBackward.pop(bebe);
-		if (bebe->getmaintain())
-		printer.Print(to_string(bebe->getnumber()) + ", ");
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		MBusInStationBackward.push(bebe);
-	}
-
-	while (!WBusInStationForward.isempty())
-	{
-		WBusInStationForward.pop(bebe);
-		if (bebe->getmaintain())
-		printer.Print(to_string(bebe->getnumber()) + ", ");	
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		WBusInStationForward.push(bebe);
-	}
-
-	while (!WBusInStationBackward.isempty())
-	{
-		WBusInStationBackward.pop(bebe);
-		if (bebe->getmaintain())
-		printer.Print(to_string(bebe->getnumber()) + ", ");	
-		temp.push(bebe);
-	}
-
-	while (!temp.isempty())
-	{
-		temp.pop(bebe);
-		WBusInStationBackward.push(bebe);
-	}
-	printer.Print("\n");
+	printer.displaycheckup(MBusInStationForward, MBusInStationBackward, WBusInStationBackward, WBusInStationForward, number);
+	
 }
 
 void Station::insertpassenger(Passenger* incoming)

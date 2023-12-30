@@ -1,11 +1,13 @@
 
 #include "Company.h"
+#include"UI.h"
 #include <cstdio>
 
 bool Company::executeevent()
 {
 	if (simevents.isempty())
 		return false;
+	return true;
 
 	if(!simevents.isempty())
 	{
@@ -24,6 +26,7 @@ bool Company::executeevent()
 		}
 		return true;
 	}
+	return true;
 }
 
 Company::Company()
@@ -102,7 +105,7 @@ void Company::readFile()
 
 	if (!reader.is_open())
 	{
-		printer.Print("error cannot open file"); //if file couldn't be opened print error message then quit
+		printer.Print_error(); //if file couldn't be opened print error message then quit
 		return;
 	}
 
@@ -299,6 +302,7 @@ bool Company::takeinpassenger()
 {
 	if (simevents.isempty())
 		return false;
+	return true;
 
 }
 
@@ -313,14 +317,15 @@ void Company::simulation()
 			updatebusses();
 			updatestations();
 			display();
-			printer.Print("\npress any key to continue...");
+			printer.getchar();
 			getchar();
 			time++;
 		}
 	}
 	else
 	{
-		printer.Print("Silent Mode\nsimulation starts....\n");
+		printer.silent_mode();
+
 		while (time <= 24 * 60)
 		{
 			executeevent();
@@ -330,147 +335,13 @@ void Company::simulation()
 		}
 	}
 	writeFile();
-	printer.Print("Simulation ends, output file created");
+	printer.simulation_ends();
 }
 
-void Company::simulate_phase_1()
-{
-	int rndval;
-	time = 240;
-	Passenger* isleft=nullptr;
-	int type;
-
-	while (time <= 1320)
-	{
-		type = -1;
-		isleft = nullptr;
-		if (simevents.isempty() && lines_read == 0)
-			return;
-
-		executeevent();
-
-		rndval = int((rand() % 60 + 1));;
-
-		if(rndval >=1 && rndval <=25)
-		{
-			type = 3;
-		}
-		else if (rndval >= 35 && rndval <= 45)
-		{
-			type = 10;
-		}
-		else if (rndval >= 50 && rndval <= 60)
-		{
-			type = 0;
-		}
-
-		if (type != -1)
-		{
-			if (type == 3)
-			{
-				for (int i = 0; i < stationNum; i++)
-				{
-					stationList[i]->exitpassengerbytype(isleft, type);
-					if (isleft)
-					{
-						if (lines_read!=0)
-						{
-							lines_read--;
-						}
-						
-						finished_queue.push(isleft);
-						break;
-					}
-				}
-				if (isleft == nullptr)
-				{
-					type--;
-					for (int i = 0; i < stationNum; i++)
-					{
-						stationList[i]->exitpassengerbytype(isleft, type);
-						if (isleft)
-						{
-							if (lines_read != 0)
-							{
-								lines_read--;
-							}
-							finished_queue.push(isleft);
-							break;
-						}
-					}
-					if (isleft == nullptr)
-					{
-						type--;
-						for (int i = 0; i < stationNum; i++)
-						{
-							stationList[i]->exitpassengerbytype(isleft, type);
-							if (isleft)
-							{
-								if (lines_read != 0)
-								{
-									lines_read--;
-								}
-								finished_queue.push(isleft);
-								break;
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				for (int i = 0; i < stationNum; i++)
-				{
-					stationList[i]->exitpassengerbytype(isleft, type);
-					if (isleft)
-					{
-						lines_read--;
-						finished_queue.push(isleft);
-						break;
-					}
-				}
-			}
-			
-		}
-		printer.Print("time ["); 
-		printer.Print(time/60);
-		printer.Print(":");
-		printer.Print(time%60);
-		printer.Print("]\n");
-
-		for (int i = 1; i < stationNum; i++)
-		{
-			stationList[i]->displayinfo();
-		}
-
-		printer.Print("finished queue:\n");
-		finished_queue.print();
-		printer.Print("\n press any key to continue...");
-	
-		getchar();
-		time++;
-	}
-	
-}
 
 void Company::display()
 {
-	
-	printer.Print("time [");
-	printer.Print(time / 60);
-	printer.Print(":");
-	printer.Print(time % 60);
-	printer.Print("]\n");
-
-	for (int i = 1; i < stationNum; i++)
-	{
-		stationList[i]->displayinfo();
-
-	}
-	printer.Print("-----------------------------------------------------------------------------------\n2) Busses in Check up: ");
-	stationList[0]->displaycheckup();
-	printer.Print("-----------------------------------------------------------------------------------\n3) finished Passeners: ");
-	finished_queue.print();
+	printer.display_stations_and_finished_queue(stationNum, finished_queue, stationList, time);
 }
 
 Company::~Company()

@@ -1,7 +1,7 @@
 #pragma once
-#include"UI.h"
 #include"Passenger.h"
 #include "fifoqueue.h"
+class UI;
 
 class Bus
 {
@@ -48,7 +48,6 @@ public:
 
 	bool isdoneemptying();
 
-	void display();
 
 	int get_station();
 	
@@ -119,5 +118,7 @@ public:
 	int gettimebetweenstations();
 
 	static bool SetMaxStations(int);
+
+	Passenger** get_passenger_arr();
 
 }; 

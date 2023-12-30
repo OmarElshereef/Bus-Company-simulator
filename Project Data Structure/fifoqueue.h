@@ -1,7 +1,10 @@
 #include "Node.h"
 #include <iostream>
-#include"UI.h"
 #pragma once
+#include "UI.h"
+
+class UI;
+
 using namespace std;
 
 template <class T>

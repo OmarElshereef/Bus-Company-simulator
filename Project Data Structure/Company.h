@@ -8,7 +8,9 @@
 #include"Passenger.h"
 #include"Station.h"
 #include"Bus.h"
-#include"UI.h"
+
+class UI;
+
 using namespace std;
 
 class Company
@@ -47,19 +49,10 @@ public:
 
 	void simulation();
 
-	void simulate_phase_1();
 
 	void updatestations();
 
 	void display();
-
-	//mahmoud phase 2
-	void maintenance();
-	void set_maintenance_time(int wbus, int mbus);
-	int get_maintenance_time(Bus* b);
-	void check_checkup_list();
-	//mahmoud phase 2
-
 
 	~Company();
 	
