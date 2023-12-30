@@ -64,16 +64,20 @@ int Bus::getmaintenancetime()
 
 void Bus::display()
 {
-	printer.Print("bus #" + to_string(number) + "\t");
-	printer.Print("direction: " + to_string(direction) +"\t");
-	if (InStation)
-		printer.Print("station: " + to_string(station) + "\t");
+	printer.Print("BUS" + to_string(number) + "[");
+	if (direction)
+		printer.Print("FWD, ");
 	else
-		printer.Print("not in station\t");
-	printer.Print("number of passengers in bus: " + to_string(num_of_passengers)+"\t");
-	if (maintain)
-		printer.Print("needs maintenance");
-	printer.Print("\n");
+		printer.Print("BCK, ");
+
+	printer.Print("] {");
+	for (int i=0; i < num_of_passengers-1; i++)
+	{
+		printer.Print(to_string(passenger_arr[i]->getPassengerID()) + ", ");
+	}
+	if(num_of_passengers!=0)
+	printer.Print(to_string(passenger_arr[num_of_passengers - 1]->getPassengerID()));
+	printer.Print("}\n");
 }
 
 int Bus::get_station()

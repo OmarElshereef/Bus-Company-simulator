@@ -175,6 +175,62 @@ void Station::displayinfo()
 	WheelChairQBackward.PrintByPriority(10);
 
 	printer.Print("]\n");
+
+	int total = MBusInStationForward.size() + MBusInStationBackward.size() + WBusInStationForward.size() + WBusInStationBackward.size();
+	printer.Print(to_string(total) + " in this station:\n");
+	fifoqueue<Bus*> temp;
+	Bus* bebe;
+	while (!MBusInStationForward.isempty())
+	{
+		MBusInStationForward.pop(bebe);
+		bebe->display();
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		MBusInStationForward.push(bebe);
+	}
+
+	while (!MBusInStationBackward.isempty())
+	{
+		MBusInStationBackward.pop(bebe);
+		bebe->display();
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		MBusInStationBackward.push(bebe);
+	}
+
+	while (!WBusInStationForward.isempty())
+	{
+		WBusInStationForward.pop(bebe);
+		bebe->display();
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		WBusInStationForward.push(bebe);
+	}
+
+	while (!WBusInStationBackward.isempty())
+	{
+		WBusInStationBackward.pop(bebe);
+		bebe->display();
+		temp.push(bebe);
+	}
+
+	while (!temp.isempty())
+	{
+		temp.pop(bebe);
+		WBusInStationBackward.push(bebe);
+	}
 	
 }
 
@@ -330,7 +386,7 @@ void Station::DequeueBus(int curr_time)
 			MBusInStationForward.pop(Mbus);
 		}
 	}
-	else if (!MBusInStationBackward.isempty())
+	if (!MBusInStationBackward.isempty())
 	{
 		if ((number==0 && MBusInStationBackward.peek()->getfixtime() == curr_time) || ((MBusInStationBackward.peek()->is_full() || stationpassengersBackward.isempty()) && (MBusInStationBackward.peek()->isdoneemptying() && number != 0)))
 		{
@@ -339,7 +395,7 @@ void Station::DequeueBus(int curr_time)
 			MBusInStationBackward.pop(Mbus);
 		}
 	}
-	else  if (!WBusInStationForward.isempty())
+	if (!WBusInStationForward.isempty())
 	{
 		if ((number == 0 && WBusInStationForward.peek()->getfixtime() == curr_time) || ((WBusInStationForward.peek()->is_full() || WheelChairQForward.isempty()) && (WBusInStationForward.peek()->isdoneemptying() && number !=0)))
 		{
@@ -348,7 +404,7 @@ void Station::DequeueBus(int curr_time)
 			WBusInStationForward.pop(Mbus);
 		}
 	}
-	else if (!WBusInStationBackward.isempty())
+	if (!WBusInStationBackward.isempty())
 	{
 		if ((number ==0 && WBusInStationBackward.peek()->getfixtime() == curr_time) || ((WBusInStationBackward.peek()->is_full() || WheelChairQBackward.isempty()) && (WBusInStationBackward.peek()->isdoneemptying() && number !=0)))
 		{

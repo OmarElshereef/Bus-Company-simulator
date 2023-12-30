@@ -9,9 +9,11 @@ using namespace std;
 
 int main()
 {
+	UI ui;
+	ui.welcome();
 	Company c;
 	c.readFile();
 	c.simulation();
-	c.writeFile();
+	
 }
 

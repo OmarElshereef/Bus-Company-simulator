@@ -111,7 +111,7 @@ void Company::readFile()
 	int journies, wbusfix, mbusfix;
 	int maxwait, geton;
 
-	reader >> stations >> distance >> wbus >> mbus >> wbuscap >> mbuscap >> journies >> wbusfix >> mbusfix >> maxwait>> geton; // reading initial values in order
+	reader >> stations >> distance >> mbus >> wbus >> mbuscap >> wbuscap >> journies >> mbusfix >> wbusfix >> maxwait>> geton; // reading initial values in order
 	
 	stationList = new Station*[stations+1];  stationNum = stations+1;  //setting array for stations
 	
@@ -124,25 +124,52 @@ void Company::readFile()
 	Busses_arr = new Bus * [wbus + mbus]; count_busses = wbus + mbus;   //setting array of busses
 	count_Mbus = mbus; count_wbus = wbus;
 
-	fifoqueue
+	bool turn = true;
+	int gap= abs(mbus-wbus);
+	int index = 0;
+
 	int pls = 240;
-	for (int i = 0; i < count_busses; i++)  //loop for creating busses
+	for (int i = 0; i < count_busses - gap; i++)  //loop for creating busses
 	{
-		if (i < mbus)
+		if (turn)
 		{
 			Busses_arr[i] = new Bus(mbuscap, 0, 'M', i + 1);
 			stationList[0]->EnqueueBus(Busses_arr[i], time);
 			Busses_arr[i]->setmaintenancetime(mbusfix);
+			turn = false;
 		}
 		else
 		{
 			Busses_arr[i] = new Bus(wbuscap, 0, 'W', i + 1);
 			stationList[0]->EnqueueBus(Busses_arr[i], time);
 			Busses_arr[i]->setmaintenancetime(wbusfix);
+			turn = true;
 		}
+		index++;
 		Busses_arr[i]->initializefixtime(pls);
 		pls += 15;
 	}
+
+	for(int i=index ; i<count_busses;i++)
+	{
+		if (mbus > wbus)
+		{
+			Busses_arr[i] = new Bus(mbuscap, 0, 'M', i + 1);
+			stationList[0]->EnqueueBus(Busses_arr[i], time);
+			Busses_arr[i]->setmaintenancetime(mbusfix);
+		}
+
+		else if (wbus > mbus)
+		{
+			Busses_arr[i] = new Bus(wbuscap, 0, 'W', i + 1);
+			stationList[0]->EnqueueBus(Busses_arr[i], time);
+			Busses_arr[i]->setmaintenancetime(wbusfix);
+		}
+
+		Busses_arr[i]->initializefixtime(pls);
+		pls += 15;
+	}
+
 	Busses_arr[0]->SetTimeBetweenStations(distance);  Busses_arr[0]->SetMaxStations(journies);   capacityM = mbuscap;  capacityW = wbuscap;
 
 	Passenger::setmaxwait(maxwait);  Passenger::setgetontime(geton);
@@ -273,18 +300,33 @@ bool Company::takeinpassenger()
 
 void Company::simulation()
 {
-	time = 240;
-	while (time<=24*60)
+	if (printer.getsim() == 1)
 	{
-		executeevent();
-		updatebusses();
-		updatestations();
-		display();
-		printer.Print("\npress any key to continue...");
-		getchar();
-		time++;
-
+		time = 240;
+		while (time <= 24 * 60)
+		{
+			executeevent();
+			updatebusses();
+			updatestations();
+			display();
+			printer.Print("\npress any key to continue...");
+			getchar();
+			time++;
+		}
 	}
+	else
+	{
+		printer.Print("Silent Mode\nsimulation starts....\n");
+		while (time <= 24 * 60)
+		{
+			executeevent();
+			updatebusses();
+			updatestations();
+			time++;
+		}
+	}
+	writeFile();
+	printer.Print("Simulation ends, output file created");
 }
 
 void Company::simulate_phase_1()
@@ -409,18 +451,19 @@ void Company::simulate_phase_1()
 
 void Company::display()
 {
+	
 	printer.Print("time [");
 	printer.Print(time / 60);
 	printer.Print(":");
 	printer.Print(time % 60);
 	printer.Print("]\n");
 
-	for (int i = 0; i < stationNum; i++)
+	for (int i = 1; i < stationNum; i++)
+	{
 		stationList[i]->displayinfo();
-	
-	for (int i = 0; i < count_busses; i++)
-		Busses_arr[i]->display();
-
+		printer.Print("press any key to display the next station\n");
+		getchar();
+	}
 	printer.Print("finished Passeners: ");
 	finished_queue.print();
 }
