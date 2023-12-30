@@ -284,9 +284,10 @@ void Company::writeFile()
 		else
 		    totalutilizationW += Busses_arr[i]->getutilization();
 	}
+	totalbusybus = totalbusybus / count_busses;
 
 	float actualutilization = ((totalutilizationM / capacityM) + (totalutilizationW / capacityW)) / 2;
-	writer << "Avg busy time = " << int(float(totalbusybus) / (18 * 60) * 100) << "%" << endl;
+	writer << "Avg busy time = " << int(float(totalbusybus) / (20 * 60) * 100) << "%" << endl;
 	writer << "Avg utilization = " << actualutilization/ 100 << "%" << endl;
 
 }
@@ -326,7 +327,7 @@ void Company::simulation()
 		}
 	}
 	writeFile();
-	printer.Print("Simulation ends, output file created");
+	printer.Print("\nSimulation ends, output file created");
 }
 
 void Company::simulate_phase_1()
