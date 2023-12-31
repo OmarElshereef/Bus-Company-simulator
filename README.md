@@ -4,7 +4,7 @@
 
 The EasyTrip Bus Company Simulation project aims to automate the bus assignment process for efficient and profitable passenger transportation. The system simulates the operation of the transportation process, considering various factors such as passenger types, bus types, stations, and working hours. The primary goal is to develop a program that calculates statistics to improve the overall transportation process.
 
-## Project Objectives
+## Project Objectives 🎯
 
 By the end of this project, the student should be able to:
 
@@ -13,12 +13,12 @@ By the end of this project, the student should be able to:
 - Build and use data structures to implement the proposed design.
 - Write a complete object-oriented C++ program that performs a non-trivial task.
 
-## Simulation Time
+## Simulation Time ⌛
 
 - Time is represented in hh:mm format.
 - The simulation operates for one full day, from 00:00 to 23:59.
 
-## Passengers, Buses, and Stations
+## Passengers, Buses, and Stations 🚉
 
 **Passengers:**
 - Arrival Time: Time when the passenger arrives at the station.
@@ -36,7 +36,7 @@ By the end of this project, the student should be able to:
 - Bus Capacity (BC): The number of passengers a bus can carry.
 - Maintenance Time: After finishing J journeys, a bus must undergo maintenance.
 
-## Basic Rules
+## Basic Rules ✅
 
 - Company working hours are from 4:00 to 22:00.
 - Passengers can only board buses during working hours.
@@ -48,7 +48,7 @@ By the end of this project, the student should be able to:
 ## Planning
 ![Project Planning](ProjectPlanning.jpg)
 
-## Input/Output File Formats
+## Input/Output File Formats 📁
 - The program receives information from an input file and produces an output file.
 - Input file format includes details about stations, buses, capacities, checkup durations, and events.
 - Output file includes information about passengers, their times, and various statistics.
@@ -59,7 +59,7 @@ By the end of this project, the student should be able to:
 ### Output File Format
 ![Project Planning](SampleOutput.jpeg)
 
-## Program Interface
+## Program Interface 🖥️
 
 ### 1. **Interactive Mode:** Allows the user to monitor passengers and buses in real-time.
 ![Project Planning](Interactive.jpeg)
@@ -67,7 +67,8 @@ By the end of this project, the student should be able to:
 ### 2. **Silent Mode:** Produces only an output file without printing simulation steps on the console.
 ![Project Planning](Silent.jpeg)
 
-## Evaluation Criteria
+
+## Evaluation Criteria 📊
 
 - **Successful Compilation:** Must compile with zero errors.
 - **Object-Oriented Concepts:** Modularity, maintainability, and class responsibilities.
@@ -76,13 +77,7 @@ By the end of this project, the student should be able to:
 - **Test Cases:** Comprehensive test cases covering various scenarios.
 - **Coding Style:** Elegance, consistency, and sufficiency of comments.
 
-## Individual Evaluation
-
-- Each member's grade divided into individual work, integration with others, and cooperation.
-- No member should copy from external sources; penalties apply for cheating.
-- Late penalties apply for both phases.
-
-## Project Contributors
+## Project Contributors 🤝
 
 | Member Name                       | ID      | Email                                 |
 |-----------------------------------|---------|---------------------------------------|
