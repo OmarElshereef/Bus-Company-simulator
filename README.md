@@ -56,16 +56,16 @@ By the end of this project, the student should be able to:
 - Input file format includes details about stations, buses, capacities, checkup durations, and events.
 - Output file includes information about passengers, their times, and various statistics.
 
-![Project Planning](ProjectPlanning.jpg)
-![Project Planning](ProjectPlanning.jpg)
+![Project Planning](SampleInput.jpeg)
+![Project Planning](SampleOutput.jpeg)
 
 ### Program Interface
 
 1. **Interactive Mode:** Allows the user to monitor passengers and buses in real-time.
-![Project Planning](ProjectPlanning.jpg)
+![Project Planning](Interactive.jpeg)
    
 2. **Silent Mode:** Produces only an output file without printing simulation steps on the console.
-![Project Planning](ProjectPlanning.jpg)
+![Project Planning](Silent.jpeg)
 
 ### Evaluation Criteria
 
