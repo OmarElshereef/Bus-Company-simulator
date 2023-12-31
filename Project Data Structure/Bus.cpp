@@ -107,7 +107,7 @@ void Bus::upgrade_station(int size, int time)
 		if (station == size)
 		{
 			setArriveTime(time + 1);
-			if (curr_trips == max_trips - 1 && !offhours)
+			if (curr_trips >= max_trips - 1 && !offhours)
 			{
 				curr_trips++;
 				maintain = true;
@@ -130,9 +130,8 @@ void Bus::upgrade_station(int size, int time)
 				station--;
 				return;
 			}
-
 			setArriveTime(time + 1);
-			if (curr_trips == max_trips && !offhours)
+			if (curr_trips >= max_trips && !offhours)
 			{
 				maintain = true;
 				station--;
