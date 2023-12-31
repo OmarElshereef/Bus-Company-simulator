@@ -47,16 +47,25 @@ By the end of this project, the student should be able to:
 - Buses have specific boarding criteria for different passenger types.
 - Checkup duration and bus speed are the same for all buses of the same type.
 
+### Planning
+![Project Planning](ProjectPlanning.jpg)
+
 ### Input/Output File Formats
 
 - The program receives information from an input file and produces an output file.
 - Input file format includes details about stations, buses, capacities, checkup durations, and events.
 - Output file includes information about passengers, their times, and various statistics.
 
+![Project Planning](ProjectPlanning.jpg)
+![Project Planning](ProjectPlanning.jpg)
+
 ### Program Interface
 
 1. **Interactive Mode:** Allows the user to monitor passengers and buses in real-time.
+![Project Planning](ProjectPlanning.jpg)
+   
 2. **Silent Mode:** Produces only an output file without printing simulation steps on the console.
+![Project Planning](ProjectPlanning.jpg)
 
 ### Evaluation Criteria
 
