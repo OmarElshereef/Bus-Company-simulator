@@ -2,7 +2,8 @@
 
 ## Project Description
 
-The EasyTrip Bus Company Simulation project aims to automate the bus assignment process for efficient and profitable passenger transportation. The system simulates the operation of the transportation process, considering various factors such as passenger types, bus types, stations, and working hours. The primary goal is to develop a program that calculates statistics to improve the overall transportation process.
+The EasyTrip Bus Company Simulation project, undertaken as part of the Data Structures and Algorithms course at Cairo University, Faculty of Engineering, addresses the need for an automated bus assignment process to enhance the efficiency and profitability of passenger transportation. The system simulates the entire transportation operation, taking into account crucial factors such as passenger types, bus types, stations, and working hours. The overarching objective is to develop a comprehensive program capable of calculating statistics to optimize and refine the transportation process.
+
 
 ## Project Objectives 🎯
 
@@ -79,10 +80,10 @@ By the end of this project, the student should be able to:
 
 ## Project Contributors 🤝
 
-| Member Name                       | ID      | Email                                 |
-|-----------------------------------|---------|---------------------------------------|
-| Anas Alaa Mohamed                 | 4220112 | Anas.ibrahim03@eng-st.cu.edu.eg       |
-| Omar Ahmed Mohamed Ali            | 4220139 | omar.ali033@eng-st.cu.edu.eg          |
-| Shehab Eldin Osama Ahmed          | 1200175 | shehab.osama02@eng-st.cu.edu.eg       |
-| Mahamoud Mohamed Abdelfattah      | 4220142 | mahmoud.elsayed032@eng-st.cu.edu.eg   |
+| Member Name                       | Email                                 |
+|-----------------------------------|---------------------------------------|
+| Anas Alaa Mohamed                 | Anas.ibrahim03@eng-st.cu.edu.eg       |
+| Omar Ahmed Mohamed Ali            | omar.ali033@eng-st.cu.edu.eg          |
+| Shehab Eldin Osama Ahmed          | shehab.osama02@eng-st.cu.edu.eg       |
+| Mahamoud Mohamed Abdelfattah      | mahmoud.elsayed032@eng-st.cu.edu.eg   |
 
